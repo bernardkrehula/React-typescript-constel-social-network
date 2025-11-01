@@ -1,3 +1,4 @@
+import Btn from '#/Components/Btn';
 import SingleInput from '#/Components/Input';
 import './index.css'
 
@@ -10,7 +11,7 @@ const Login = () => {
             <SingleInput placeholder='Enter your email here...'/>
             <h2>Password</h2>
             <SingleInput placeholder='Enter your password here...'/>
-            <Btn />
+            <Btn variation='login-btn'>Confirm</Btn>
         </div>
     )
 }

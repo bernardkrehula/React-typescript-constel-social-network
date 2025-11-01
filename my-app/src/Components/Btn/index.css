@@ -1,0 +1,18 @@
+.btn{
+    font-size: 1.8rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    border: none;
+}
+.login-btn{
+    background-color: rgb(97, 30, 206);
+    font-weight: 700;
+    border-radius: 10px;
+    color: white;
+    width: 100%;
+    padding: 15px;
+    cursor: pointer;
+    transition: 0.2s all;
+}
+.login-btn:hover{
+    background-color: rgb(71, 22, 150);
+}
