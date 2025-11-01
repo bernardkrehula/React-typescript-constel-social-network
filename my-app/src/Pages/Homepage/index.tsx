@@ -1,6 +1,6 @@
 import './index.css'
 
-const Homepage = () => {
+const Homepage = () => { 
 
     return(
         <div>

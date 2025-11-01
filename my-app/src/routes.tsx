@@ -1,12 +1,16 @@
 import { createBrowserRouter } from "react-router";
 import App from "./App";
-import Homepage from "./Homepage";
+import Homepage from "./Pages/Homepage";
 
-const routes = createBrowserRouter([
+const router = createBrowserRouter([
     {
         path: '/',
         element: <App />,
         children: [
+            {
+                path: 'Login',
+                element:
+            }
             {
                 path: 'Homepage',
                 element: <Homepage />
@@ -14,3 +18,5 @@ const routes = createBrowserRouter([
         ]
     }
 ]);
+
+export default router;
