@@ -7,7 +7,7 @@ type SingleInputType = {
 const SingleInput = ({placeholder}: SingleInputType) => {
 
     return(
-        <input placeholder={placeholder} />
+        <input className={`single-input`} placeholder={placeholder} />
     )
 }
 

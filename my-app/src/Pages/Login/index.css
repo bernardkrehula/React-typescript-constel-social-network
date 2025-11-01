@@ -1,0 +1,9 @@
+.login-page{
+    width: 400px;
+    margin: 100px auto;
+}
+.login-page h2{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 1.7rem;
+    margin-bottom: 10px;
+}

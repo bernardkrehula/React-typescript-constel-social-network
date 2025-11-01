@@ -1,8 +1,9 @@
 import './index.css'
 
+
 const Btn = ({onClick}) => {
     return(
-        <button onClick={onClick}></button>
+        <button className={`btn`} onClick={onClick}></button>
     )
 }
 
