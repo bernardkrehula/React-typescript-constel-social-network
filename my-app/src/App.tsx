@@ -10,11 +10,7 @@ function App() {
     navigate(defaultPage);  
   },[])
 
-  return (
-    <>
-      <Outlet />
-    </>
-  )
+  return <Outlet />;
 }
 
 export default App
