@@ -1,0 +1,38 @@
+.homepage{
+    display: flex;
+}
+.menu{
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    border: 2px solid black;
+    height: 100vh;
+    padding-left: 180px;
+    padding-top: 20px;
+}
+.menu-logo{
+    height: 50px;
+    width: 50px;
+    margin-bottom: 10px;
+}
+.menu-icon{
+    display: flex;
+    color: rgb(57, 109, 205);
+    font-family: sans-serif;
+    align-items: center;
+    font-size: 1.5rem;
+    gap: 5px;
+}
+.menu-icon h2{
+    margin-top: 5px;
+}
+.menu-svg{
+    fill: rgb(57, 109, 205);
+    height: 35px;
+    width: 35px;
+}
+.feed{
+    width: 750px;
+    border: 2px solid black;
+    height: 100vh;
+}
