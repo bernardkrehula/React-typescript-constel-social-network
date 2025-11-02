@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 
-export const fetchDataApi = async(password: string, email: string) => {
+export const fetchDataApi = async(values) => {
+    const { email, password } = values;
     const {data} = await axios.post('https://api.hr.constel.co/api/v1/login', {
         email: email,
         password: password
@@ -14,11 +15,10 @@ export const fetchDataApi = async(password: string, email: string) => {
 }
 
 
-export const getLoginData = (password: string, email: string) => {
+export const getLoginData = (values) => {
     return useQuery({
         queryKey: ['loginData'],
-        queryFn: () => fetchDataApi(password, email),
-        enabled: !!password,
+        queryFn: () => fetchDataApi(values)
     })
 } 
 
