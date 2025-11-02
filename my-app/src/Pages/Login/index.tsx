@@ -1,8 +1,22 @@
 import Btn from '#/Components/Btn';
 import SingleInput from '#/Components/Input';
+import { useEffect, useState } from 'react';
 import './index.css'
+import { getLoginData } from '#/api/loginApi';
 
 const Login = () => {
+    const [ password, setPassword ] = useState<string>('');
+    const [ email, setEmail ] = useState<string>('');
+    const { data, isFetched } = getLoginData(password, email);
+
+    useEffect(() => {
+        setPassword('He5r4dOVdy9x6IT');
+        setEmail('malesija.nemanja@gmail.com');
+    },[])
+
+    useEffect(() => {
+        console.log(data)
+    },[isFetched])
 
     return(
         <div className='login-page'>
