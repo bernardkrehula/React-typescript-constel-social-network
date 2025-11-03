@@ -1,11 +1,19 @@
 import Btn from '#/Components/Btn';
-import SingleInput from '#/Components/Input';
+import SingleInput from '#/Components/SingleInput';
 import { useState } from 'react';
 import './index.css'
 import { getLoginData } from '#/api/loginApi';
 import { useNavigate } from 'react-router';
+import { useForm } from 'react-hook-form';
+
+//Pogledaj paket react hook forms i napravi login sa njim 
+//Kad se user uspjesno ulogira sacuvaj json web token u local storage 
+//Na homepage provjeravas postoji li  json web token ako postoji user je ulogiran i dozvoli mu pristup
+//Dozvoli mu pristup: ako imas usera u stateu nastavi dalje ako nemas dohvati usera na osnovu json web tokena i spremi ga u state
+//Ako ne postoji redirektaj ga na login na login provjeris obratno
 
 const Login = () => {
+    const { register, handleSubmit }= useForm();
     const [ formValues, setFormValues ] = useState({
         email: '',
         password: ''

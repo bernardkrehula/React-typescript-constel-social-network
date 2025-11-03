@@ -6,9 +6,9 @@ function App() {
   const defaultPage = 'login';
   const navigate = useNavigate();
 
-  /* useEffect(() => {
+  useEffect(() => {
     navigate(defaultPage);  
-  },[]) */
+  },[])
 
   return <Outlet />;
 }

@@ -1,3 +1,4 @@
+import SinglePost from '#/Components/SinglePost';
 import './index.css'
 
 const Homepage = () => { 
@@ -12,7 +13,7 @@ const Homepage = () => {
                 </div>
             </div>
             <div className='feed'>
-                <h1>Title</h1>
+                <SinglePost />
             </div>
         </div>
     )
