@@ -6,7 +6,7 @@ type SingleInputType = {
     name: 'email' | 'password';
     register: UseFormRegister<FormInputTypes>;
 }
-type FormInputTypes = {
+export type FormInputTypes = {
     email: string;
     password: string;
 }
