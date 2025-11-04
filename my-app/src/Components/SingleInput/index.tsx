@@ -3,8 +3,7 @@ import type { UseFormRegister } from 'react-hook-form'
 
 type SingleInputType = {
     placeholder: string;
-    name: string;
-    onChange: (value: React.ChangeEvent<HTMLInputElement>) => void;
+    name: 'email' | 'password';
     register: UseFormRegister<FormInputTypes>;
 }
 type FormInputTypes = {
@@ -12,8 +11,8 @@ type FormInputTypes = {
     password: string;
 }
 
-const SingleInput = ({placeholder, name, onChange, register}: SingleInputType) => {
-    return(
+const SingleInput = ({placeholder, name, register}: SingleInputType) => {
+    if(register) return(
         <input className={`single-input`} placeholder={placeholder} {...register(name)}/>
     )
 }
