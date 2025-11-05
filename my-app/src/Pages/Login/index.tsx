@@ -1,11 +1,11 @@
 import Btn from '#/Components/Btn';
 import SingleInput from '#/Components/SingleInput';
-import { useState } from 'react';
 import './index.css'
 import { getLoginData } from '#/api/loginApi';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
+import { useState } from 'react';
 
 //Pogledaj paket react hook forms i napravi login sa njim 
 //Kad se user uspjesno ulogira sacuvaj json web token u local storage 
@@ -20,19 +20,18 @@ type FormInputTypes = {
 
 const Login = () => {
     const { register, handleSubmit }= useForm<FormInputTypes>();
-    const [ formValues, setFormValues ] = useState({
-        email: '',
-        password: ''
-    })
-    const { data } = getLoginData(formValues);
+\    const { data } = getLoginData(formData);
+    
     const navigate = useNavigate();
 
     const navigateToHomepage = () => {
+        console.log(data)
         if(data.status === 'ok') navigate('/'+'Homepage');
     }
     const onSubmit: SubmitHandler<FormInputTypes> = (data: FormInputTypes) => {
-        
-        console.log(data)
+        setFormData(data);
+        navigateToHomepage();
+        console.log('submit-data: ', data)
     }
 
     return(
@@ -42,7 +41,7 @@ const Login = () => {
             <SingleInput name='email' placeholder='Enter your email here...' register={register}/>
             <h2>Password</h2>
             <SingleInput name='password' placeholder='Enter your password here...' register={register}/>
-            <Btn type='submit' onClick={navigateToHomepage} variation='login-btn'>Confirm</Btn>
+            <Btn type='submit' variation='login-btn'>Confirm</Btn>
         </form>
     )
 }

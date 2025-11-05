@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from 'react-router'
 import './App.css'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 function App() {
   const defaultPage = 'login';
