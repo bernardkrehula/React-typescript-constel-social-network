@@ -2,7 +2,7 @@ import Btn from '#/Components/Btn';
 import SingleInput from '#/Components/SingleInput';
 import './index.css'
 import { fetchDataApi } from '#/api/loginApi';
-import { useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
 import { useEffect, useState } from 'react';
@@ -21,10 +21,11 @@ type FormInputTypes = {
 const Login = () => {
     const { register, handleSubmit }= useForm<FormInputTypes>();
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         redirectToHomepage();
-    },[navigate])
+    },[navigate, location])
 
     const redirectToHomepage = () => {
         //If user is logged in always redirect it to homepage
