@@ -21,20 +21,28 @@ type FormInputTypes = {
 const Login = () => {
     const { register, handleSubmit }= useForm<FormInputTypes>();
     const navigate = useNavigate();
-    
 
     useEffect(() => {
+        redirectToHomepage();
+    },[navigate])
+
+    const redirectToHomepage = () => {
         //If user is logged in always redirect it to homepage
+        //If token is expired navigate to login
         const token = localStorage.getItem('token');
         if(token){
-            navigate('/Homepage')
+            navigate('/homepage')
+            console.log(token)
         }
-    
-    },[navigate])
+        else{
+            navigate('/login');
+        }
+    }
         
     const navigateToHomepage = (data) => {
-        if(data.status === 'ok') navigate('/'+'Homepage');
+        if(data.token) navigate('/homepage');
     }
+
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
         const getData = await fetchDataApi(data);
         navigateToHomepage(getData);
