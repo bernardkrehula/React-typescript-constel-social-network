@@ -1,11 +1,11 @@
 import Btn from '#/Components/Btn';
 import SingleInput from '#/Components/SingleInput';
 import './index.css'
-import { getLoginData } from '#/api/loginApi';
-import { useNavigate } from 'react-router';
+import { fetchDataApi } from '#/api/loginApi';
+import { useNavigate, useParams } from 'react-router';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 //Pogledaj paket react hook forms i napravi login sa njim 
 //Kad se user uspjesno ulogira sacuvaj json web token u local storage 
@@ -20,19 +20,24 @@ type FormInputTypes = {
 
 const Login = () => {
     const { register, handleSubmit }= useForm<FormInputTypes>();
-    const [ formData, setFormData ] = useState({email: '', password: ''});
-    const { data } = getLoginData(formData);
-    
     const navigate = useNavigate();
+    
 
-    const navigateToHomepage = () => {
-        console.log(data)
+    useEffect(() => {
+        //If user is logged in always redirect it to homepage
+        const token = localStorage.getItem('token');
+        if(token){
+            navigate('/Homepage')
+        }
+    
+    },[navigate])
+        
+    const navigateToHomepage = (data) => {
         if(data.status === 'ok') navigate('/'+'Homepage');
     }
-    const onSubmit: SubmitHandler<FormInputTypes> = (data: FormInputTypes) => {
-        setFormData(data);
-        navigateToHomepage();
-        console.log('submit-data: ', data)
+    const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
+        const getData = await fetchDataApi(data);
+        navigateToHomepage(getData);
     }
 
     return(

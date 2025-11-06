@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useQuery } from '@tanstack/react-query';
 
 type ValueTypes = {
     email: string;
@@ -25,13 +24,3 @@ export const fetchDataApi = async(values: ValueTypes) => {
         console.error(error);
     }
 }
-
-
-export const getLoginData = (values: ValueTypes) => {
-    const { email, password } = values; 
-    return useQuery({
-        queryKey: ['loginData'],
-        queryFn: () => fetchDataApi(values),
-        enabled: !!email && !!password
-    })
-} 
