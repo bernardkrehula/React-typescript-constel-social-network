@@ -20,7 +20,8 @@ type FormInputTypes = {
 
 const Login = () => {
     const { register, handleSubmit }= useForm<FormInputTypes>();
-\    const { data } = getLoginData(formData);
+    const [ formData, setFormData ] = useState({email: '', password: ''});
+    const { data } = getLoginData(formData);
     
     const navigate = useNavigate();
 
