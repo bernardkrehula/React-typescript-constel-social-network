@@ -1,4 +1,4 @@
-import SinglePost from '#/Components/SinglePost';
+import PostCreator from '#/Components/PostCreator';
 import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 import './index.css'
@@ -23,9 +23,8 @@ const Homepage = () => {
                 </div>
             </div>
             <div className='feed'>
-                {postData.posts.map(post => {
-                    return <SinglePost post={post}/>
-                })}
+                <PostCreator />
+                {postData.posts.map()}
             </div>
         </div>
     )
