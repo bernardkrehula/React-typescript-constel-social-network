@@ -1,8 +1,18 @@
 import SinglePost from '#/Components/SinglePost';
+import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
 import './index.css'
 
-const Homepage = () => { 
+const Homepage = () => {
+    const navigate = useNavigate();
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if(token){
+            navigate('/')
+        }
+    },[navigate])
+ 
     return(
         <div className='homepage'>
             <div className='menu'>
