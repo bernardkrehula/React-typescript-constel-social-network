@@ -2,7 +2,7 @@ import Btn from '#/Components/Btn';
 import SingleInput from '#/Components/SingleInput';
 import './index.css'
 import { fetchDataApi } from '#/api/loginApi';
-import { useLocation, useNavigate, useParams } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
 import { useEffect, useState } from 'react';
@@ -12,6 +12,10 @@ import { useEffect, useState } from 'react';
 //Na homepage provjeravas postoji li  json web token ako postoji user je ulogiran i dozvoli mu pristup
 //Dozvoli mu pristup: ako imas usera u stateu nastavi dalje ako nemas dohvati usera na osnovu json web tokena i spremi ga u state
 //Ako ne postoji redirektaj ga na login na login provjeris obratno
+//Dohvatiti postove
+//Odraditi css
+//Dodati logout
+//Staviti animaciju na logout 
 
 type FormInputTypes = {
     email: string;
@@ -21,32 +25,34 @@ type FormInputTypes = {
 const Login = () => {
     const { register, handleSubmit }= useForm<FormInputTypes>();
     const navigate = useNavigate();
-    const location = useLocation();
+    const [ isLogged, setLogin ] = useState(false);
 
     useEffect(() => {
-        redirectToHomepage();
-    },[navigate, location])
+        const token = localStorage.getItem('token');
+        if(!token){
+            navigate('/')
+        }
+    },[navigate])
 
     const redirectToHomepage = () => {
         //If user is logged in always redirect it to homepage
         //If token is expired navigate to login
-        const token = localStorage.getItem('token');
+       
         if(token){
-            navigate('/homepage')
-            console.log(token)
+            navigate('/')
+            setLogin(true);
         }
         else{
             navigate('/login');
+            setLogin(false);
         }
     }
         
-    const navigateToHomepage = (data) => {
-        if(data.token) navigate('/homepage');
-    }
-
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
+        //Get login data
         const getData = await fetchDataApi(data);
-        navigateToHomepage(getData);
+        //If token is legit set log user
+        if(getData.token) setLogin(true);
     }
 
     return(

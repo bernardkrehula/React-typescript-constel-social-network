@@ -1,16 +1,16 @@
-import { Outlet, useNavigate } from 'react-router'
 import './App.css'
-import { useEffect } from 'react'
+import Login from './Pages/Login';
+import Authcontext from './Pages/AuthContext';
+import Homepage from './Pages/Homepage';
 
-function App() {
-  const defaultPage = 'login';
-  const navigate = useNavigate();
+const App = () => {
 
-  useEffect(() => {
-    navigate(defaultPage);  
-  },[])
-
-  return <Outlet />;
+    return(
+        <Authcontext>
+            <Login/>
+            <Homepage/>
+        </Authcontext>
+    )
 }
 
-export default App
+export default App;
