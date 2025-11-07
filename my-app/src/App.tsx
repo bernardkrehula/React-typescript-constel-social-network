@@ -4,7 +4,6 @@ import Authcontext from './Pages/AuthContext';
 import Homepage from './Pages/Homepage';
 
 const App = () => {
-
     return(
         <Authcontext>
             <Login/>
