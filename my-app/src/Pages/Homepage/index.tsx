@@ -8,9 +8,8 @@ const Homepage = () => {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if(token){
-            navigate('/')
-        }
+        if(token) navigate('/');
+        else navigate('/login');
     },[navigate])
  
     return(

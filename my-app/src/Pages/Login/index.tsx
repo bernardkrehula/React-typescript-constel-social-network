@@ -21,38 +21,30 @@ type FormInputTypes = {
     email: string;
     password: string;
 }
+type TokenType = {
+    status: string;
+    token: string;
+}
 
 const Login = () => {
     const { register, handleSubmit }= useForm<FormInputTypes>();
     const navigate = useNavigate();
-    const [ isLogged, setLogin ] = useState(false);
+    
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if(token){
-            navigate('/')
-        }
+        if(token) navigate('/');
+        else navigate('/login');
     },[navigate])
 
-    const redirectToHomepage = () => {
-        //If user is logged in always redirect it to homepage
-        //If token is expired navigate to login
-       
-        if(token){
-            navigate('/')
-            setLogin(true);
-        }
-        else{
-            navigate('/login');
-            setLogin(false);
-        }
+    const redirectToHomepage = (data: TokenType) => {
+        if(data.token) navigate('/');
     }
         
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
         //Get login data
         const getData = await fetchDataApi(data);
-        //If token is legit set log user
-        if(getData.token) setLogin(true);
+        redirectToHomepage(getData);
     }
 
     return(
