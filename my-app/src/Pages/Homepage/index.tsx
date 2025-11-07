@@ -2,6 +2,7 @@ import SinglePost from '#/Components/SinglePost';
 import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 import './index.css'
+import { postData } from '#/data/postData';
 
 const Homepage = () => {
     const navigate = useNavigate();
@@ -22,7 +23,9 @@ const Homepage = () => {
                 </div>
             </div>
             <div className='feed'>
-                <SinglePost />
+                {postData.posts.map(post => {
+                    return <SinglePost post={post}/>
+                })}
             </div>
         </div>
     )
