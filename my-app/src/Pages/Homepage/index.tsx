@@ -3,9 +3,12 @@ import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 import './index.css'
 import { postData } from '#/data/postData';
+import SingleInput from '#/Components/SingleInput';
+import SinglePost from '#/Components/SinglePost';
 
 const Homepage = () => {
     const navigate = useNavigate();
+    console.log(postData.posts)
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -24,7 +27,9 @@ const Homepage = () => {
             </div>
             <div className='feed'>
                 <PostCreator />
-                {postData.posts.map()}
+                {postData.posts.map((post, key) => {
+                    return  <SinglePost key={key} data={post}/>
+                })}
             </div>
         </div>
     )

@@ -1,6 +1,7 @@
 
-const SinglePost = () => {
-
+const SinglePost = ({data}) => {
+     console.log(data)
+ 
     return(
         <div className="single-post">
 
