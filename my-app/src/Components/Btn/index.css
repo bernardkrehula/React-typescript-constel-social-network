@@ -17,6 +17,19 @@
 .new-post{
     width: 200px;
 }
-.post-like{
-    width: 50px;
+.post-btn{
+    display: flex;
+    gap: 10px;
+    background-color: rgb(184, 184, 184);
+    justify-content: center;
+    width: fit-content;
+    padding-left: 20px;
+    padding-right: 20px;
+    align-items: center;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+.post-btn:hover{
+    color: white;
+    background-color: rgb(241, 116, 38);
 }

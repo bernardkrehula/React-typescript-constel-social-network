@@ -50,3 +50,17 @@
     line-height: 1.7;
     text-align: justify;
 }
+.post-btns{
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+.post-btns svg{
+    height: 22px;
+    width: 22px;
+    color: white
+}
+.post-btns h2{
+    color: white;
+    font-size: 2rem;
+}
