@@ -6,6 +6,9 @@ html{
   margin: 0;
   padding: 0;
 }
+body{
+    background-color: #131313;
+}
 .homepage{
     display: flex;
 }
@@ -43,8 +46,6 @@ html{
     flex-direction: column;
     gap: 40px;
     width: 750px;
-    border-right: 1px solid rgb(181, 181, 181);
-    border-left: 1px solid rgb(181, 181, 181);
     height: 100vh;
     padding: 20px;
 }

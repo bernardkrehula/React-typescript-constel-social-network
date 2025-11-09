@@ -48,6 +48,7 @@ const SinglePost = ({data}: SinglePostDataType) => {
                     <h2>3</h2>
                 </Btn>
             </div>
+            <hr />
         </div>
     )
 }
