@@ -27,7 +27,7 @@ body{
 }
 .menu-icon{
     display: flex;
-    color: rgb(57, 109, 205);
+    color: rgb(255, 255, 255);
     font-family: sans-serif;
     align-items: center;
     font-size: 1.5rem;
@@ -37,7 +37,7 @@ body{
     margin-top: 5px;
 }
 .menu-svg{
-    fill: rgb(57, 109, 205);
+    fill: rgb(255, 255, 255);
     height: 35px;
     width: 35px;
 }
