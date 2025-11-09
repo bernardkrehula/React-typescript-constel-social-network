@@ -1,3 +1,8 @@
+.single-post{
+    background-color: rgb(223, 226, 233);
+    border-radius: 10px;
+    padding: 20px;
+}
 .post-user-data{
     display: flex;
     align-items: center;
@@ -42,4 +47,6 @@
     font-family: sans-serif;
     color: rgb(43, 43, 43);
     margin-top: 10px;
+    line-height: 1.7;
+    text-align: justify;
 }
