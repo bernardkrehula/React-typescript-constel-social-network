@@ -8,7 +8,6 @@ import SinglePost from '#/Components/SinglePost';
 
 const Homepage = () => {
     const navigate = useNavigate();
-    console.log(postData.posts)
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -28,6 +27,8 @@ const Homepage = () => {
             <div className='feed'>
                 <PostCreator />
                 {postData.posts.map((post, key) => {
+                    const { image } = post;
+                    console.log(image)
                     return  <SinglePost key={key} data={post}/>
                 })}
             </div>
