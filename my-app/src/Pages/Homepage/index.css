@@ -67,6 +67,7 @@ body{
     height: 50px;
     margin-left: auto;
     margin-bottom: 15px;
+    cursor: pointer;
 }
 .profile-menu{
     display: block;
