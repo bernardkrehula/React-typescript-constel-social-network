@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 import './index.css'
 import { postData } from '#/data/postData';
-import SingleInput from '#/Components/SingleInput';
 import SinglePost from '#/Components/SinglePost';
 
 const Homepage = () => {
