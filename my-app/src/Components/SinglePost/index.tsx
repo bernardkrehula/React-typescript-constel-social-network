@@ -1,6 +1,7 @@
 import './index.css'
 import Btn from '../Btn'
 import { useState } from 'react';
+import { formatISO9075 } from 'date-fns';
 
 type SinglePostDataType = {
     data: {
@@ -22,14 +23,15 @@ type SinglePostDataType = {
 }
 
 const SinglePost = ({data}: SinglePostDataType) => {
-    const { user, image, text } = data;
+    const { user, image, text, created_at } = data;
     const { full_name, username, picture } = user;
     const [isLiked, setIsLiked ] = useState(false);
     const [isCommentOpened, setIsCommentOpened] = useState(false);
 
     const likePost = () => setIsLiked(prev => !prev);
     const openComment = () => setIsCommentOpened(prev => !prev);
- 
+    const date  = formatISO9075(created_at, {representation: 'date'})
+    
     return(
         <div className="single-post">
             <div className='post-user-data'>
@@ -40,7 +42,7 @@ const SinglePost = ({data}: SinglePostDataType) => {
                 </div>
                 <div className='post-time'>
                     <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="calendar" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"></path></svg>
-                    <h2>2023-09-14T17:44:03.772Z</h2>
+                    <h2>{date}</h2>
                 </div>
             </div>
             {image && <img className='post-img' src={image} />}
