@@ -6,10 +6,8 @@ const PostCreator = () => {
 
     return(
         <div className='post-creator'>
-            <div>
-                <img src="/user-logo.jpg"/>
-                <SingleInput />
-            </div>
+            <img src="/user-logo.jpg"/>
+            <SingleInput variation='post-creator-input' placeholder="What's on your mind?"/>
             <Btn variation='new-post'>New Post</Btn>
         </div>
     )

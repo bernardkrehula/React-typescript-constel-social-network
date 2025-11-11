@@ -4,11 +4,13 @@
     width: 100%;
     border-radius: 8px;
     border: none;
-    margin-bottom: 25px;
 }
 .single-input::placeholder{
     color: rgb(159, 159, 159);
 }
 .single-input:focus{
     outline: 1.5px solid rgb(28, 139, 195);
+}
+.login-input{
+    margin-bottom: 25px;
 }

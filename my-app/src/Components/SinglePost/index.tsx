@@ -75,7 +75,6 @@ const SinglePost = ({data}: SinglePostDataType) => {
                     }
                 </Btn>
             </div>
-            <hr />
         </div>
     )
 }

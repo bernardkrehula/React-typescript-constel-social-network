@@ -2,11 +2,7 @@
     background-color: transparent;
     border-radius: 10px;
     padding: 20px;
-}
-.single-post hr{
-    margin-top: 15px;
-    margin-left: -20px;
-    margin-right: -20px;
+    background-color: rgb(30, 30, 30);
 }
 .post-user-data{
     display: flex;

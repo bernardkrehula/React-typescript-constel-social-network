@@ -2,21 +2,25 @@ import PostCreator from '#/Components/PostCreator';
 import { useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
 import './index.css'
-import { postData } from '#/data/postData';
 import SinglePost from '#/Components/SinglePost';
 import Btn from '#/Components/Btn';
 
 const Homepage = () => {
     const navigate = useNavigate();
     const [ showProfileMenu, setProfileMenu ] = useState<boolean>(false);
+    const [ postData, setPostData] = useState(null);
 
     const displayProfleMenu = () => setProfileMenu(prev => !prev);
 
     useEffect(() => {
+        const userData = localStorage.getItem('homepageData');
         const token = localStorage.getItem('token');
-        if(token) navigate('/');
+        if(token) if(userData) setPostData(JSON.parse(userData));
         else navigate('/login');
     },[navigate])
+    useEffect(() => {
+        console.log(postData)
+    },[postData])
  
     const logoutUser = () => {
         localStorage.removeItem('token');
@@ -33,7 +37,7 @@ const Homepage = () => {
             </div>
             <div className='feed'>
                 <PostCreator />
-                {postData.posts.map((post, key) => {
+                {postData && postData.posts.map((post, key) => {
                     return  <SinglePost key={key} data={post}/>
                 })}
             </div>
