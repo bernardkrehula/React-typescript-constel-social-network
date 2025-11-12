@@ -5,8 +5,9 @@ import { requestLoginData } from '#/api/loginApi';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { getHomepageData } from '#/api/getHomepageDataApi';
+import type { LoginDataType } from '#/App';
 
 //Pogledaj paket react hook forms i napravi login sa njim 
 //Kad se user uspjesno ulogira sacuvaj json web token u local storage 
@@ -26,8 +27,11 @@ type TokenType = {
     status: string;
     token: string;
 }
+type setLoginDataTypes = {
+    setLoginData: React.Dispatch<React.SetStateAction<LoginDataType>>;
+}
 
-const Login = ({setLoginData}) => {
+const Login = ({setLoginData}: setLoginDataTypes) => {
     const { register, handleSubmit }= useForm<FormInputTypes>();
     const navigate = useNavigate();
 
