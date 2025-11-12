@@ -5,7 +5,7 @@ type ValueTypes = {
     password: string;
 }
 
-export const fetchDataApi = async(values: ValueTypes) => {
+export const requestLoginData = async(values: ValueTypes) => {
     const { email, password } = values;
     try{
         const {data} = await axios.post('https://api.hr.constel.co/api/v1/login', {

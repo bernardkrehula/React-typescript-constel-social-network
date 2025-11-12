@@ -13,10 +13,12 @@ const Homepage = () => {
     const displayProfleMenu = () => setProfileMenu(prev => !prev);
 
     useEffect(() => {
-        const userData = localStorage.getItem('homepageData');
+
         const token = localStorage.getItem('token');
-        if(token) if(userData) setPostData(JSON.parse(userData));
-        else navigate('/login');
+        if(!token) navigate('/login');
+        if(token && !user.isLoggedIn){
+            //Dohvati usera uz pomoc tokena i spremi ga u state 
+        }
     },[navigate])
     useEffect(() => {
         console.log(postData)
@@ -26,6 +28,7 @@ const Homepage = () => {
         localStorage.removeItem('token');
         navigate('/login');
     }
+    //Dodati if userLoggedIn provjeru
     return(
         <div className='homepage'>
             <div className='menu'>
