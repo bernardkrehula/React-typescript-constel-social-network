@@ -6,7 +6,8 @@ const App = () => {
     return(
         <div className="main">
             <Homepage />
-            <Login />
+            {/*<Login /> */}
+            <h1>Radi</h1>
         </div>
     )
 }
