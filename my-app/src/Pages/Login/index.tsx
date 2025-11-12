@@ -27,7 +27,7 @@ type TokenType = {
     token: string;
 }
 
-const Login = () => {
+const Login = ({setLoginData}) => {
     const { register, handleSubmit }= useForm<FormInputTypes>();
     const navigate = useNavigate();
 

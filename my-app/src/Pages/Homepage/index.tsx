@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react';
 import './index.css'
 import SinglePost from '#/Components/SinglePost';
 import Btn from '#/Components/Btn';
+import type { LoginDataType } from '#/App';
 
-const Homepage = () => {
+const Homepage = ({loginData}: LoginDataType) => {
     const navigate = useNavigate();
     const [ showProfileMenu, setProfileMenu ] = useState<boolean>(false);
     const [ postData, setPostData] = useState(null);
@@ -16,9 +17,9 @@ const Homepage = () => {
 
         const token = localStorage.getItem('token');
         if(!token) navigate('/login');
-        if(token && !user.isLoggedIn){
+       /*  if(token && !user.isLoggedIn){
             //Dohvati usera uz pomoc tokena i spremi ga u state 
-        }
+        } */
     },[navigate])
     useEffect(() => {
         console.log(postData)

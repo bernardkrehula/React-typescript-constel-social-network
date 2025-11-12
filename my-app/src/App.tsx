@@ -2,17 +2,21 @@ import Login from "./Pages/Login";
 import Homepage from "./Pages/Homepage";
 import { useState } from "react";
 
+export type LoginDataType = {
+    status: string;
+    token: string;
+}
+
 const App = () => {
-    const [loginData, setLoginData] = useState({
+    const [loginData, setLoginData] = useState<LoginDataType>({
         status: '',
         token: ''
     });
 
     return(
         <div className="main">
-            <Homepage />
-            {/*<Login /> */}
-            <h1>Radi</h1>
+            <Homepage loginData={loginData}/>
+            <Login setLoginData={setLoginData}/> 
         </div>
     )
 }
