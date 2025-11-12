@@ -45,13 +45,13 @@ const Login = () => {
         
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
         //Get login data
-        const getData = await requestLoginData(data);
-        const homePageData = await getHomepageData(getData.token);
+        const getLoginData = await requestLoginData(data);
+        const homePageData = await getHomepageData(getLoginData.token);
         //Prebaci homepageData na homepage
         //Kad je response uspjesan stavi neki state user popuni ga podacima name, last name... i stavi mu userLoggin true 
         //User state staviti u context vratiti app 
 
-        redirectToHomepage(getData);
+        redirectToHomepage(getLoginData);
         //Temporary hompageData set to local storage
         localStorage.setItem('homepageData', JSON.stringify(homePageData));
     }
