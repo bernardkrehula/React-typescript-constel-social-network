@@ -12,6 +12,7 @@ const Homepage = ({loginData}: LoginDataType) => {
     const [ postData, setPostData] = useState(null);
 
     const displayProfleMenu = () => setProfileMenu(prev => !prev);
+    
 
     useEffect(() => {
 
@@ -22,8 +23,9 @@ const Homepage = ({loginData}: LoginDataType) => {
         } */
     },[navigate])
     useEffect(() => {
-        console.log(postData)
-    },[postData])
+/*         console.log('Homepage:', loginData)
+ *//*         const homePageData = await getHomepageData(loginData.token);
+ */    },[loginData])
  
     const logoutUser = () => {
         localStorage.removeItem('token');

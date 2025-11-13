@@ -1,7 +1,7 @@
 import Btn from '#/Components/Btn';
 import SingleInput from '#/Components/SingleInput';
 import './index.css'
-import { requestLoginData } from '#/api/loginApi';
+import { requestLoginData } from '#/api/getLoginData';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
@@ -31,7 +31,7 @@ type setLoginDataTypes = {
     setLoginData: React.Dispatch<React.SetStateAction<LoginDataType>>;
 }
 
-const Login = ({setLoginData}: setLoginDataTypes) => {
+const Login = ({setLoginData, getLogData}: setLoginDataTypes) => {
     const { register, handleSubmit }= useForm<FormInputTypes>();
     const navigate = useNavigate();
 
@@ -50,14 +50,14 @@ const Login = ({setLoginData}: setLoginDataTypes) => {
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
         //Get login data
         const getLoginData = await requestLoginData(data);
-        const homePageData = await getHomepageData(getLoginData.token);
-        //Prebaci homepageData na homepage
+        redirectToHomepage(getLoginData);
+/*         setLoginData(getLoginData);
+ */     console.log(getLogData)
+/*         console.log('Loginpage:', getLoginData)
+ */        //Prebaci homepageData na homepage
         //Kad je response uspjesan stavi neki state user popuni ga podacima name, last name... i stavi mu userLoggin true 
         //User state staviti u context vratiti app 
-
-        redirectToHomepage(getLoginData);
         //Temporary hompageData set to local storage
-        localStorage.setItem('homepageData', JSON.stringify(homePageData));
     }
 
     return(

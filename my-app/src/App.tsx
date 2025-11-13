@@ -12,11 +12,14 @@ const App = () => {
         status: '',
         token: ''
     });
+    const getLogData = (data) => {
+        console.log('AppData:', data)
+    }
 
     return(
         <div className="main">
-            <Homepage loginData={loginData}/>
-            <Login setLoginData={setLoginData}/> 
+            <Homepage/>
+            <Login setLoginData={setLoginData} getLogData={'gas'}/> 
         </div>
     )
 }

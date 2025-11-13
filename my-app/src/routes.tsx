@@ -6,15 +6,17 @@ import App from "./App";
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <App />
-    }, 
-    {
-        path: '/homepage',
-        element: <Homepage />
-    },
-    {
-        path: 'login',
-        element: <Login />
+        element: <App />,
+        children: [
+            {
+                path: '/homepage',
+                element: <Homepage />
+            },
+            {
+                path: 'login',
+                element: <Login />
+            }
+        ]
     }
 ]);
 
