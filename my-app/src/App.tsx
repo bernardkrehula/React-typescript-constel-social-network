@@ -1,6 +1,7 @@
 import Login from "./Pages/Login";
 import Homepage from "./Pages/Homepage";
 import { useState } from "react";
+import { Outlet } from "react-router";
 
 export type LoginDataType = {
     status: string;
@@ -15,12 +16,7 @@ const App = () => {
     const getLogData = (data) => {
         console.log('AppData:', data)
     }
-
-    return(
-        <div className="main">
-            <Homepage/>
-            <Login setLoginData={setLoginData} getLogData={'gas'}/> 
-        </div>
-    )
+    
+    return <Outlet />
 }
 export default App;
