@@ -12,10 +12,9 @@ const Homepage = ({loginData}: LoginDataType) => {
     const [ postData, setPostData] = useState(null);
 
     const displayProfleMenu = () => setProfileMenu(prev => !prev);
-    
 
     useEffect(() => {
-
+        
         const token = localStorage.getItem('token');
         if(!token) navigate('/login');
        /*  if(token && !user.isLoggedIn){

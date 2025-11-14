@@ -16,7 +16,8 @@ const App = () => {
     const getLogData = (data) => {
         console.log('AppData:', data)
     }
-    
-    return <Outlet />
+    return(
+        
+    )
 }
 export default App;
