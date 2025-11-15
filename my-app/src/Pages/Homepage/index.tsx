@@ -4,21 +4,17 @@ import { useEffect, useState } from 'react';
 import './index.css'
 import SinglePost from '#/Components/SinglePost';
 import Btn from '#/Components/Btn';
-import type { LoginDataType } from '#/ConnectionContext';
-import { useAppContext } from '#/ConnectionContext';
+import { getHomepageData } from '#/api/getHomepageDataApi';
 
 const Homepage = () => {
     const navigate = useNavigate();
     const [ showProfileMenu, setProfileMenu ] = useState<boolean>(false);
     const [ postData, setPostData] = useState(null);
-    const { loginData } = useAppContext();
     const displayProfleMenu = () => setProfileMenu(prev => !prev);
-
+    
     useEffect(() => {
-
         const token = localStorage.getItem('token');
         if(!token) navigate('/login');
-        console.log(loginData)
        /*  if(token && !user.isLoggedIn){
             //Dohvati usera uz pomoc tokena i spremi ga u state 
         } */

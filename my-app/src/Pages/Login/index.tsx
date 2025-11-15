@@ -2,13 +2,13 @@ import Btn from '#/Components/Btn';
 import SingleInput from '#/Components/SingleInput';
 import './index.css'
 import { requestLoginData } from '#/api/getLoginData';
-import { useNavigate } from 'react-router';
+import { useNavigate, useOutletContext } from 'react-router';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { getHomepageData } from '#/api/getHomepageDataApi';
 import type { LoginDataType } from '#/App';
-import { useAppContext } from '#/ConnectionContext';
+import { requestUserData } from '#/api/getUserData';
 
 //Pogledaj paket react hook forms i napravi login sa njim 
 //Kad se user uspjesno ulogira sacuvaj json web token u local storage 
@@ -34,8 +34,8 @@ type setLoginDataTypes = {
 
 const Login = () => {
     const { register, handleSubmit }= useForm<FormInputTypes>();
+    const { setLoginData } = useOutletContext();
     const navigate = useNavigate();
-    const { setLoginData } = useAppContext();
     useEffect(() => {
         const token = localStorage.getItem('token');
         if(token){
@@ -46,14 +46,15 @@ const Login = () => {
 
     const redirectToHomepage = (data: TokenType) => {
         if(data.token) navigate('/homepage');
-
+        console.log(data)
     }
         
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
         //Get login data
         const getLoginData = await requestLoginData(data);
+        const getUserData = await requestUserData(getLoginData.token);
+        setLoginData(getUserData)
         redirectToHomepage(getLoginData);
-        setLoginData(getLoginData);    
 /*         console.log('Loginpage:', getLoginData)
  */        //Prebaci homepageData na homepage
         //Kad je response uspjesan stavi neki state user popuni ga podacima name, last name... i stavi mu userLoggin true 
