@@ -2,6 +2,7 @@ import Login from "./Pages/Login";
 import Homepage from "./Pages/Homepage";
 import { useState } from "react";
 import { Outlet } from "react-router";
+import ConnectionContex from "./ConnectionContext";
 
 export type LoginDataType = {
     status: string;
@@ -17,7 +18,10 @@ const App = () => {
         console.log('AppData:', data)
     }
     return(
-        
+        <ConnectionContex>
+            <Login/>
+            <Homepage/>
+        </ConnectionContex>
     )
 }
 export default App;
