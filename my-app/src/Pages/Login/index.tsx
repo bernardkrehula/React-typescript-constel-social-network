@@ -34,7 +34,7 @@ type setLoginDataTypes = {
 
 const Login = () => {
     const { register, handleSubmit }= useForm<FormInputTypes>();
-    const { setLoginData } = useOutletContext();
+    const { setUserData } = useOutletContext();
     const navigate = useNavigate();
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -46,14 +46,13 @@ const Login = () => {
 
     const redirectToHomepage = (data: TokenType) => {
         if(data.token) navigate('/homepage');
-        console.log(data)
     }
         
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
         //Get login data
         const getLoginData = await requestLoginData(data);
         const getUserData = await requestUserData(getLoginData.token);
-        setLoginData(getUserData)
+        setUserData(getUserData)
         redirectToHomepage(getLoginData);
 /*         console.log('Loginpage:', getLoginData)
  */        //Prebaci homepageData na homepage

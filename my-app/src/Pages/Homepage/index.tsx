@@ -1,5 +1,5 @@
 import PostCreator from '#/Components/PostCreator';
-import { useNavigate } from 'react-router';
+import { useNavigate, useOutletContext } from 'react-router';
 import { useEffect, useState } from 'react';
 import './index.css'
 import SinglePost from '#/Components/SinglePost';
@@ -10,11 +10,13 @@ const Homepage = () => {
     const navigate = useNavigate();
     const [ showProfileMenu, setProfileMenu ] = useState<boolean>(false);
     const [ postData, setPostData] = useState(null);
+    const { userData } = useOutletContext();
     const displayProfleMenu = () => setProfileMenu(prev => !prev);
     
     useEffect(() => {
         const token = localStorage.getItem('token');
         if(!token) navigate('/login');
+        console.log(userData)
        /*  if(token && !user.isLoggedIn){
             //Dohvati usera uz pomoc tokena i spremi ga u state 
         } */
