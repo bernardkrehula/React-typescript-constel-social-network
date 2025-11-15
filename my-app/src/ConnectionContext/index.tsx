@@ -14,7 +14,7 @@ const ConnectionContex = ({children}) => {
     });
 
     return (
-        <AppContext.Provider value={{ isTrue }}>
+        <AppContext.Provider value={{ loginData, setLoginData }}>
             {children}
         </AppContext.Provider>
     );

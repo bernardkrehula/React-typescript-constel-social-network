@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ConnectionContex from "./ConnectionContext";
 import { Outlet, useNavigate } from "react-router";
 
@@ -11,7 +11,7 @@ const App = () => {
 
     return(
         <ConnectionContex>
-            <Outlet context={{loginData, setLoginData}}/>
+            <Outlet/>
         </ConnectionContex>
     )
 }

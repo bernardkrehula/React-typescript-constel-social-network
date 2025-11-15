@@ -32,10 +32,10 @@ type setLoginDataTypes = {
     setLoginData: React.Dispatch<React.SetStateAction<LoginDataType>>;
 }
 
-const Login = ({setLoginData}: setLoginDataTypes) => {
+const Login = () => {
     const { register, handleSubmit }= useForm<FormInputTypes>();
     const navigate = useNavigate();
-    const { loginData } = useAppContext();
+    const { setLoginData } = useAppContext();
     useEffect(() => {
         const token = localStorage.getItem('token');
         if(token){
@@ -46,15 +46,14 @@ const Login = ({setLoginData}: setLoginDataTypes) => {
 
     const redirectToHomepage = (data: TokenType) => {
         if(data.token) navigate('/homepage');
-        console.log(loginData)
+
     }
         
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
         //Get login data
         const getLoginData = await requestLoginData(data);
         redirectToHomepage(getLoginData);
-/*         setLoginData(getLoginData);
- */    
+        setLoginData(getLoginData);    
 /*         console.log('Loginpage:', getLoginData)
  */        //Prebaci homepageData na homepage
         //Kad je response uspjesan stavi neki state user popuni ga podacima name, last name... i stavi mu userLoggin true 
