@@ -37,13 +37,13 @@ const Login = ({setLoginData}: setLoginDataTypes) => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if(token){
-            navigate('/');
+            navigate('/homepage');
         }
         else navigate('/login');
     },[navigate])
 
     const redirectToHomepage = (data: TokenType) => {
-        if(data.token) navigate('/');
+        if(data.token) navigate('/homepage');
     }
         
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
@@ -51,7 +51,7 @@ const Login = ({setLoginData}: setLoginDataTypes) => {
         const getLoginData = await requestLoginData(data);
         redirectToHomepage(getLoginData);
 /*         setLoginData(getLoginData);
- */     setLoginData(data)
+ */    
 /*         console.log('Loginpage:', getLoginData)
  */        //Prebaci homepageData na homepage
         //Kad je response uspjesan stavi neki state user popuni ga podacima name, last name... i stavi mu userLoggin true 

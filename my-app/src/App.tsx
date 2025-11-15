@@ -1,8 +1,6 @@
-import Login from "./Pages/Login";
-import Homepage from "./Pages/Homepage";
-import { useState } from "react";
-import { Outlet } from "react-router";
+import { useEffect, useState } from "react";
 import ConnectionContex from "./ConnectionContext";
+import { Outlet, useNavigate } from "react-router";
 
 export type LoginDataType = {
     status: string;
@@ -14,13 +12,15 @@ const App = () => {
         status: '',
         token: ''
     });
-    const getLogData = (data) => {
-        console.log('AppData:', data)
-    }
+    const navigate = useNavigate();
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if(!token) navigate('/login')
+    },[])
+
     return(
         <ConnectionContex>
-            <Login/>
-            <Homepage/>
+            <Outlet/>
         </ConnectionContex>
     )
 }

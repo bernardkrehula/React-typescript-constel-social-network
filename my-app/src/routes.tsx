@@ -6,11 +6,11 @@ import App from "./App";
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Homepage />
-    },
-    {
-        path: 'login',
-        element: <Login />
+        element: <App />,
+        children: [
+            { index: true, path: 'homepage', element: <Homepage /> },
+            { path: 'login', element: <Login /> }
+        ]
     }
 ]);
 
