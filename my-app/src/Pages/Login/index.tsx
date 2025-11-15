@@ -8,6 +8,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import React, { useEffect } from 'react';
 import { getHomepageData } from '#/api/getHomepageDataApi';
 import type { LoginDataType } from '#/App';
+import { useAppContext } from '#/ConnectionContext';
 
 //Pogledaj paket react hook forms i napravi login sa njim 
 //Kad se user uspjesno ulogira sacuvaj json web token u local storage 
@@ -34,6 +35,7 @@ type setLoginDataTypes = {
 const Login = ({setLoginData}: setLoginDataTypes) => {
     const { register, handleSubmit }= useForm<FormInputTypes>();
     const navigate = useNavigate();
+    const { loginData } = useAppContext();
     useEffect(() => {
         const token = localStorage.getItem('token');
         if(token){
@@ -44,6 +46,7 @@ const Login = ({setLoginData}: setLoginDataTypes) => {
 
     const redirectToHomepage = (data: TokenType) => {
         if(data.token) navigate('/homepage');
+        console.log(loginData)
     }
         
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {

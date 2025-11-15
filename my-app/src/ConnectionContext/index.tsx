@@ -1,9 +1,17 @@
 import { useContext, createContext, useState } from "react";
 
-const AppContext = createContext();
+export type LoginDataType = {
+    status: string;
+    token: string;
+}
+
+const AppContext = createContext<LoginDataType | undefined>(undefined);
 
 const ConnectionContex = ({children}) => {
-    const [isTrue, setIsTrue] = useState(true);
+    const [loginData, setLoginData] = useState<LoginDataType>({
+        status: '',
+        token: ''
+    });
 
     return (
         <AppContext.Provider value={{ isTrue }}>
