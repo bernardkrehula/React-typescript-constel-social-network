@@ -9,6 +9,7 @@ export type LoginDataType = {
         username: string;
     },
     status: string;
+    userLogin: boolean;
 }
 
 const App = () => {
@@ -19,7 +20,8 @@ const App = () => {
             picture: '',
             username: ''
         },
-        status: ''
+        status: '',
+        userLogin: false
     });
     const navigate = useNavigate();
     useEffect(() => {

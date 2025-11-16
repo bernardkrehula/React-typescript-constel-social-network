@@ -28,9 +28,6 @@ type TokenType = {
     status: string;
     token: string;
 }
-type setLoginDataTypes = {
-    setLoginData: React.Dispatch<React.SetStateAction<LoginDataType>>;
-}
 
 const Login = () => {
     const { register, handleSubmit }= useForm<FormInputTypes>();
@@ -58,7 +55,6 @@ const Login = () => {
  */        //Prebaci homepageData na homepage
         //Kad je response uspjesan stavi neki state user popuni ga podacima name, last name... i stavi mu userLoggin true 
         //User state staviti u context vratiti app 
-        //Temporary hompageData set to local storage
     }
 
     return(
