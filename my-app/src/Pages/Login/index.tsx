@@ -9,6 +9,17 @@ import React, { useContext, useEffect } from 'react';
 import { getHomepageData } from '#/api/getHomepageDataApi';
 import type { LoginDataType } from '#/App';
 import { requestUserData } from '#/api/getUserData';
+import type { UserDataType } from '#/App';
+
+type FetchUserDataType = {
+    account: {
+        email: string;
+        full_name: string;
+        picture: string;
+        username: string;
+    },
+    status: string;
+}
 
 //Pogledaj paket react hook forms i napravi login sa njim 
 //Kad se user uspjesno ulogira sacuvaj json web token u local storage 
@@ -44,12 +55,18 @@ const Login = () => {
     const redirectToHomepage = (data: TokenType) => {
         if(data.token) navigate('/homepage');
     }
+    const setupUserData = (getUserData: FetchUserDataType) => {
+        if(getUserData.status === 'ok') setUserData((prev: UserDataType)  => ({...prev,
+            account: getUserData.account,
+            status: getUserData.status,
+            userLogin: true}))
+    }
         
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
         //Get login data
         const getLoginData = await requestLoginData(data);
         const getUserData = await requestUserData(getLoginData.token);
-        setUserData(getUserData)
+        setupUserData(getUserData);
         redirectToHomepage(getLoginData);
 /*         console.log('Loginpage:', getLoginData)
  */        //Prebaci homepageData na homepage

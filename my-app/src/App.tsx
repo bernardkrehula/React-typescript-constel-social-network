@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router";
 
-export type LoginDataType = {
+export type UserDataType = {
     account: {
         email: string;
         full_name: string;
@@ -13,7 +13,7 @@ export type LoginDataType = {
 }
 
 const App = () => {
-    const [userData, setUserData] = useState<LoginDataType>({
+    const [userData, setUserData] = useState<UserDataType>({
         account: {
             email: '',
             full_name: '',
@@ -28,6 +28,10 @@ const App = () => {
         const token = localStorage.getItem('token');
         if(!token) navigate('/login')
     },[])
+    //Temporary for console log
+    useEffect(() => {
+        console.log(userData)
+    },[userData])
 
     return <Outlet context={{userData, setUserData}}/>
 }
