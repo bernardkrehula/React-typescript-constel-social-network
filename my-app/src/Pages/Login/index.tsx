@@ -21,16 +21,6 @@ type FetchUserDataType = {
     status: string;
 }
 
-//Pogledaj paket react hook forms i napravi login sa njim 
-//Kad se user uspjesno ulogira sacuvaj json web token u local storage 
-//Na homepage provjeravas postoji li  json web token ako postoji user je ulogiran i dozvoli mu pristup
-//Dozvoli mu pristup: ako imas usera u stateu nastavi dalje ako nemas dohvati usera na osnovu json web tokena i spremi ga u state
-//Ako ne postoji redirektaj ga na login na login provjeris obratno
-//Dohvatiti postove
-//Odraditi css
-//Dodati logout
-//Staviti animaciju na logout 
-
 type FormInputTypes = {
     email: string;
     password: string;
@@ -44,34 +34,17 @@ const Login = () => {
     const { register, handleSubmit }= useForm<FormInputTypes>();
     const { setUserData } = useOutletContext();
     const navigate = useNavigate();
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if(token){
-            navigate('/homepage');
-        }
-        else navigate('/login');
-    },[navigate])
-
-    const redirectToHomepage = (data: TokenType) => {
-        if(data.token) navigate('/homepage');
-    }
-    const setupUserData = (getUserData: FetchUserDataType) => {
-        if(getUserData.status === 'ok') setUserData((prev: UserDataType)  => ({...prev,
-            account: getUserData.account,
-            status: getUserData.status,
-            userLogin: true}))
-    }
-        
+    //Dodati error handling iz response kad se posalju krivi podaci 
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
         //Get login data
-        const getLoginData = await requestLoginData(data);
-        const getUserData = await requestUserData(getLoginData.token);
-        setupUserData(getUserData);
-        redirectToHomepage(getLoginData);
-/*         console.log('Loginpage:', getLoginData)
- */        //Prebaci homepageData na homepage
-        //Kad je response uspjesan stavi neki state user popuni ga podacima name, last name... i stavi mu userLoggin true 
-        //User state staviti u context vratiti app 
+        const loginData = await requestLoginData(data);
+        const userData = await requestUserData(loginData.token);
+        if(userData.status === 'ok') setUserData((prev: UserDataType)  => ({...prev,
+            account: userData.account,
+            status: userData.status,
+            userLogin: true}))
+        localStorage.setItem('token', loginData.token);
+        navigate('/homepage');
     }
 
     return(

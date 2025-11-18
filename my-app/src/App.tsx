@@ -13,6 +13,7 @@ export type UserDataType = {
 }
 
 const App = () => {
+    //Maknuti status i dati drugacija imena varijablama
     const [userData, setUserData] = useState<UserDataType>({
         account: {
             email: '',
@@ -27,12 +28,9 @@ const App = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if(!token) navigate('/login')
+        else navigate('/homepage');
     },[])
-    //Temporary for console log
-    useEffect(() => {
-        console.log(userData)
-    },[userData])
-
+    
     return <Outlet context={{userData, setUserData}}/>
 }
 export default App;

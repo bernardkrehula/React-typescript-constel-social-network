@@ -5,26 +5,41 @@ import './index.css'
 import SinglePost from '#/Components/SinglePost';
 import Btn from '#/Components/Btn';
 import { getHomepageData } from '#/api/getHomepageDataApi';
+import { requestUserData } from '#/api/getUserData';
+import type { UserDataType } from '#/App';
 
 const Homepage = () => {
     const navigate = useNavigate();
     const [ showProfileMenu, setProfileMenu ] = useState<boolean>(false);
     const [ postData, setPostData] = useState(null);
-    const { userData } = useOutletContext();
+    const { userData, setUserData } = useOutletContext();
     const displayProfleMenu = () => setProfileMenu(prev => !prev);
     
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        /* const token = localStorage.getItem('token');
+        //If you change url without token reddirect user back to login
         if(!token) navigate('/login');
-        console.log(userData)
-       /*  if(token && !user.isLoggedIn){
+        if(token && !userData.userLogin){
+            setupUserData(token);
+            console.log('get homepage data')
             //Dohvati usera uz pomoc tokena i spremi ga u state 
         } */
-    },[navigate])
+       //Pogledati u gotovu app errore
+        getUserData()
+    },[])
 
     const logoutUser = () => {
         localStorage.removeItem('token');
         navigate('/login');
+    }
+    const getUserData = async(token: string) => {
+        const userData = await requestUserData(token);
+        setUserData((prev: UserDataType)  => ({
+            ...prev,
+            account: userData.account,
+            status: userData.status,
+            userLogin: true
+        }))
     }
     //Dodati if userLoggedIn provjeru
     return(
