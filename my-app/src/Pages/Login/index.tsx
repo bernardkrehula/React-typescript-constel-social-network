@@ -34,20 +34,18 @@ const Login = () => {
     const { register, handleSubmit } = useForm<FormInputTypes>();
     const { setUserData } = useOutletContext();
     const [ isDataFalse, setIsDataFalse ] = useState(false);
-    const userLoginInfo = {
-        email: 'malesija.nemanja@gmail.com',
-        passowrd: ''
-    }
+    const [ errorMessage, setErrorMessage ] = useState('';)
     const navigate = useNavigate();
     //Dodati error handling iz response kad se posalju krivi podaci 
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
         //Get login data
         const loginData = await requestLoginData(data);
         //Check if request is valid // If email or password are valid
-        if(!loginData){
+        if(loginData.response.data.status === 'error'){
             setIsDataFalse(true);
-/*             setTimeout(() => { setIsDataFalse(false) },4000);
- */        }
+            setTimeout(() => { setIsDataFalse(false) },4000);
+            console.log(loginData, 'radi')
+        }
         const userData = await requestUserData(loginData.token);
         if(userData.status === 'ok') setUserData((prev: UserDataType)  => ({...prev,
             account: userData.account,
@@ -63,8 +61,8 @@ const Login = () => {
             <h2>Email</h2>
             <SingleInput variation='login-input' type='text' name='email' placeholder='Enter your email here...' register={register}/>
             <h2>Password</h2>
-            <SingleInput variation='login-input' type='password' name='password' placeholder='Enter your password here...' register={register}/>
-            {isDataFalse && <h2 className='error-message'>Incorrect password or email adress</h2>}
+            <SingleInput variation='login-input' type='text' name='password' placeholder='Enter your password here...' register={register}/>
+            {isDataFalse && <h2 className='error-message'></h2>}
             <Btn type='submit' variation='login-btn'>Confirm</Btn>
         </form>
     )
