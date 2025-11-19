@@ -41,11 +41,10 @@ const Login = () => {
         //Get login data
         const loginData = await requestLoginData(data);
         //Check if request is valid // If email or password are valid
-        if(loginData.response.data.status === 'error'){
+        if(loginData.status === 'number'){
             setErrorMessage(loginData.response.data.error.message)
             setIsDataFalse(true);
             setTimeout(() => { setIsDataFalse(false) },4000);
-            console.log(loginData.response.data.error.message, 'radi')
         }
         const userData = await requestUserData(loginData.token);
         if(userData.status === 'ok') setUserData((prev: UserDataType)  => ({...prev,
