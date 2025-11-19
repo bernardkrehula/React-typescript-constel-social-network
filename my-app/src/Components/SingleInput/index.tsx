@@ -14,14 +14,13 @@ export type FormInputTypes = {
 }
 //How to include prop conditionaly in react 
 const SingleInput = ({variation, placeholder, name, type, register}: SingleInputType) => {
-    /*  
-    const extraconfig = { 
+    const extraconfig = {
+        name: name,
+        type: type,
         placeholder: placeholder, 
-        ...{ register? ...register(name): {} }
+        ...( register? register(name) : {} )
     }
-    */
-    if(register) return <input className={`single-input ${variation}`} type={type} placeholder={placeholder} {...register(name)}/>
-    else return <input className={`single-input ${variation}`} type={type} placeholder={placeholder}/>
+    return <input className={`single-input ${variation}`} {...extraconfig}/>
 }
 
 export default SingleInput;
