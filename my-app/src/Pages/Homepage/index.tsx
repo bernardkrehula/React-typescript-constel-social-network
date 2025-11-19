@@ -16,16 +16,9 @@ const Homepage = () => {
     const displayProfleMenu = () => setProfileMenu(prev => !prev);
     
     useEffect(() => {
-        /* const token = localStorage.getItem('token');
-        //If you change url without token reddirect user back to login
-        if(!token) navigate('/login');
-        if(token && !userData.userLogin){
-            setupUserData(token);
-            console.log('get homepage data')
-            //Dohvati usera uz pomoc tokena i spremi ga u state 
-        } */
        //Pogledati u gotovu app errore
-        getUserData()
+        const token = localStorage.getItem('token');
+        getUserData(token);
     },[])
 
     const logoutUser = () => {
