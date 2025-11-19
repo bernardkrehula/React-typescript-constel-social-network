@@ -8,11 +8,15 @@ import { getHomepageData } from '#/api/getHomepageDataApi';
 import { requestUserData } from '#/api/getUserData';
 import type { UserDataType } from '#/App';
 
+type OutletContextType = {
+    setUserData: (value: any) => void;
+}
+
 const Homepage = () => {
     const navigate = useNavigate();
     const [ showProfileMenu, setProfileMenu ] = useState<boolean>(false);
     const [ postData, setPostData] = useState(null);
-    const { userData, setUserData } = useOutletContext();
+    const { setUserData } = useOutletContext<OutletContextType>();
     const displayProfleMenu = () => setProfileMenu(prev => !prev);
     
     useEffect(() => {
@@ -25,7 +29,7 @@ const Homepage = () => {
         localStorage.removeItem('token');
         navigate('/login');
     }
-    const getUserData = async(token: string) => {
+    const getUserData = async(token: string | null) => {
         const userData = await requestUserData(token);
         setUserData((prev: UserDataType)  => ({
             ...prev,
@@ -34,7 +38,6 @@ const Homepage = () => {
             userLogin: true
         }))
     }
-    //Dodati if userLoggedIn provjeru
     return(
         <div className='homepage'>
             <div className='menu'>
