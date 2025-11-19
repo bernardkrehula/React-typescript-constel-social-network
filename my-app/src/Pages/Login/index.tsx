@@ -5,7 +5,7 @@ import { requestLoginData } from '#/api/getLoginData';
 import { useNavigate, useOutletContext } from 'react-router';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { getHomepageData } from '#/api/getHomepageDataApi';
 import type { LoginDataType } from '#/App';
 import { requestUserData } from '#/api/getUserData';
@@ -31,13 +31,18 @@ type TokenType = {
 }
 
 const Login = () => {
-    const { register, handleSubmit }= useForm<FormInputTypes>();
+    const { register, handleSubmit } = useForm<FormInputTypes>();
     const { setUserData } = useOutletContext();
+    const [ isDataFalse, setIsDataFalse ] = useState(false);
     const navigate = useNavigate();
     //Dodati error handling iz response kad se posalju krivi podaci 
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
         //Get login data
         const loginData = await requestLoginData(data);
+        if(!loginData){
+            setIsDataFalse(true);
+/*             setTimeout(() => { setIsDataFalse(false) },4000);
+ */        }
         const userData = await requestUserData(loginData.token);
         if(userData.status === 'ok') setUserData((prev: UserDataType)  => ({...prev,
             account: userData.account,
@@ -54,6 +59,7 @@ const Login = () => {
             <SingleInput variation='login-input' name='email' placeholder='Enter your email here...' register={register}/>
             <h2>Password</h2>
             <SingleInput variation='login-input' name='password' placeholder='Enter your password here...' register={register}/>
+            {isDataFalse && <h2 className='error-message'>Incorrect password or email adress</h2>}
             <Btn type='submit' variation='login-btn'>Confirm</Btn>
         </form>
     )
