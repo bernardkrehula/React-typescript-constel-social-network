@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const requestHomepageData = async(token: string) => {
+export const requestHomepageData = async(token: string | null) => {
 
     try{
         const { data } = await axios.get('https://api.hr.constel.co/api/v1/posts', {

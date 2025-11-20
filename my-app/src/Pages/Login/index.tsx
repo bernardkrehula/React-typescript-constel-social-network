@@ -5,9 +5,7 @@ import { requestLoginData } from '#/api/getLoginData';
 import { useNavigate, useOutletContext } from 'react-router';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
-import React, { useContext, useEffect, useState } from 'react';
-import { getHomepageData } from '#/api/getHomepageDataApi';
-import type { LoginDataType } from '#/App';
+import { useState } from 'react';
 import { requestUserData } from '#/api/getUserData';
 import type { UserDataType } from '#/App';
 

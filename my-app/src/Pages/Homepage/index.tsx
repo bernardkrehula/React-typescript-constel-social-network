@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import './index.css'
 import SinglePost from '#/Components/SinglePost';
 import Btn from '#/Components/Btn';
-import { getHomepageData, requestHomepageData } from '#/api/getHomepageDataApi';
+import { requestHomepageData } from '#/api/getHomepageDataApi';
 import { requestUserData } from '#/api/getUserData';
 import type { UserDataType } from '#/App';
 
@@ -15,7 +15,20 @@ type OutletContextType = {
 const Homepage = () => {
     const navigate = useNavigate();
     const [ showProfileMenu, setProfileMenu ] = useState<boolean>(false);
-    const [ userHomepageData, setUserHomepageData] = useState(null);
+    const [ userHomepageData, setUserHomepageData] = useState([
+        {
+            created_at: '',
+            image: '',
+            liked: false,
+            likes: '',
+            text: '',
+            user: {
+                full_name: '',
+                picture: '',
+                username: ''
+            }
+        }
+    ]);
     const { userProfileData, setUserProfileData } = useOutletContext<OutletContextType>();
     const displayProfleMenu = () => setProfileMenu(prev => !prev);
     
@@ -23,7 +36,8 @@ const Homepage = () => {
        //Pogledati u gotovu app errore
         const token = localStorage.getItem('token');
         getUserProfileData(token);
-        getUserHomepageData(token)
+        getUserHomepageData(token);
+        /* console.log('homepage data: ', userHomepageData); */
     },[])
 
     const logoutUser = () => {
@@ -39,9 +53,10 @@ const Homepage = () => {
             userLogin: true
         }))
     }
-    const getUserHomepageData = () => {
+    const getUserHomepageData = async(token: string | null) => {
         const homepageData = await requestHomepageData(token);
-
+        console.log(homepageData)
+        setUserHomepageData(homepageData);
     }
     return(
         <div className='homepage'>
@@ -54,9 +69,9 @@ const Homepage = () => {
             </div>
             <div className='feed'>
                 <PostCreator />
-                {postData && postData.posts.map((post, key) => {
+                {/* {postData && postData.posts.map((post, key) => {
                     return  <SinglePost key={key} data={post}/>
-                })}
+                })} */}
             </div>
             <div className='profile-container'>
                 <img src="/user-logo.jpg" onClick={displayProfleMenu}/>
