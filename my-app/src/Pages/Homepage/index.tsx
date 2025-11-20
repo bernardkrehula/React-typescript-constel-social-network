@@ -15,20 +15,25 @@ type OutletContextType = {
 const Homepage = () => {
     const navigate = useNavigate();
     const [ showProfileMenu, setProfileMenu ] = useState<boolean>(false);
-    const [ userHomepageData, setUserHomepageData] = useState([
-        {
-            created_at: '',
-            image: '',
-            liked: false,
-            likes: '',
-            text: '',
-            user: {
-                full_name: '',
-                picture: '',
-                username: ''
-            }
-        }
-    ]);
+    const [ userHomepageData, setUserHomepageData] = useState(
+        {posts: [{
+                audio: null,
+                comments: 0,
+                created_at: '',
+                image: '',
+                liked: false,
+                likes: '',
+                post_id: '',
+                text: '',
+                user: {
+                    full_name: '',
+                    picture: '',
+                    username: ''
+                },
+                user_id: ''
+            }],
+            status: ''
+        });
     const { userProfileData, setUserProfileData } = useOutletContext<OutletContextType>();
     const displayProfleMenu = () => setProfileMenu(prev => !prev);
     
@@ -55,7 +60,6 @@ const Homepage = () => {
     }
     const getUserHomepageData = async(token: string | null) => {
         const homepageData = await requestHomepageData(token);
-        console.log(homepageData)
         setUserHomepageData(homepageData);
     }
     return(
@@ -69,9 +73,9 @@ const Homepage = () => {
             </div>
             <div className='feed'>
                 <PostCreator />
-                {/* {postData && postData.posts.map((post, key) => {
+                {userHomepageData.posts.map((post, key) => {
                     return  <SinglePost key={key} data={post}/>
-                })} */}
+                })}
             </div>
             <div className='profile-container'>
                 <img src="/user-logo.jpg" onClick={displayProfleMenu}/>
