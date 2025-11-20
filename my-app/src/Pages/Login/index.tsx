@@ -32,7 +32,7 @@ type TokenType = {
 
 const Login = () => {
     const { register, handleSubmit } = useForm<FormInputTypes>();
-    const { setUserData } = useOutletContext();
+    const { setUserProfileData } = useOutletContext();
     const [ isDataFalse, setIsDataFalse ] = useState(false);
     const [ errorMessage, setErrorMessage ] = useState('');
     const navigate = useNavigate();
@@ -47,7 +47,7 @@ const Login = () => {
             setTimeout(() => { setIsDataFalse(false) },4000);
         }
         const userData = await requestUserData(loginData.token);
-        if(userData.status === 'ok') setUserData((prev: UserDataType)  => ({...prev,
+        if(userData.status === 'ok') setUserProfileData((prev: UserDataType)  => ({...prev,
             account: userData.account,
             status: userData.status,
             userLogin: true}))

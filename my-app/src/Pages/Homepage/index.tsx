@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import './index.css'
 import SinglePost from '#/Components/SinglePost';
 import Btn from '#/Components/Btn';
-import { getHomepageData } from '#/api/getHomepageDataApi';
+import { getHomepageData, requestHomepageData } from '#/api/getHomepageDataApi';
 import { requestUserData } from '#/api/getUserData';
 import type { UserDataType } from '#/App';
 
@@ -15,28 +15,33 @@ type OutletContextType = {
 const Homepage = () => {
     const navigate = useNavigate();
     const [ showProfileMenu, setProfileMenu ] = useState<boolean>(false);
-    const [ postData, setPostData] = useState(null);
-    const { setUserData } = useOutletContext<OutletContextType>();
+    const [ userHomepageData, setUserHomepageData] = useState(null);
+    const { userProfileData, setUserProfileData } = useOutletContext<OutletContextType>();
     const displayProfleMenu = () => setProfileMenu(prev => !prev);
     
     useEffect(() => {
        //Pogledati u gotovu app errore
         const token = localStorage.getItem('token');
-        getUserData(token);
+        getUserProfileData(token);
+        getUserHomepageData(token)
     },[])
 
     const logoutUser = () => {
         localStorage.removeItem('token');
         navigate('/login');
     }
-    const getUserData = async(token: string | null) => {
+    const getUserProfileData = async(token: string | null) => {
         const userData = await requestUserData(token);
-        setUserData((prev: UserDataType)  => ({
+        setUserProfileData((prev: UserDataType)  => ({
             ...prev,
             account: userData.account,
             status: userData.status,
             userLogin: true
         }))
+    }
+    const getUserHomepageData = () => {
+        const homepageData = await requestHomepageData(token);
+
     }
     return(
         <div className='homepage'>

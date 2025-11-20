@@ -8,20 +8,18 @@ export type UserDataType = {
         picture: string;
         username: string;
     },
-    status: string;
     userLogin: boolean;
 }
 
 const App = () => {
     //Maknuti status i dati drugacija imena varijablama
-    const [userData, setUserData] = useState<UserDataType>({
+    const [userProfileData, setUserProfileData] = useState<UserDataType>({
         account: {
             email: '',
             full_name: '',
             picture: '',
             username: ''
         },
-        status: '',
         userLogin: false
     });
     const navigate = useNavigate();
@@ -31,6 +29,6 @@ const App = () => {
         else navigate('/homepage');
     },[])
     
-    return <Outlet context={{userData, setUserData}}/>
+    return <Outlet context={{userProfileData, setUserProfileData}}/>
 }
 export default App;
