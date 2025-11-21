@@ -47,7 +47,9 @@ const SinglePost = ({data}: SinglePostDataType) => {
                    <h2>{date}</h2>
                 </div>
             </div>
-            {image && <img className='post-img' src={image} />}
+            {image && <div className='post-image-containter'>
+                    <img className='post-img' src={image} />
+                </div>}
             <p className='post-content'>{text}</p>
             <div className='post-btns'>
                 <Btn variation='post-btn' onClick={likePost}>

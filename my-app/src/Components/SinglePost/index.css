@@ -38,6 +38,10 @@
     margin-bottom: 4px;
     color: rgb(151, 151, 151);
 }
+.post-image-containter{
+    height: 400px;
+    
+}
 .post-img{
     width: 100%;
     border-radius: 10px;

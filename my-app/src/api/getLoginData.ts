@@ -21,7 +21,7 @@ export const requestLoginData = async(values: ValueTypes) => {
         return data;
     }
     catch(error){
-        console.error(error); 
+        console.error(error);
         return error;
     }
 }
