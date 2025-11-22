@@ -23,9 +23,8 @@ type FormInputTypes = {
     email: string;
     password: string;
 }
-type TokenType = {
-    status: string;
-    token: string;
+type LoginDataType = {
+
 }
 
 const Login = () => {
@@ -34,14 +33,18 @@ const Login = () => {
     const [ isDataFalse, setIsDataFalse ] = useState(false);
     const [ errorMessage, setErrorMessage ] = useState('');
     const navigate = useNavigate();
+
     //Dodati error handling iz response kad se posalju krivi podaci 
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
         //Get login data
         const loginData = await requestLoginData(data);
         //Check if request is valid // If email or password are valid
+        //Promijeniti provjeru na response
         if(typeof loginData.status === 'number') return throwErrors(loginData);
         const userData = await requestUserData(loginData.token);
-        
+        //Napraviti try catch blok 
+        //Komponenta mora primiti ciste podatke destrukturirane lijepo pripremljene u filovima za fetch
+        //Error provjera mora otici u catch blok 
         if(userData.status === 'ok') setUserProfileData((prev: UserDataType)  => ({...prev,
             account: userData.account,
             status: userData.status,
@@ -51,6 +54,11 @@ const Login = () => {
     }
 
     const throwErrors = (loginData) => {
+        //Provjera kada je error sa responsa a kad nije 
+        //Napravi typescript klasu koje ce se da zove custom error 
+        //Procesuiraj response i ako si nasao message i sto treba nasao baci taj error
+        //U throw errors je error ili instanceof custom error
+        const error = new Error();
         setErrorMessage(loginData.response.data.error.message)
         setIsDataFalse(true);
         setTimeout(() => { setIsDataFalse(false) },4000);
@@ -64,6 +72,7 @@ const Login = () => {
             <h2>Password</h2>
             <SingleInput variation='login-input' type='text' name='password' placeholder='Enter your password here...' register={register}/>
             {isDataFalse && <h2 className='error-message'>{errorMessage}</h2>}
+            {/* Dodati vise genericka imena na btn primary, red... */}
             <Btn type='submit' variation='login-btn'>Confirm</Btn>
         </form>
     )

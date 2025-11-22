@@ -18,10 +18,13 @@ export const requestLoginData = async(values: ValueTypes) => {
         })
         
         localStorage.setItem('token', data.token)
+        console.log('data: ', data)
         return data;
     }
     catch(error){
         console.error(error);
+        //Destrukturirati data na error
+        console.log('error: ', error)
         return error;
     }
 }
