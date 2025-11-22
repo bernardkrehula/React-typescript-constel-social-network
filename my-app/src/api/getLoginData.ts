@@ -1,3 +1,4 @@
+import { CustomError } from '#/Classes/CustomError';
 import axios from 'axios';
 
 type ValueTypes = {
@@ -18,13 +19,17 @@ export const requestLoginData = async(values: ValueTypes) => {
         })
         
         localStorage.setItem('token', data.token)
-        console.log('data: ', data)
         return data;
     }
-    catch(error){
+    catch(error: unknown){
         console.error(error);
+        const errorStatus = error.status;
+        console.log(errorStatus)
+        const errorMessage = error.response.data.error.message
+        if(error instanceof CustomError){
+            console.log('default error je: ', error)
+        }
         //Destrukturirati data na error
-        console.log('error: ', error)
-        return error;
+        return errorMessage;
     }
 }

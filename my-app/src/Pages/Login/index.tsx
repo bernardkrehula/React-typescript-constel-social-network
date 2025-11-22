@@ -8,6 +8,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
 import { requestUserData } from '#/api/getUserData';
 import type { UserDataType } from '#/App';
+import { CustomError } from '#/Classes/CustomError';
 
 type FetchUserDataType = {
     account: {
@@ -40,6 +41,8 @@ const Login = () => {
         const loginData = await requestLoginData(data);
         //Check if request is valid // If email or password are valid
         //Promijeniti provjeru na response
+        const myError = new CustomError();
+       
         if(typeof loginData.status === 'number') return throwErrors(loginData);
         const userData = await requestUserData(loginData.token);
         //Napraviti try catch blok 
@@ -59,7 +62,7 @@ const Login = () => {
         //Procesuiraj response i ako si nasao message i sto treba nasao baci taj error
         //U throw errors je error ili instanceof custom error
         const error = new Error();
-        setErrorMessage(loginData.response.data.error.message)
+        setErrorMessage('')
         setIsDataFalse(true);
         setTimeout(() => { setIsDataFalse(false) },4000);
     }
