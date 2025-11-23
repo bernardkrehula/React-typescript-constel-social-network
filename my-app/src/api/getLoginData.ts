@@ -21,11 +21,11 @@ export const requestLoginData = async(values: ValueTypes) => {
         localStorage.setItem('token', data.token)
         return data;
     }
+    
     catch(error: unknown){
-        console.error(error);
         const errorStatus = error.status;
-        console.log(errorStatus)
         const errorMessage = error.response.data.error.message
+
         if(error instanceof CustomError){
             console.log('default error je: ', error)
         }

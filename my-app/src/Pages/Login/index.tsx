@@ -48,12 +48,14 @@ const Login = () => {
         //Napraviti try catch blok 
         //Komponenta mora primiti ciste podatke destrukturirane lijepo pripremljene u filovima za fetch
         //Error provjera mora otici u catch blok 
-        if(userData.status === 'ok') setUserProfileData((prev: UserDataType)  => ({...prev,
+
+        
+        /* if(userData.status === 'ok') setUserProfileData((prev: UserDataType)  => ({...prev,
             account: userData.account,
             status: userData.status,
             userLogin: true}))
         localStorage.setItem('token', loginData.token);
-        navigate('/homepage');
+        navigate('/homepage'); */
     }
 
     const throwErrors = (loginData) => {
