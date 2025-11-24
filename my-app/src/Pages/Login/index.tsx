@@ -10,34 +10,18 @@ import { requestUserData } from '#/api/getUserData';
 import type { UserDataType } from '#/App';
 import { CustomError } from '#/Classes/CustomError';
 
-type FetchUserDataType = {
-    account: {
-        email: string;
-        full_name: string;
-        picture: string;
-        username: string;
-    },
-    status: string;
-}
-
 type FormInputTypes = {
     email: string;
     password: string;
 }
-type LoginDataType = {
-
-}
 
 const Login = () => {
     const { register, handleSubmit } = useForm<FormInputTypes>();
-    const { setUserProfileData } = useOutletContext();
     const [ isDataFalse, setIsDataFalse ] = useState(false);
     const [ errorMessage, setErrorMessage ] = useState('');
-    const navigate = useNavigate();
 
     //Dodati error handling iz response kad se posalju krivi podaci 
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
-        //Get login data
         const loginData = await requestLoginData(data);
         //Check if request is valid // If email or password are valid
         //Promijeniti provjeru na response
@@ -48,14 +32,12 @@ const Login = () => {
         //Napraviti try catch blok 
         //Komponenta mora primiti ciste podatke destrukturirane lijepo pripremljene u filovima za fetch
         //Error provjera mora otici u catch blok 
+        try{
 
-        
-        /* if(userData.status === 'ok') setUserProfileData((prev: UserDataType)  => ({...prev,
-            account: userData.account,
-            status: userData.status,
-            userLogin: true}))
-        localStorage.setItem('token', loginData.token);
-        navigate('/homepage'); */
+        }
+        catch(error){
+            
+        }
     }
 
     const throwErrors = (loginData) => {
