@@ -2,12 +2,10 @@ import Btn from '#/Components/Btn';
 import SingleInput from '#/Components/SingleInput';
 import './index.css'
 import { requestLoginData } from '#/api/getLoginData';
-import { useNavigate, useOutletContext } from 'react-router';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
 import { requestUserData } from '#/api/getUserData';
-import type { UserDataType } from '#/App';
 import { CustomError } from '#/Classes/CustomError';
 
 type FormInputTypes = {
@@ -22,18 +20,19 @@ const Login = () => {
 
     //Dodati error handling iz response kad se posalju krivi podaci 
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
-        const loginData = await requestLoginData(data);
+        const { email, password } = data;
+
+        if(password.length < 8) throw new CustomError('Password must have 8 or more characters');
         //Check if request is valid // If email or password are valid
         //Promijeniti provjeru na response
-        const myError = new CustomError();
-       
+        
         if(typeof loginData.status === 'number') return throwErrors(loginData);
         const userData = await requestUserData(loginData.token);
         //Napraviti try catch blok 
         //Komponenta mora primiti ciste podatke destrukturirane lijepo pripremljene u filovima za fetch
         //Error provjera mora otici u catch blok 
         try{
-
+            const loginData = await requestLoginData(data);
         }
         catch(error){
             
