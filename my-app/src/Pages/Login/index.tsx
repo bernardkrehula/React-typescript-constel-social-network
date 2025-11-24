@@ -23,8 +23,8 @@ const Login = () => {
         const { email, password } = data;
 
         if(password.length < 8) throw new CustomError('Password must have 8 or more characters');
-/*         if(!emailValidator(email)) throw new CustomError
- */        //Check if request is valid // If email or password are valid
+        if(!emailValidator(email)) throw new CustomError('Email has wrong format');
+        //Check if request is valid // If email or password are valid
         //Promijeniti provjeru na response
         
         if(typeof loginData.status === 'number') return throwErrors(loginData);
