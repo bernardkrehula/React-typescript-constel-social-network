@@ -7,6 +7,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
 import { requestUserData } from '#/api/getUserData';
 import { CustomError } from '#/Classes/CustomError';
+import { data, useNavigate } from 'react-router';
 
 type FormInputTypes = {
     email: string;
@@ -17,37 +18,42 @@ const Login = () => {
     const { register, handleSubmit } = useForm<FormInputTypes>();
     const [ isDataFalse, setIsDataFalse ] = useState(false);
     const [ errorMessage, setErrorMessage ] = useState('');
+    const navigate = useNavigate();
 
     //Dodati error handling iz response kad se posalju krivi podaci 
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
-        const { email, password } = data;
-
-        if(password.length < 8) throw new CustomError('Password must have 8 or more characters');
-        if(!emailValidator(email)) throw new CustomError('Email has wrong format');
-        //Check if request is valid // If email or password are valid
-        //Promijeniti provjeru na response
-        
-        if(typeof loginData.status === 'number') return throwErrors(loginData);
-        const userData = await requestUserData(loginData.token);
-        //Napraviti try catch blok 
-        //Komponenta mora primiti ciste podatke destrukturirane lijepo pripremljene u filovima za fetch
-        //Error provjera mora otici u catch blok 
         try{
+            ErrorValidator(data);
+            //Check if request is valid // If email or password are valid
             const loginData = await requestLoginData(data);
+            //Promijeniti provjeru na response
+            navigate('Homepage')
+            console.log(localStorage.getItem('token'))
+            if(typeof loginData.status === 'number') return throwErrors(loginData);
+            const userData = await requestUserData(loginData.token);
+            //Napraviti try catch blok 
+            //Komponenta mora primiti ciste podatke destrukturirane lijepo pripremljene u filovima za fetch
+            //Error provjera mora otici u catch blok  
         }
         catch(error){
-            
+            console.log(error, 'radi')
         }
     }
 
-    const emailValidator = (email: string) => { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) };
+    const ErrorValidator = (data) => { 
+        const { email, password } = data;
+
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+            throw new CustomError('Email has wrong format');
+        }
+        if(password.length < 8) throw new CustomError('Password must have 8 or more characters');
+    };
 
     const throwErrors = (loginData) => {
         //Provjera kada je error sa responsa a kad nije 
         //Napravi typescript klasu koje ce se da zove custom error 
         //Procesuiraj response i ako si nasao message i sto treba nasao baci taj error
         //U throw errors je error ili instanceof custom error
-        const error = new Error();
         setErrorMessage('')
         setIsDataFalse(true);
         setTimeout(() => { setIsDataFalse(false) },4000);

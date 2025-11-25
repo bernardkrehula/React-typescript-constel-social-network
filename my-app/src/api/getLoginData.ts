@@ -25,12 +25,6 @@ export const requestLoginData = async(values: ValueTypes) => {
     catch(error: unknown){
         const errorStatus = error.status;
         const errorMessage = error.response.data.error.message;
-        const myError = new CustomError(errorMessage)
-        console.log(myError)
-
-        if(error instanceof CustomError){
-            console.log('default error je: ', error)
-        }
         //Destrukturirati data na error
         return errorMessage;
     }
