@@ -1,4 +1,4 @@
-import { CustomError } from '#/Classes/CustomError';
+import { ValidationError } from '#/Classes/ValidationError';
 import axios from 'axios';
 
 type ValueTypes = {
@@ -24,7 +24,9 @@ export const requestLoginData = async(values: ValueTypes) => {
     
     catch(error: unknown){
         const errorMessage = error.response.data.error.message;
-        //Destrukturirati data na error
-        return errorMessage;
+        if(error?.response){
+            throw new ValidationError(errorMessage);
+        }
+        else console.error('Unexpected error', error);        
     }
 }

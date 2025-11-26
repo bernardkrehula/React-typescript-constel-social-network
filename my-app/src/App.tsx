@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router";
 
 export type UserDataType = {
@@ -12,16 +12,6 @@ export type UserDataType = {
 }
 
 const App = () => {
-    //Maknuti status i dati drugacija imena varijablama
-    const [userProfileData, setUserProfileData] = useState<UserDataType>({
-        account: {
-            email: '',
-            full_name: '',
-            picture: '',
-            username: ''
-        },
-        userLogin: false
-    });
     const navigate = useNavigate();
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -29,6 +19,6 @@ const App = () => {
         else navigate('/homepage');
     },[])
     
-    return <Outlet context={{userProfileData, setUserProfileData}}/>
+    return <Outlet />
 }
 export default App;

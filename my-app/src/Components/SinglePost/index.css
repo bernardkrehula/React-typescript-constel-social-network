@@ -39,12 +39,14 @@
     color: rgb(151, 151, 151);
 }
 .post-image-containter{
-    height: 400px;
-    
+    height: fit-content;
+    background-size: cover;
 }
 .post-img{
     width: 100%;
     border-radius: 10px;
+    height: auto;
+    object-fit: cover;  
 }
 .post-content{
     width: 100%;

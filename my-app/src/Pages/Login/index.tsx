@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
 import { requestUserData } from '#/api/getUserData';
-import { CustomError } from '#/Classes/CustomError';
+import { ValidationError } from '#/Classes/ValidationError';
 import { useNavigate } from 'react-router';
 
 type FormInputTypes = {
@@ -23,41 +23,32 @@ const Login = () => {
     //Dodati error handling iz response kad se posalju krivi podaci 
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
         try{
-            ErrorValidator(data);
-            const loginData = await requestLoginData(data);
-/*             const userData = await requestUserData(loginData.token);
- */        
-            console.log(loginData)
-            throwErrors(loginData);
+            LocalErrorValidator(data);
+            await requestLoginData(data);
+            navigate('/homepage'); 
         }
         catch(error){
-            throwErrors(error);
+            if(error instanceof ValidationError) throwErrors(error);
         }
     }
 
-    const ErrorValidator = (data: FormInputTypes) => { 
+    const LocalErrorValidator = (data: FormInputTypes) => { 
         const { email, password } = data;
         if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-            throw new CustomError('Email has wrong format');
+            throw new ValidationError('Email has wrong format');
         }
         if(password.length < 8){
-            throw new CustomError('Password must have 8 or more characters');
+            throw new ValidationError('Password must have 8 or more characters');
         }
 
     };
     
 
     const throwErrors = (error: unknown) => {
-        //Provjera kada je error sa responsa a kad nije 
-        //Napravi typescript klasu koje ce se da zove custom error 
-        //Procesuiraj response i ako si nasao message i sto treba nasao baci taj error
-        //U throw errors je error ili instanceof custom error
-        if(error instanceof CustomError) {
-            setErrorMessage(error.message);
-            setIsDataFalse(true);
-            setTimeout(() => { setIsDataFalse(false) },4000);
-        }
-        else console.error('Unexpected error', error);        
+        setErrorMessage(error.message);
+        setIsDataFalse(true);
+        setTimeout(() => { setIsDataFalse(false) },4000);
+        console.error(error)
     }
 
     return(

@@ -1,5 +1,5 @@
 
-export class CustomError extends Error{
+export class ValidationError extends Error{
     constructor(message: string) {
         super();
         this.message = message;

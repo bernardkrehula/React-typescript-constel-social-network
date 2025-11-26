@@ -34,15 +34,21 @@ const Homepage = () => {
             }],
             status: ''
         });
-    const { userProfileData, setUserProfileData } = useOutletContext<OutletContextType>();
+    const [userProfileData, setUserProfileData] = useState<UserDataType>({
+        account: {
+            email: '',
+            full_name: '',
+            picture: '',
+            username: ''
+        },
+        userLogin: false
+    });
     const displayProfleMenu = () => setProfileMenu(prev => !prev);
     
     useEffect(() => {
-       //Pogledati u gotovu app errore
         const token = localStorage.getItem('token');
         getUserProfileData(token);
         getUserHomepageData(token);
-        /* console.log('homepage data: ', userHomepageData); */
     },[])
 
     const logoutUser = () => {
