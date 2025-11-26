@@ -7,7 +7,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
 import { requestUserData } from '#/api/getUserData';
 import { CustomError } from '#/Classes/CustomError';
-import { data, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 type FormInputTypes = {
     email: string;
@@ -27,7 +27,7 @@ const Login = () => {
             //Check if request is valid // If email or password are valid
             const loginData = await requestLoginData(data);
             //Promijeniti provjeru na response
-            navigate('Homepage')
+            navigate('/homepage')
             console.log(localStorage.getItem('token'))
             if(typeof loginData.status === 'number') return throwErrors(loginData);
             const userData = await requestUserData(loginData.token);
@@ -40,16 +40,19 @@ const Login = () => {
         }
     }
 
-    const ErrorValidator = (data) => { 
+    const ErrorValidator = (data: FormInputTypes) => { 
         const { email, password } = data;
-
+throwErrors()
         if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
             throw new CustomError('Email has wrong format');
         }
-        if(password.length < 8) throw new CustomError('Password must have 8 or more characters');
+        if(password.length < 8){
+            throw new CustomError('Password must have 8 or more characters');
+        }
+
     };
 
-    const throwErrors = (loginData) => {
+    const throwErrors = () => {
         //Provjera kada je error sa responsa a kad nije 
         //Napravi typescript klasu koje ce se da zove custom error 
         //Procesuiraj response i ako si nasao message i sto treba nasao baci taj error
