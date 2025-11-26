@@ -23,7 +23,6 @@ export const requestLoginData = async(values: ValueTypes) => {
     }
     
     catch(error: unknown){
-        const errorStatus = error.status;
         const errorMessage = error.response.data.error.message;
         //Destrukturirati data na error
         return errorMessage;

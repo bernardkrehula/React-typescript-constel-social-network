@@ -24,25 +24,19 @@ const Login = () => {
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
         try{
             ErrorValidator(data);
-            //Check if request is valid // If email or password are valid
             const loginData = await requestLoginData(data);
-            //Promijeniti provjeru na response
-            navigate('/homepage')
-            console.log(localStorage.getItem('token'))
-            if(typeof loginData.status === 'number') return throwErrors(loginData);
-            const userData = await requestUserData(loginData.token);
-            //Napraviti try catch blok 
-            //Komponenta mora primiti ciste podatke destrukturirane lijepo pripremljene u filovima za fetch
-            //Error provjera mora otici u catch blok  
+/*             const userData = await requestUserData(loginData.token);
+ */        
+            console.log(loginData)
+            throwErrors(loginData);
         }
         catch(error){
-            console.log(error, 'radi')
+            throwErrors(error);
         }
     }
 
     const ErrorValidator = (data: FormInputTypes) => { 
         const { email, password } = data;
-throwErrors()
         if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
             throw new CustomError('Email has wrong format');
         }
@@ -51,15 +45,19 @@ throwErrors()
         }
 
     };
+    
 
-    const throwErrors = () => {
+    const throwErrors = (error: unknown) => {
         //Provjera kada je error sa responsa a kad nije 
         //Napravi typescript klasu koje ce se da zove custom error 
         //Procesuiraj response i ako si nasao message i sto treba nasao baci taj error
         //U throw errors je error ili instanceof custom error
-        setErrorMessage('')
-        setIsDataFalse(true);
-        setTimeout(() => { setIsDataFalse(false) },4000);
+        if(error instanceof CustomError) {
+            setErrorMessage(error.message);
+            setIsDataFalse(true);
+            setTimeout(() => { setIsDataFalse(false) },4000);
+        }
+        else console.error('Unexpected error', error);        
     }
 
     return(
