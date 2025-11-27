@@ -60,7 +60,6 @@ const Homepage = () => {
         setUserProfileData((prev: UserDataType)  => ({
             ...prev,
             account: userData.account,
-            status: userData.status,
             userLogin: true
         }))
     }

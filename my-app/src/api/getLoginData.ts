@@ -6,7 +6,7 @@ type ValueTypes = {
     password: string;
 }
 
-export const requestLoginData = async(values: ValueTypes) => {
+/* export const requestLoginData = async(values: ValueTypes) => {
     const { email, password } = values;
     try{
         const {data} = await axios.post('https://api.hr.constel.co/api/v1/login', {
@@ -28,5 +28,30 @@ export const requestLoginData = async(values: ValueTypes) => {
             throw new ValidationError(errorMessage);
         }
         else console.error('Unexpected error', error);        
+    }
+}
+ */
+export const requestLoginData = async(values: ValueTypes) => {
+    const { email, password } = values;
+    try{
+        const response = await axios.post('https://api.hr.constel.co/api/v1/login', {
+            email: email,
+            password: password
+        }, {
+            headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+            }
+        })
+        console.log('response: ', response)
+        return { pageData: {token: response.data.token}};
+    }
+    
+    catch(error: any){
+        if(error.status === 400){
+            throw new ValidationError(error.response.data.error.message)
+        }
+        else{
+            throw Error
+        }
     }
 }
