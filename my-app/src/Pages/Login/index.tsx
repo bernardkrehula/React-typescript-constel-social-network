@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { requestUserData } from '#/api/getUserData';
 import { ValidationError } from '#/Classes/ValidationError';
 import { useNavigate } from 'react-router';
+
 //Napraviti da se dodaje tekstualni post 
 
 type FormInputTypes = {
@@ -24,8 +25,7 @@ const Login = () => {
     //Dodati error handling iz response kad se posalju krivi podaci 
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
         try{
-/*             LocalErrorValidator(data);
- */            const responseData = await requestLoginData(data);
+           const responseData = await requestLoginData(data);
                 localStorage.setItem('token', responseData.pageData.token)
                 navigate('/homepage');  
         }
@@ -33,6 +33,7 @@ const Login = () => {
             if(error instanceof ValidationError) throwErrors(error.message);
             else{
                 //Ups something went wrong
+                console.error('Ups something went wrong');
             }
         }
     }
