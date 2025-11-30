@@ -5,9 +5,9 @@ import { requestLoginData } from '#/api/getLoginData';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
-import { requestUserData } from '#/api/getUserData';
 import { ValidationError } from '#/Classes/ValidationError';
 import { useNavigate } from 'react-router';
+import z from 'zod';
 
 //Napraviti da se dodaje tekstualni post 
 
@@ -25,9 +25,10 @@ const Login = () => {
     //Dodati error handling iz response kad se posalju krivi podaci 
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
         try{
-           const responseData = await requestLoginData(data);
-                localStorage.setItem('token', responseData.pageData.token)
-                navigate('/homepage');  
+            LocalErrorValidator(data);
+            const responseData = await requestLoginData(data);
+            localStorage.setItem('token', responseData.pageData.token)
+            navigate('/homepage');  
         }
         catch(error){
             if(error instanceof ValidationError) throwErrors(error.message);
@@ -38,7 +39,7 @@ const Login = () => {
         }
     }
     //Napravi zod validaciju i u catch blok provjeris instance of zod error
-    const LocalErrorValidator = (data: FormInputTypes) => { 
+    const LocalValidator = (data: FormInputTypes) => { 
         const { email, password } = data;
         if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
             throw new ValidationError('Email has wrong format');
@@ -48,6 +49,14 @@ const Login = () => {
         }
 
     };
+    const LocalErrorValidator = (data: FormInputTypes) => {
+        const LoginSheme = z.object({
+            email: z.email(),
+            password: z.string().min(8)
+    })
+        const response = LoginSheme.safeParse(data)
+        console.log(response, data)
+    }
     
 
     const throwErrors = (error: string) => {
