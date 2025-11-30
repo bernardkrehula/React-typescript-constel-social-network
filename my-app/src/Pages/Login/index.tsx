@@ -7,7 +7,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
 import { ValidationError } from '#/Classes/ValidationError';
 import { useNavigate } from 'react-router';
-import z from 'zod';
+import z, { success, ZodError } from 'zod';
 
 //Napraviti da se dodaje tekstualni post 
 
@@ -32,6 +32,9 @@ const Login = () => {
         }
         catch(error){
             if(error instanceof ValidationError) throwErrors(error.message);
+            if(error instanceof ZodError){
+                console.log(error.issues[0].message)
+            }
             else{
                 //Ups something went wrong
                 console.error('Ups something went wrong');
@@ -39,23 +42,15 @@ const Login = () => {
         }
     }
     //Napravi zod validaciju i u catch blok provjeris instance of zod error
-    const LocalValidator = (data: FormInputTypes) => { 
-        const { email, password } = data;
-        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-            throw new ValidationError('Email has wrong format');
-        }
-        if(password.length < 8){
-            throw new ValidationError('Password must have 8 or more characters');
-        }
-
-    };
     const LocalErrorValidator = (data: FormInputTypes) => {
         const LoginSheme = z.object({
-            email: z.email(),
-            password: z.string().min(8)
+            email: z.email('Email has wrong format'),
+            password: z.string().min(8, 'Password must have 8 or more characters')
     })
-        const response = LoginSheme.safeParse(data)
-        console.log(response, data)
+    const response = LoginSheme.safeParse(data)
+        if(!response.success){
+            throw response.error;
+        }
     }
     
 
