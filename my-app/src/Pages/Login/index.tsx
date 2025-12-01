@@ -9,6 +9,7 @@ import { ValidationError } from '#/Classes/ValidationError';
 import { useNavigate } from 'react-router';
 import z, {  ZodError } from 'zod';
 
+//Kako ukloniti errore na vercelu
 //Napraviti da se dodaje tekstualni post 
 
 type FormInputTypes = {
@@ -65,7 +66,7 @@ const Login = () => {
             <SingleInput variation='login-input' type='text' name='password' placeholder='Enter your password here...' register={register}/>
             {isDataFalse && <h2 className='error-message'>{errorMessage}</h2>}
             {/* Dodati vise genericka imena na btn primary, red... */}
-            <Btn type='submit' variation='login-btn'>Confirm</Btn>
+            <Btn type='submit'>Confirm</Btn>
         </form>
     )
 }

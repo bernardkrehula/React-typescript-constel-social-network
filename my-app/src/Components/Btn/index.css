@@ -14,10 +14,10 @@
 .btn:hover{
     background-color: rgb(71, 22, 150);
 }
-.new-post{
+.primary--large{
     width: 200px;
 }
-.post-btn{
+.primary--small{
     display: flex;
     gap: 10px;
     background-color: rgb(184, 184, 184);
@@ -29,7 +29,7 @@
     padding-top: 7px;
     padding-bottom: 7px;
 }
-.post-btn:hover{
+.primary--small:hover{
     color: white;
     background-color: rgb(241, 116, 38);
 }

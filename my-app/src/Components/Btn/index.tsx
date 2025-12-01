@@ -2,7 +2,7 @@ import './index.css'
 
 type BtnType = {
     onClick?: () => void;
-    variation: string;
+    variation?: string;
     children: string;
     type?: 'button' | 'submit' | 'reset';
 }

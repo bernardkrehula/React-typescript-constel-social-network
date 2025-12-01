@@ -8,7 +8,7 @@ const PostCreator = () => {
         <div className='post-creator'>
             <img src="/user-logo.jpg"/>
             <SingleInput variation='post-creator-input' placeholder="What's on your mind?"/>
-            <Btn variation='new-post'>New Post</Btn>
+            <Btn variation='primary--large'>New Post</Btn>
         </div>
     )
 }
