@@ -7,7 +7,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
 import { ValidationError } from '#/Classes/ValidationError';
 import { useNavigate } from 'react-router';
-import z, { success, ZodError } from 'zod';
+import z, {  ZodError } from 'zod';
 
 //Napraviti da se dodaje tekstualni post 
 
@@ -22,7 +22,6 @@ const Login = () => {
     const [ errorMessage, setErrorMessage ] = useState('');
     const navigate = useNavigate();
 
-    //Dodati error handling iz response kad se posalju krivi podaci 
     const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
         try{
             LocalErrorValidator(data);
@@ -32,16 +31,13 @@ const Login = () => {
         }
         catch(error){
             if(error instanceof ValidationError) throwErrors(error.message);
-            if(error instanceof ZodError){
-                console.log(error.issues[0].message)
-            }
+            if(error instanceof ZodError) throwErrors(error.issues[0].message);
             else{
-                //Ups something went wrong
                 console.error('Ups something went wrong');
             }
         }
     }
-    //Napravi zod validaciju i u catch blok provjeris instance of zod error
+
     const LocalErrorValidator = (data: FormInputTypes) => {
         const LoginSheme = z.object({
             email: z.email('Email has wrong format'),
@@ -52,10 +48,8 @@ const Login = () => {
             throw response.error;
         }
     }
-    
 
     const throwErrors = (error: string) => {
-        //Type error ima na sebi message polje 
         setErrorMessage(error);
         setIsDataFalse(true);
         setTimeout(() => { setIsDataFalse(false) },4000);
