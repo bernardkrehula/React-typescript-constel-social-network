@@ -7,8 +7,8 @@ import Btn from '#/Components/Btn';
 import { requestHomepageData } from '#/api/getHomepageDataApi';
 import { requestUserData } from '#/api/getUserData';
 import type { UserDataType } from '#/App';
-import UserIcon from '#/icons/userIcon';
-import LogoutIcon from '#/icons/logout';
+import UserIcon from '#/icons/UserIcon';
+import LogoutIcon from '#/icons/LogoutIcon';
 
 const Homepage = () => {
     const navigate = useNavigate();
