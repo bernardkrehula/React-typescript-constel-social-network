@@ -2,9 +2,6 @@ import './index.css'
 import Btn from '../Btn'
 import { useState } from 'react';
 import { formatISO9075 } from 'date-fns';
-import LikeFilledIcon from '#/icons/LikeFilledIcon';
-import LikeOutlinedIcon from '#/icons/LikeOutlinedIcon';
-import CommentIcon from '#/icons/CommentIcon';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import { FaComment, FaRegComment } from 'react-icons/fa';
 

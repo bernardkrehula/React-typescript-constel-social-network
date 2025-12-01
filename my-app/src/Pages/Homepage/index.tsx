@@ -7,8 +7,8 @@ import Btn from '#/Components/Btn';
 import { requestHomepageData } from '#/api/getHomepageDataApi';
 import { requestUserData } from '#/api/getUserData';
 import type { UserDataType } from '#/App';
-import UserIcon from '#/icons/UserIcon';
-import LogoutIcon from '#/icons/LogoutIcon';
+import { FaUser } from 'react-icons/fa';
+import { FiLogOut } from 'react-icons/fi';
 
 const Homepage = () => {
     const navigate = useNavigate();
@@ -41,6 +41,23 @@ const Homepage = () => {
         },
         userLogin: false
     });
+    const [ newPost, setNewPost ] = useState({
+        user: {
+            name: '',
+            username: '',
+            image: ''
+        },
+        postContent: {
+            text: '',
+            image: '',
+            likes: 0,
+            comments: [
+                { name: '', text: '', time: '', isEdited: '' }
+            ],
+            date:
+        },
+        isEdited: ''
+    })
     const displayProfleMenu = () => setProfileMenu(prev => !prev);
     
     useEffect(() => {
@@ -89,11 +106,11 @@ const Homepage = () => {
                 <img src="/user-logo.jpg" onClick={displayProfleMenu}/>
                 {showProfileMenu && <div className='profile-menu'>
                     <Btn onClick={logoutUser}>
-                        <LogoutIcon />
+                        <FiLogOut />
                         <h2>Logout</h2>
                     </Btn>
                     <Btn>
-                        <UserIcon />
+                        <FaUser />
                         <h2>Profile</h2>
                     </Btn>
                 </div>}
