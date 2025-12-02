@@ -3,18 +3,22 @@ import SingleInput from '../SingleInput';
 import Btn from '../Btn';
 import { useState } from 'react';
 
-const PostCreator = () => {
+const PostCreator = ({createNewPost}) => {
     const [ inputValue, setInputValue ] = useState('');
-    const getPostValue = (e) => {
-        const values = e.target
-        console.log(values.value)
-    }
+
+    const getInputValue = (e) => setInputValue(e.target.value);
+    const passInputValue = (e) => {
+        e.preventDefault();
+        createNewPost(inputValue);
+        setInputValue('');
+    };
+
     return(
-        <div className='post-creator'>
+        <form className='post-creator' onSubmit={passInputValue}>
             <img src="/user-logo.jpg"/>
-            <SingleInput variation='post-creator-input' placeholder="What's on your mind?" onChange={getPostValue}/>
-            <Btn variation='primary--large'>New Post</Btn>
-        </div>
+            <SingleInput variation='post-creator-input' placeholder="What's on your mind?" onChange={getInputValue} value={inputValue}/>
+            <Btn variation='primary--large' type ='submit'>New Post</Btn>
+        </form>
     )
 }
 

@@ -82,7 +82,9 @@ const Homepage = () => {
         setUserHomepageData(homepageData);
     }
 
-    const getPostValue = (data) => console.log(data); 
+    const createNewPost = (text) => {
+        console.log(text)
+    }
     return(
         <div className='homepage'>
             <div className='homepage-horizontal-border-line'></div>
@@ -98,7 +100,7 @@ const Homepage = () => {
             </div>
             <div className='menu-border-line'></div>
             <div className='feed'>
-                <PostCreator/>
+                <PostCreator createNewPost={createNewPost}/>
                 {userHomepageData.posts.map((post, key) => {
                     return  <SinglePost key={key} data={post}/>
                 })}
