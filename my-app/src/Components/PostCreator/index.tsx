@@ -3,14 +3,30 @@ import SingleInput from '../SingleInput';
 import Btn from '../Btn';
 import { useState } from 'react';
 
-const PostCreator = ({createNewPost}) => {
+const PostCreator = ({addNewPost}) => {
     const [ inputValue, setInputValue ] = useState('');
 
     const getInputValue = (e) => setInputValue(e.target.value);
     const passInputValue = (e) => {
         e.preventDefault();
-        createNewPost(inputValue);
+        const newPost = {
+                audio: null,
+                comments: 0,
+                created_at: '2.12',
+                image: '',
+                liked: false,
+                likes: '',
+                post_id: crypto.randomUUID(),
+                text: inputValue,
+                user: {
+                    full_name: 'Bernard Krehula',
+                    picture: '/user-logo.jpg',
+                    username: 'bruxiii'
+                },
+                user_id: ''
+            }
         setInputValue('');
+        addNewPost(newPost);
     };
 
     return(

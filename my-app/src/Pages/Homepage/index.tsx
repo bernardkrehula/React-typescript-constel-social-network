@@ -41,22 +41,7 @@ const Homepage = () => {
         },
         userLogin: false
     });
-    const [ newPost, setNewPost ] = useState({
-            audio: null,
-            comments: 0,
-            created_at: '',
-            image: '',
-            liked: false,
-            likes: '',
-            post_id: '',
-            text: '',
-            user: {
-                full_name: '',
-                picture: '',
-                username: ''
-            },
-            user_id: ''
-        })
+    
     const displayProfleMenu = () => setProfileMenu(prev => !prev);
     
     useEffect(() => {
@@ -81,10 +66,14 @@ const Homepage = () => {
         const homepageData = await requestHomepageData(token);
         setUserHomepageData(homepageData);
     }
-
-    const createNewPost = (text) => {
-        console.log(text)
+    const addNewPost = (newPost) => {
+        setUserHomepageData(prev => ({
+            ...prev,
+            posts: [newPost, ...prev.posts]
+        }))
+        console.log(newPost, userHomepageData)
     }
+    
     return(
         <div className='homepage'>
             <div className='homepage-horizontal-border-line'></div>
@@ -100,8 +89,9 @@ const Homepage = () => {
             </div>
             <div className='menu-border-line'></div>
             <div className='feed'>
-                <PostCreator createNewPost={createNewPost}/>
+                <PostCreator addNewPost={addNewPost}/>
                 {userHomepageData.posts.map((post, key) => {
+                    console.log('radi rerender', post)
                     return  <SinglePost key={key} data={post}/>
                 })}
             </div>
