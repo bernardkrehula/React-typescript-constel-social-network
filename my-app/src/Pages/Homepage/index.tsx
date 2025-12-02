@@ -42,22 +42,21 @@ const Homepage = () => {
         userLogin: false
     });
     const [ newPost, setNewPost ] = useState({
-        user: {
-            name: '',
-            username: '',
-            image: ''
-        },
-        postContent: {
-            text: '',
+            audio: null,
+            comments: 0,
+            created_at: '',
             image: '',
-            likes: 0,
-            comments: [
-                { name: '', text: '', time: '', isEdited: '' }
-            ],
-            date:
-        },
-        isEdited: ''
-    })
+            liked: false,
+            likes: '',
+            post_id: '',
+            text: '',
+            user: {
+                full_name: '',
+                picture: '',
+                username: ''
+            },
+            user_id: ''
+        })
     const displayProfleMenu = () => setProfileMenu(prev => !prev);
     
     useEffect(() => {
@@ -82,6 +81,8 @@ const Homepage = () => {
         const homepageData = await requestHomepageData(token);
         setUserHomepageData(homepageData);
     }
+
+    const getPostValue = (data) => console.log(data); 
     return(
         <div className='homepage'>
             <div className='homepage-horizontal-border-line'></div>
@@ -97,7 +98,7 @@ const Homepage = () => {
             </div>
             <div className='menu-border-line'></div>
             <div className='feed'>
-                <PostCreator />
+                <PostCreator/>
                 {userHomepageData.posts.map((post, key) => {
                     return  <SinglePost key={key} data={post}/>
                 })}

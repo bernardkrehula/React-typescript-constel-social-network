@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router';
 import z, {  ZodError } from 'zod';
 
 //Kako ukloniti errore na vercelu
+//Kako prebaciti te funkcije u posebni file
 //Napraviti da se dodaje tekstualni post 
 
 type FormInputTypes = {
