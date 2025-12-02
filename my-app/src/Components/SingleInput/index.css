@@ -11,6 +11,6 @@
 .single-input:focus{
     outline: 1.5px solid rgb(28, 139, 195);
 }
-.login-input{
+.auth--primary{
     margin-bottom: 25px;
 }

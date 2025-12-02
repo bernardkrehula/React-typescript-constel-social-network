@@ -91,7 +91,6 @@ const Homepage = () => {
             <div className='feed'>
                 <PostCreator addNewPost={addNewPost}/>
                 {userHomepageData.posts.map((post, key) => {
-                    console.log('radi rerender', post)
                     return  <SinglePost key={key} data={post}/>
                 })}
             </div>

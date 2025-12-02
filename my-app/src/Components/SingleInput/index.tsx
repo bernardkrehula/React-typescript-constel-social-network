@@ -5,7 +5,7 @@ type SingleInputType = {
     placeholder: string;
     name: 'email' | 'password';
     register: UseFormRegister<FormInputTypes>;
-    variation: string;
+    variation?: string;
     type: string;
     onChange: (value: string) => void;
     value: string

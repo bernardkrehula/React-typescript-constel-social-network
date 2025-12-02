@@ -32,7 +32,7 @@ const PostCreator = ({addNewPost}) => {
     return(
         <form className='post-creator' onSubmit={passInputValue}>
             <img src="/user-logo.jpg"/>
-            <SingleInput variation='post-creator-input' placeholder="What's on your mind?" onChange={getInputValue} value={inputValue}/>
+            <SingleInput placeholder="What's on your mind?" onChange={getInputValue} value={inputValue}/>
             <Btn variation='primary--large' type ='submit'>New Post</Btn>
         </form>
     )
