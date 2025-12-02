@@ -12,10 +12,10 @@ const PostCreator = ({addNewPost}) => {
         const newPost = {
                 audio: null,
                 comments: 0,
-                created_at: '2.12',
+                created_at: new Date(),
                 image: '',
                 liked: false,
-                likes: '',
+                likes: 0,
                 post_id: crypto.randomUUID(),
                 text: inputValue,
                 user: {
