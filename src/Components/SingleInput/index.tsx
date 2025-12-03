@@ -1,19 +1,17 @@
 import './index.css'
 import type { UseFormRegister } from 'react-hook-form'
+//How to pass default props to component 
 
 type SingleInputType = {
     placeholder: string;
-    name: 'email' | 'password';
-    register: UseFormRegister<FormInputTypes>;
+    name: string;
+    register: UseFormRegister<Record<string, string | number>>; //Ovo znaci kao da se uvijek ime definira kao string a to ime moze na sebe primiti string ili number
     variation?: string;
     type: string;
-    onChange: (value: string) => void;
+    onChange: React.ChangeEventHandler<HTMLInputElement>
     value: string
 }
-export type FormInputTypes = {
-    email: string;
-    password: string;
-}
+
 //How to include prop conditionaly in react 
 const SingleInput = ({variation, placeholder, name, type, register, onChange, value}: SingleInputType) => {
     const extraconfig = {

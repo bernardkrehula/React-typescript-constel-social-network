@@ -3,14 +3,35 @@ import SingleInput from '../SingleInput';
 import Btn from '../Btn';
 import { useState } from 'react';
 
-const PostCreator = ({addNewPost}) => {
+type PostCreatorType = {
+    addNewPost: (post: NewPostValueType) => void;
+}
+
+export type NewPostValueType = {
+    comments: number,
+    created_at: Date,
+    image: string,
+    liked: boolean,
+    likes: number,
+    post_id: number | string,
+    text: string,
+    user: {
+        full_name: string,
+        picture: string,
+        username: string
+    },
+    user_id: string,
+    isLiked: boolean
+}
+//new FormData na nju stavim tekst 
+const PostCreator = ({addNewPost}: PostCreatorType) => {
     const [ inputValue, setInputValue ] = useState('');
 
-    const getInputValue = (e) => setInputValue(e.target.value);
-    const passInputValue = (e) => {
+    const getInputValue = (e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
+
+    const passInputValue = (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const newPost = {
-                audio: null,
+        const newPost: NewPostValueType = {
                 comments: 0,
                 created_at: new Date(),
                 image: '',
@@ -23,7 +44,7 @@ const PostCreator = ({addNewPost}) => {
                     picture: '/user-logo.jpg',
                     username: 'bruxiii'
                 },
-                user_id: ''
+                user_id: crypto.randomUUID()
             }
         setInputValue('');
         addNewPost(newPost);

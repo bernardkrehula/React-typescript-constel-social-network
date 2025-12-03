@@ -29,8 +29,23 @@ const SinglePost = ({data}: SinglePostDataType) => {
     const { full_name, username, picture } = user;
     const [isLiked, setIsLiked ] = useState(false);
     const [isCommentOpened, setIsCommentOpened] = useState(false);
-
-    const likePost = () => setIsLiked(prev => !prev);
+    const [ likesNumber, setLikesNumber] = useState(likes);
+    /*Promjeniti broj lajkova u arrayu direktno jer je sad problem da se na likesNumber ispise broj lajkova za lajkove pri fetchu ali
+    je problem da 
+    */
+    const likePost = () => {
+        
+        console.log( likes) 
+        /* setIsLiked(prev => {
+            if(prev){
+                setLikesNumber(number => number += 1)
+            }
+            else {
+                setLikesNumber(number => number -= 1)
+            }
+        }); */
+        
+    };
     const openComment = () => setIsCommentOpened(prev => !prev);
     //Prevent error from formatIso9075 
     if(created_at === '') return
@@ -58,12 +73,12 @@ const SinglePost = ({data}: SinglePostDataType) => {
                     {isLiked ?
                         <>
                             <AiFillLike/>
-                            <h2>{likes}</h2>
+                            <h2>{likesNumber}</h2>
                         </> 
                         :
                         <>
                             <AiOutlineLike/>
-                            <h2>{likes}</h2>
+                            <h2>{likesNumber}</h2>
                         </>
                     }
                 </Btn>

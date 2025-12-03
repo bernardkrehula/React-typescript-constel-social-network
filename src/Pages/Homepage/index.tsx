@@ -1,5 +1,5 @@
 import PostCreator from '#/Components/PostCreator';
-import { useNavigate, useOutletContext } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
 import './index.css'
 import SinglePost from '#/Components/SinglePost';
@@ -9,6 +9,11 @@ import { requestUserData } from '#/api/getUserData';
 import type { UserDataType } from '#/App';
 import { FaUser } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
+import type { NewPostValueType } from '#/Components/PostCreator';
+//Napraviti da se otvori modal na post 
+//Dodati da se moze lajkovati
+//Sredit typescript warninge
+//Provjeriti kako se sortiraju folderi i files
 
 const Homepage = () => {
     const navigate = useNavigate();
@@ -66,12 +71,14 @@ const Homepage = () => {
         const homepageData = await requestHomepageData(token);
         setUserHomepageData(homepageData);
     }
-    const addNewPost = (newPost) => {
+    const addNewPost = (newPost: NewPostValueType) => {
         setUserHomepageData(prev => ({
             ...prev,
             posts: [newPost, ...prev.posts]
-        }))
-        console.log(newPost, userHomepageData)
+        })) 
+    }
+    const likePost = () => {
+        
     }
     
     return(
