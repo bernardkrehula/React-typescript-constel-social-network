@@ -25,7 +25,7 @@ const Homepage = () => {
                 created_at: '',
                 image: '',
                 liked: false,
-                likes: '',
+                likes: 0,
                 post_id: '',
                 text: '',
                 user: {
@@ -77,9 +77,7 @@ const Homepage = () => {
             posts: [newPost, ...prev.posts]
         })) 
     }
-    const likePost = () => {
-        
-    }
+  
     
     return(
         <div className='homepage'>

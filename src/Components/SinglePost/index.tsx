@@ -1,7 +1,7 @@
 import './index.css'
 import Btn from '../Btn'
 import { useState } from 'react';
-import { formatISO9075 } from 'date-fns';
+import { formatISO9075, set } from 'date-fns';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import { FaComment, FaRegComment } from 'react-icons/fa';
 
@@ -25,7 +25,7 @@ type SinglePostDataType = {
 }
 
 const SinglePost = ({data}: SinglePostDataType) => {
-    const { user, image, text, created_at, likes, comments } = data;
+    const { user, image, text, created_at, likes, comments, post_id } = data;
     const { full_name, username, picture } = user;
     const [isLiked, setIsLiked ] = useState(false);
     const [isCommentOpened, setIsCommentOpened] = useState(false);
@@ -34,18 +34,10 @@ const SinglePost = ({data}: SinglePostDataType) => {
     je problem da 
     */
     const likePost = () => {
-        
-        console.log( likes) 
-        /* setIsLiked(prev => {
-            if(prev){
-                setLikesNumber(number => number += 1)
-            }
-            else {
-                setLikesNumber(number => number -= 1)
-            }
-        }); */
-        
-    };
+      const likeState = !isLiked;
+      setIsLiked(prev => !prev);
+      setLikesNumber(prev => likeState ? prev += 1 : prev -= 1)
+    }
     const openComment = () => setIsCommentOpened(prev => !prev);
     //Prevent error from formatIso9075 
     if(created_at === '') return
