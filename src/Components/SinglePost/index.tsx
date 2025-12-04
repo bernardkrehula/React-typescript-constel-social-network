@@ -1,7 +1,7 @@
 import './index.css'
 import Btn from '../Btn'
 import { useState } from 'react';
-import { formatISO9075, set } from 'date-fns';
+import { format, formatISO9075, intlFormat, parseISO, set } from 'date-fns';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import { FaComment, FaRegComment } from 'react-icons/fa';
 
@@ -25,14 +25,12 @@ type SinglePostDataType = {
 }
 
 const SinglePost = ({data}: SinglePostDataType) => {
-    const { user, image, text, created_at, likes, comments, post_id } = data;
+    const { user, image, text, created_at, likes, comments } = data;
     const { full_name, username, picture } = user;
     const [isLiked, setIsLiked ] = useState(false);
     const [isCommentOpened, setIsCommentOpened] = useState(false);
     const [ likesNumber, setLikesNumber] = useState(likes);
-    /*Promjeniti broj lajkova u arrayu direktno jer je sad problem da se na likesNumber ispise broj lajkova za lajkove pri fetchu ali
-    je problem da 
-    */
+
     const likePost = () => {
       const likeState = !isLiked;
       setIsLiked(prev => !prev);
@@ -41,7 +39,8 @@ const SinglePost = ({data}: SinglePostDataType) => {
     const openComment = () => setIsCommentOpened(prev => !prev);
     //Prevent error from formatIso9075 
     if(created_at === '') return
-    const date  = formatISO9075(created_at, {representation: 'date'})
+    console.log(created_at)
+    const date = format(new Date(created_at), "dd.MM.y.")
 
     return(
         <div className="single-post">
