@@ -10,14 +10,16 @@ import type { UserDataType } from '#/App';
 import { FaUser } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 import type { NewPostValueType } from '#/Components/PostCreator';
-//Napraviti da se otvori modal na post 
 //Dodati da se moze lajkovati
+
+//Napraviti da se otvori modal na post 
 //Sredit typescript warninge
 //Provjeriti kako se sortiraju folderi i files
-
+//Pomaknuti funkcije u posebni ts file samo za funkcije 
 const Homepage = () => {
     const navigate = useNavigate();
     const [ showProfileMenu, setProfileMenu ] = useState<boolean>(false);
+    const [ isPostClicked, setIsPostClicked ] = useState(false);
     const [ userHomepageData, setUserHomepageData] = useState(
         {posts: [{
                 audio: null,
@@ -77,8 +79,10 @@ const Homepage = () => {
             posts: [newPost, ...prev.posts]
         })) 
     }
-  
-    
+    const openPost = () => {
+
+    }
+
     return(
         <div className='homepage'>
             <div className='homepage-horizontal-border-line'></div>
@@ -95,8 +99,9 @@ const Homepage = () => {
             <div className='menu-border-line'></div>
             <div className='feed'>
                 <PostCreator addNewPost={addNewPost}/>
+                {isPostClicked && ''}
                 {userHomepageData.posts.map((post, key) => {
-                    return  <SinglePost key={key} data={post}/>
+                    return  <SinglePost key={key} data={post} openPost={openPost}/>
                 })}
             </div>
             <div className='profile-container'>

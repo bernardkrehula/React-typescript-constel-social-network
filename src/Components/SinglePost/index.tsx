@@ -1,12 +1,11 @@
 import './index.css'
 import Btn from '../Btn'
 import { useState } from 'react';
-import { format, formatISO9075, intlFormat, parseISO, set } from 'date-fns';
+import { format } from 'date-fns';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import { FaComment, FaRegComment } from 'react-icons/fa';
 
 type SinglePostDataType = {
-    data: {
         post_id: string;
         user_id: string;
         text: string;
@@ -20,11 +19,14 @@ type SinglePostDataType = {
             full_name: string;
             picture: string;
         },
-        liked: boolean;
-    }   
+        liked: boolean; 
+}
+type SinglePostPropsType = {
+    data: SinglePostDataType;
+    openPost: () => void;
 }
 
-const SinglePost = ({data}: SinglePostDataType) => {
+const SinglePost = ({data, openPost}: SinglePostPropsType) => {
     const { user, image, text, created_at, likes, comments } = data;
     const { full_name, username, picture } = user;
     const [isLiked, setIsLiked ] = useState(false);
@@ -39,7 +41,6 @@ const SinglePost = ({data}: SinglePostDataType) => {
     const openComment = () => setIsCommentOpened(prev => !prev);
     //Prevent error from formatIso9075 
     if(created_at === '') return
-    console.log(created_at)
     const date = format(new Date(created_at), "dd.MM.y.")
 
     return(
