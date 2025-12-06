@@ -44,7 +44,7 @@ const SinglePost = ({data, openPost}: SinglePostPropsType) => {
     const date = format(new Date(created_at), "dd.MM.y.")
 
     return(
-        <div className="single-post">
+        <div className="single-post" onClick={() => openPost(data)}>
             <div className='post-user-data'>
                 <img src={picture}/>
                 <div className='post-names'>

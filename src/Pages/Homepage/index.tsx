@@ -79,8 +79,9 @@ const Homepage = () => {
             posts: [newPost, ...prev.posts]
         })) 
     }
-    const openPost = () => {
-
+    const openPost = (data) => {
+        setIsPostClicked(prev => !prev);
+        console.log(data)
     }
 
     return(
@@ -99,7 +100,7 @@ const Homepage = () => {
             <div className='menu-border-line'></div>
             <div className='feed'>
                 <PostCreator addNewPost={addNewPost}/>
-                {isPostClicked && ''}
+                {isPostClicked && <div className='post-modal' />}
                 {userHomepageData.posts.map((post, key) => {
                     return  <SinglePost key={key} data={post} openPost={openPost}/>
                 })}
