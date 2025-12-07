@@ -2,13 +2,16 @@ import './index.css'
 import { useState } from 'react';
 import { format } from 'date-fns';
 import Btn from '../Btn';
+import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
+import { FaComment, FaRegComment } from 'react-icons/fa';
 
 import type { SinglePostDataType } from '../SinglePost';
 type PostModalType = {
-    data: SinglePostDataType
+    data: SinglePostDataType;
+    setIsPostClicked: (value: boolean) => void;
 }
 
-const PostModal = ({data}: PostModalType) => {
+const PostModal = ({data, setIsPostClicked}: PostModalType) => {
     console.log('U komponenti', data)
     const { user, image, text, created_at, likes, comments } = data;
     const { full_name, username, picture } = user;
@@ -28,6 +31,8 @@ const PostModal = ({data}: PostModalType) => {
 
 
     return(
+        <>
+        <div className='modal-overlay' onClick={() => setIsPostClicked(false)}></div>
         <div className='post-modal'>
             <div className='post-user-data'>
                 <img src={picture}/>
@@ -73,6 +78,7 @@ const PostModal = ({data}: PostModalType) => {
                 </Btn>
             </div>
         </div>
+        </>
     )
 }
 export default PostModal;

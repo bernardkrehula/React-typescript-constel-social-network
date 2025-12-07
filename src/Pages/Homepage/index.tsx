@@ -107,11 +107,10 @@ const Homepage = () => {
         const { post_id } = data;
         setIsPostClicked(prev => !prev);
         setSinglePostPopupData(data);
-        console.log('U homepage: ', data, singlePostPopupData)
         }
 
     return(
-        <div className='homepage'>
+        <div className='homepage' style={{overflow: isPostClicked ? 'hidden': ''}}>
             <div className='homepage-horizontal-border-line'></div>
             <div className='menu'>
                 <div className='menu-logo-content'>
@@ -126,7 +125,7 @@ const Homepage = () => {
             <div className='menu-border-line'></div>
             <div className='feed'>
                 <PostCreator addNewPost={addNewPost}/>
-                {isPostClicked && <PostModal data={singlePostPopupData}/>}
+                {isPostClicked && <PostModal data={singlePostPopupData} setIsPostClicked={setIsPostClicked}/>}
                 {userHomepageData.posts.map((post, key) => {
                     return  <SinglePost key={key} data={post} openPost={openPost}/>
                 })}
