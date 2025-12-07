@@ -1,39 +1,18 @@
 import './index.css'
-import Btn from '../Btn'
 import { useState } from 'react';
 import { format } from 'date-fns';
-import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
-import { FaComment, FaRegComment } from 'react-icons/fa';
 
-export type SinglePostDataType = {
-        post_id: string;
-        user_id: string;
-        text: string;
-        image: string | null;
-        audio: null;
-        comments: number;
-        likes: number;
-        created_at: string;
-        user: {
-            username: string;
-            full_name: string;
-            picture: string;
-        },
-        liked: boolean; 
-}
-type SinglePostPropsType = {
-    data: SinglePostDataType;
-    openPost: () => void;
-}
+import type { SinglePostDataType } from '../SinglePost';
 
-const SinglePost = ({data, openPost}: SinglePostPropsType) => {
+const PostModal = ({data}) => {
+    console.log('U komponenti', data)
     const { user, image, text, created_at, likes, comments } = data;
     const { full_name, username, picture } = user;
     const [isLiked, setIsLiked ] = useState(false);
     const [isCommentOpened, setIsCommentOpened] = useState(false);
     const [ likesNumber, setLikesNumber] = useState(likes);
-
-    const likePost = () => {
+ 
+   const likePost = () => {
       const likeState = !isLiked;
       setIsLiked(prev => !prev);
       setLikesNumber(prev => likeState ? prev += 1 : prev -= 1)
@@ -43,8 +22,9 @@ const SinglePost = ({data, openPost}: SinglePostPropsType) => {
     if(created_at === '') return
     const date = format(new Date(created_at), "dd.MM.y.")
 
+
     return(
-        <div className="single-post" onClick={() => openPost(data)}>
+        <div className='post-modal'>
             <div className='post-user-data'>
                 <img src={picture}/>
                 <div className='post-names'>
@@ -90,5 +70,5 @@ const SinglePost = ({data, openPost}: SinglePostPropsType) => {
             </div>
         </div>
     )
-}
-export default SinglePost;
+ */}
+export default PostModal;

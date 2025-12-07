@@ -10,6 +10,7 @@ import type { UserDataType } from '#/App';
 import { FaUser } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 import type { NewPostValueType } from '#/Components/PostCreator';
+import PostModal from '#/Components/PostModal';
 //Dodati da se moze lajkovati
 
 //Napraviti da se otvori modal na post 
@@ -20,6 +21,24 @@ const Homepage = () => {
     const navigate = useNavigate();
     const [ showProfileMenu, setProfileMenu ] = useState<boolean>(false);
     const [ isPostClicked, setIsPostClicked ] = useState(false);
+    const [ singlePostPopupData, setSinglePostPopupData ] = useState(
+        {
+                audio: null,
+                comments: 0,
+                created_at: '',
+                image: '',
+                liked: false,
+                likes: 0,
+                post_id: '',
+                text: '',
+                user: {
+                    full_name: '',
+                    picture: '',
+                    username: ''
+                },
+                user_id: ''
+            }
+    );
     const [ userHomepageData, setUserHomepageData] = useState(
         {posts: [{
                 audio: null,
@@ -79,10 +98,17 @@ const Homepage = () => {
             posts: [newPost, ...prev.posts]
         })) 
     }
+    const changePost = (postId) => {
+        /* setUserHomepageData(prev => {
+            
+        }) */
+    }   
     const openPost = (data) => {
+        const { post_id } = data;
         setIsPostClicked(prev => !prev);
-        console.log(data)
-    }
+        setSinglePostPopupData(data);
+        console.log('U homepage: ', data, singlePostPopupData)
+        }
 
     return(
         <div className='homepage'>
@@ -100,7 +126,7 @@ const Homepage = () => {
             <div className='menu-border-line'></div>
             <div className='feed'>
                 <PostCreator addNewPost={addNewPost}/>
-                {isPostClicked && <div className='post-modal' />}
+                {isPostClicked && <PostModal data={singlePostPopupData}/>}
                 {userHomepageData.posts.map((post, key) => {
                     return  <SinglePost key={key} data={post} openPost={openPost}/>
                 })}
