@@ -1,10 +1,14 @@
 import './index.css'
 import { useState } from 'react';
 import { format } from 'date-fns';
+import Btn from '../Btn';
 
 import type { SinglePostDataType } from '../SinglePost';
+type PostModalType = {
+    data: SinglePostDataType
+}
 
-const PostModal = ({data}) => {
+const PostModal = ({data}: PostModalType) => {
     console.log('U komponenti', data)
     const { user, image, text, created_at, likes, comments } = data;
     const { full_name, username, picture } = user;
@@ -12,7 +16,7 @@ const PostModal = ({data}) => {
     const [isCommentOpened, setIsCommentOpened] = useState(false);
     const [ likesNumber, setLikesNumber] = useState(likes);
  
-   const likePost = () => {
+    const likePost = () => {
       const likeState = !isLiked;
       setIsLiked(prev => !prev);
       setLikesNumber(prev => likeState ? prev += 1 : prev -= 1)
@@ -70,5 +74,5 @@ const PostModal = ({data}) => {
             </div>
         </div>
     )
- */}
+}
 export default PostModal;
