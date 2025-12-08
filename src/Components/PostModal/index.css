@@ -28,6 +28,7 @@
 
 .post-modal::-webkit-scrollbar-thumb:hover {
   background-color: #888;
+  cursor: pointer;
 }
 .modal-overlay{
     position: fixed;
@@ -36,5 +37,4 @@
     backdrop-filter: blur(8px);
     background: rgba(0, 0, 0, 0.3);
     left: 0;
-    cursor: pointer;
 }

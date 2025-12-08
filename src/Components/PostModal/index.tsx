@@ -53,7 +53,7 @@ const PostModal = ({data, setIsPostClicked}: PostModalType) => {
                 </div>}
             <p className='post-content'>{text}</p>
             <div className='post-btns'>
-                <Btn variation='primary--small' onClick={likePost}>
+                <Btn variation='primary--small' onClick={likePost} type='button'>
                     {isLiked ?
                         <>
                             <AiFillLike/>
@@ -66,7 +66,7 @@ const PostModal = ({data, setIsPostClicked}: PostModalType) => {
                         </>
                     }
                 </Btn>
-                <Btn variation='primary--small' onClick={openComment}>
+                <Btn variation='primary--small' onClick={openComment} type='button'>
                     {isCommentOpened ? 
                     <>
                         <FaComment />

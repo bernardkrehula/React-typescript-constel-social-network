@@ -11,5 +11,8 @@ He5r4dOVdy9x6IT
 -Destrukturirati podatke sa error requesta tako da do login data dodu cisti podaci naci samo poruka errora
 
 12.8 
--Promjeniti da je dizajn modala na klik realativan kontentu u modalu
+-Promjeniti da je dizajn modala na klik realativan kontentu u modalu ✔
 -Rijesiti errore u post modalu
+
+13.8 u 6:00 
+-Pronaci i zamjeniti post sa postom u glavnom data koji se prikazuje na ekranu
