@@ -107,8 +107,7 @@ const Homepage = () => {
         const { post_id } = data;
         setIsPostClicked(prev => !prev);
         setSinglePostPopupData(data);
-        }
-
+    }    
     return(
         <div className='homepage' style={{overflow: isPostClicked ? 'hidden': ''}}>
             <div className='homepage-horizontal-border-line'></div>

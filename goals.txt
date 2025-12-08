@@ -9,3 +9,7 @@ He5r4dOVdy9x6IT
 23.11
 -U getLoginData Napraviti if usporedbu sa custom errorom iz klase 
 -Destrukturirati podatke sa error requesta tako da do login data dodu cisti podaci naci samo poruka errora
+
+12.8 
+-Promjeniti da je dizajn modala na klik realativan kontentu u modalu
+-Rijesiti errore u post modalu

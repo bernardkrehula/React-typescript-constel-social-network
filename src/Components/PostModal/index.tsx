@@ -27,12 +27,15 @@ const PostModal = ({data, setIsPostClicked}: PostModalType) => {
     const openComment = () => setIsCommentOpened(prev => !prev);
     //Prevent error from formatIso9075 
     if(created_at === '') return
-    const date = format(new Date(created_at), "dd.MM.y.")
+    const date = format(new Date(created_at), "dd.MM.y.");
 
+    const handleOverlayClick = () => {
+        setIsPostClicked(false);
+    }
 
     return(
         <>
-        <div className='modal-overlay' onClick={() => setIsPostClicked(false)}></div>
+        <div className='modal-overlay' onClick={handleOverlayClick}></div>
         <div className='post-modal'>
             <div className='post-user-data'>
                 <img src={picture}/>
