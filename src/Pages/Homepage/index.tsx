@@ -2,7 +2,7 @@ import PostCreator from '#/Components/PostCreator';
 import { useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
 import './index.css'
-import SinglePost from '#/Components/SinglePost';
+import SinglePost, { type SinglePostDataType } from '#/Components/SinglePost';
 import Btn from '#/Components/Btn';
 import { requestHomepageData } from '#/api/getHomepageDataApi';
 import { requestUserData } from '#/api/getUserData';
@@ -16,11 +16,11 @@ import PostModal from '#/Components/PostModal';
 //Napraviti da se otvori modal na post 
 //Sredit typescript warninge
 //Provjeriti kako se sortiraju folderi i files
-//Pomaknuti funkcije u posebni ts file samo za funkcije 
 const Homepage = () => {
     const navigate = useNavigate();
     const [ showProfileMenu, setProfileMenu ] = useState<boolean>(false);
     const [ isPostClicked, setIsPostClicked ] = useState(false);
+    const [ isLoading, setIsLoading ] = useState<bolean>(false);
     const [ singlePostPopupData, setSinglePostPopupData ] = useState(
         {
                 audio: null,
@@ -98,16 +98,24 @@ const Homepage = () => {
             posts: [newPost, ...prev.posts]
         })) 
     }
-    const changePost = (postId) => {
-        /* setUserHomepageData(prev => {
-            
-        }) */
-    }   
-    const openPost = (data) => {
+    const changePost = (data: SinglePostDataType) => {
         const { post_id } = data;
+        /* setUserHomepageData(prev => ({
+            ...prev,
+            posts: prev.posts.map(post => post.post_id === post_id ? data : post);
+        })) */  
+
+    }   
+    const openPost = (data: SinglePostDataType) => {
         setIsPostClicked(prev => !prev);
         setSinglePostPopupData(data);
-    }    
+        changePost(data)
+        console.log('openPost: ', data)
+    }   
+    console.log(userHomepageData)
+    
+    if(!isLoading) return
+
     return(
         <div className='homepage' style={{overflow: isPostClicked ? 'hidden': ''}}>
             <div className='homepage-horizontal-border-line'></div>

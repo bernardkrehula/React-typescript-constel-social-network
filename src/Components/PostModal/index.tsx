@@ -4,15 +4,14 @@ import { format } from 'date-fns';
 import Btn from '../Btn';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import { FaComment, FaRegComment } from 'react-icons/fa';
-
 import type { SinglePostDataType } from '../SinglePost';
+
 type PostModalType = {
     data: SinglePostDataType;
     setIsPostClicked: (value: boolean) => void;
 }
 
 const PostModal = ({data, setIsPostClicked}: PostModalType) => {
-    console.log('U komponenti', data)
     const { user, image, text, created_at, likes, comments } = data;
     const { full_name, username, picture } = user;
     const [isLiked, setIsLiked ] = useState(false);
