@@ -40,22 +40,8 @@ const Homepage = () => {
             }
     );
     const [ userHomepageData, setUserHomepageData] = useState(
-        {posts: [{
-                audio: null,
-                comments: 0,
-                created_at: '',
-                image: '',
-                liked: false,
-                likes: 0,
-                post_id: '',
-                text: '',
-                user: {
-                    full_name: '',
-                    picture: '',
-                    username: ''
-                },
-                user_id: ''
-            }],
+        {
+            posts: [],
             status: ''
         });
     const [userProfileData, setUserProfileData] = useState<UserDataType>({
@@ -72,17 +58,18 @@ const Homepage = () => {
     
     useEffect(() => {
         const token = localStorage.getItem('token');
-        getUserProfileData(token);
-        getUserHomepageData(token);
+        fetchData(token);
     },[])
-
-    useEffect(() => {
-        if(userHomepageData.status) setIsLoading(true);
-    },[userHomepageData])
 
     const logoutUser = () => {
         localStorage.removeItem('token');
         navigate('/login');
+    }
+    const fetchData = async(token: string | null) => {
+        setIsLoading(true);
+        getUserProfileData(token);
+        getUserHomepageData(token);
+        setIsLoading(false);
     }
     const getUserProfileData = async(token: string | null) => {
         const userData = await requestUserData(token);
@@ -106,18 +93,18 @@ const Homepage = () => {
         const { post_id } = data;
         /* setUserHomepageData(prev => ({
             ...prev,
-            posts: prev.posts.map(post => post.post_id === post_id ? data : post);
-        })) */  
+            posts: prev.posts.map(post => post.post_id === post_id ? data : post)
+        }))  */
 
     }   
     const openPost = (data: SinglePostDataType) => {
         setIsPostClicked(prev => !prev);
         setSinglePostPopupData(data);
         changePost(data)
-        console.log('openPost: ', data)
-    }   
+        console.log('openPost: ', data, 'userHomepage: ', userHomepageData)
+       }   
 
-    if(!isLoading) return
+    if(isLoading) return
 
     else return(
         <div className='homepage' style={{overflow: isPostClicked ? 'hidden': ''}}>

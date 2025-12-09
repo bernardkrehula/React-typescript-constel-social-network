@@ -25,7 +25,7 @@ const PostModal = ({data, setIsPostClicked}: PostModalType) => {
     }
     const openComment = () => setIsCommentOpened(prev => !prev);
     //Prevent error from formatIso9075 
-    if(created_at === '') return
+    if(!created_at) return null
     const date = format(new Date(created_at), "dd.MM.y.");
 
     const handleOverlayClick = () => {

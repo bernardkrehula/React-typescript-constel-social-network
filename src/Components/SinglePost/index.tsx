@@ -39,10 +39,10 @@ const SinglePost = ({data, openPost}: SinglePostPropsType) => {
       setLikesNumber(prev => likeState ? prev += 1 : prev -= 1)
     }
     const openComment = () => setIsCommentOpened(prev => !prev);
-    //Prevent error from formatIso9075 
-    if(created_at === '') return
+ 
+    if(!created_at) return null
     const date = format(new Date(created_at), "dd.MM.y.")
-    console.log('singlePost: ', 'name: ', full_name, 'likes: ', likes, 'comments: ', comments) 
+ 
     return(
         <div className="single-post" onClick={() => openPost(data)}>
             <div className='post-user-data'>
