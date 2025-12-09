@@ -42,7 +42,7 @@ const SinglePost = ({data, openPost}: SinglePostPropsType) => {
     //Prevent error from formatIso9075 
     if(created_at === '') return
     const date = format(new Date(created_at), "dd.MM.y.")
-    /* console.log('singlePost: ', 'likes: ', likes, 'comments: ', comments) */
+    console.log('singlePost: ', 'name: ', full_name, 'likes: ', likes, 'comments: ', comments) 
     return(
         <div className="single-post" onClick={() => openPost(data)}>
             <div className='post-user-data'>

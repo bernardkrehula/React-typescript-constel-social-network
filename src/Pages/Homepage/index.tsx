@@ -20,7 +20,7 @@ const Homepage = () => {
     const navigate = useNavigate();
     const [ showProfileMenu, setProfileMenu ] = useState<boolean>(false);
     const [ isPostClicked, setIsPostClicked ] = useState(false);
-    const [ isLoading, setIsLoading ] = useState<bolean>(false);
+    const [ isLoading, setIsLoading ] = useState<boolean>(false);
     const [ singlePostPopupData, setSinglePostPopupData ] = useState(
         {
                 audio: null,
@@ -76,6 +76,10 @@ const Homepage = () => {
         getUserHomepageData(token);
     },[])
 
+    useEffect(() => {
+        if(userHomepageData.status) setIsLoading(true);
+    },[userHomepageData])
+
     const logoutUser = () => {
         localStorage.removeItem('token');
         navigate('/login');
@@ -112,11 +116,10 @@ const Homepage = () => {
         changePost(data)
         console.log('openPost: ', data)
     }   
-    console.log(userHomepageData)
-    
+
     if(!isLoading) return
 
-    return(
+    else return(
         <div className='homepage' style={{overflow: isPostClicked ? 'hidden': ''}}>
             <div className='homepage-horizontal-border-line'></div>
             <div className='menu'>
