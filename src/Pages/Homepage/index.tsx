@@ -12,17 +12,17 @@ import { FiLogOut } from 'react-icons/fi';
 import type { NewPostValueType } from '#/Components/PostCreator';
 import PostModal from '#/Components/PostModal';
 //Dodati da se moze lajkovati
-
 //Napraviti da se otvori modal na post 
 //Sredit typescript warninge
-//Provjeriti kako se sortiraju folderi i files
+
 const Homepage = () => {
     const navigate = useNavigate();
     const [ showProfileMenu, setProfileMenu ] = useState<boolean>(false);
     const [ isPostClicked, setIsPostClicked ] = useState(false);
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
-    const [ singlePostPopupData, setSinglePostPopupData ] = useState(
-        {
+    const [selectedPost, setSelectedPost] = useState<SinglePostDataType | null>(null);
+    const [ userHomepageData, setUserHomepageData] = useState(
+        {posts: [{
                 audio: null,
                 comments: 0,
                 created_at: '',
@@ -37,11 +37,7 @@ const Homepage = () => {
                     username: ''
                 },
                 user_id: ''
-            }
-    );
-    const [ userHomepageData, setUserHomepageData] = useState(
-        {
-            posts: [],
+            }],
             status: ''
         });
     const [userProfileData, setUserProfileData] = useState<UserDataType>({
@@ -72,37 +68,63 @@ const Homepage = () => {
         setIsLoading(false);
     }
     const getUserProfileData = async(token: string | null) => {
-        const userData = await requestUserData(token);
-        setUserProfileData((prev: UserDataType)  => ({
-            ...prev,
-            account: userData.account,
-            userLogin: true
-        }))
+        try {
+            const userData = await requestUserData(token);
+            setUserProfileData({
+                account: userData.account,
+                userLogin: true
+            });
+        } catch (error) {
+            console.error('Failed to fetch user data:', error);
+        }
     }
     const getUserHomepageData = async(token: string | null) => {
-        const homepageData = await requestHomepageData(token);
-        setUserHomepageData(homepageData);
+        try {
+            const homepageData = await requestHomepageData(token);
+            setUserHomepageData(homepageData);
+        } catch (error) {
+            console.error('Failed to fetch homepage data:', error);
+        }
     }
     const addNewPost = (newPost: NewPostValueType) => {
         setUserHomepageData(prev => ({
             ...prev,
             posts: [newPost, ...prev.posts]
         })) 
-    }
-    const changePost = (data: SinglePostDataType) => {
-        const { post_id } = data;
-        /* setUserHomepageData(prev => ({
-            ...prev,
-            posts: prev.posts.map(post => post.post_id === post_id ? data : post)
-        }))  */
-
-    }   
+    } 
+    //Dodati isExpanded u svaki singlePost
     const openPost = (data: SinglePostDataType) => {
-        setIsPostClicked(prev => !prev);
-        setSinglePostPopupData(data);
-        changePost(data)
-        console.log('openPost: ', data, 'userHomepage: ', userHomepageData)
-       }   
+        setSelectedPost(data);
+        setIsPostClicked(true);
+    }
+    const closeModal = () => {
+        setIsPostClicked(false);
+        setSelectedPost(null);
+    };
+    const likePost = (postId: string, currentlyLiked: boolean) => {
+        //Stavit u try blok iznad okinut request
+         setUserHomepageData(prev => ({
+            ...prev,
+            posts: prev.posts.map(post => {
+                if (post.post_id === postId) {
+                    return {
+                        ...post,
+                        liked: !currentlyLiked,
+                        likes: currentlyLiked ? post.likes - 1 : post.likes + 1
+                    };
+                }
+                return post;
+            })
+        }));
+
+        if (selectedPost && selectedPost.post_id === postId) {
+            setSelectedPost(prev => prev ? {
+                ...prev,
+                liked: !currentlyLiked,
+                likes: currentlyLiked ? prev.likes - 1 : prev.likes + 1
+            } : null);
+        }
+    }
 
     if(isLoading) return
 
@@ -122,19 +144,19 @@ const Homepage = () => {
             <div className='menu-border-line'></div>
             <div className='feed'>
                 <PostCreator addNewPost={addNewPost}/>
-                {isPostClicked && <PostModal data={singlePostPopupData} setIsPostClicked={setIsPostClicked}/>}
+                {isPostClicked && selectedPost && <PostModal data={selectedPost} closeModal={closeModal} likePost={likePost}/>}
                 {userHomepageData.posts.map((post, key) => {
-                    return  <SinglePost key={key} data={post} openPost={openPost}/>
+                    return  <SinglePost key={key} data={post} openPost={openPost} likePost={likePost}/>
                 })}
             </div>
             <div className='profile-container'>
                 <img src="/user-logo.jpg" onClick={displayProfleMenu}/>
                 {showProfileMenu && <div className='profile-menu'>
-                    <Btn onClick={logoutUser}>
+                    <Btn onClick={logoutUser} type='button'>
                         <FiLogOut />
                         <h2>Logout</h2>
                     </Btn>
-                    <Btn>
+                    <Btn type='button'>
                         <FaUser />
                         <h2>Profile</h2>
                     </Btn>

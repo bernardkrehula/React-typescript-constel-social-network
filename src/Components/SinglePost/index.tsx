@@ -24,27 +24,26 @@ export type SinglePostDataType = {
 type SinglePostPropsType = {
     data: SinglePostDataType;
     openPost: (value: SinglePostDataType) => void;
+    likePost: (value: string, booleanValue: boolean) => void;
 }
 
-const SinglePost = ({data, openPost}: SinglePostPropsType) => {
-    const { user, image, text, created_at, likes, comments } = data;
+const SinglePost = ({data, openPost, likePost}: SinglePostPropsType) => {
+    const { user, image, text, created_at, likes, comments, post_id, liked } = data;
     const { full_name, username, picture } = user;
-    const [isLiked, setIsLiked ] = useState(false);
     const [isCommentOpened, setIsCommentOpened] = useState(false);
-    const [ likesNumber, setLikesNumber] = useState(likes);
-
-    const likePost = () => {
-      const likeState = !isLiked;
-      setIsLiked(prev => !prev);
-      setLikesNumber(prev => likeState ? prev += 1 : prev -= 1)
-    }
-    const openComment = () => setIsCommentOpened(prev => !prev);
  
+    const handlePostlike = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        likePost(post_id, liked);
+    } 
+    const openComment = () => setIsCommentOpened(prev => !prev);
+
     if(!created_at) return null
-    const date = format(new Date(created_at), "dd.MM.y.")
+    const date = format(new Date(created_at), "dd.MM.y.");
  
     return(
-        <div className="single-post" onClick={() => openPost(data)}>
+        <div className="single-post">
+            <div onClick={() => openPost(data)}>
             <div className='post-user-data'>
                 <img src={picture}/>
                 <div className='post-names'>
@@ -60,21 +59,22 @@ const SinglePost = ({data, openPost}: SinglePostPropsType) => {
                     <img className='post-img' src={image} />
                 </div>}
             <p className='post-content'>{text}</p>
+            </div>
             <div className='post-btns'>
-                <Btn variation='primary--small' onClick={likePost}>
-                    {isLiked ?
+                <Btn variation='primary--small' onClick={handlePostlike} type='button'>
+                    {liked ?
                         <>
                             <AiFillLike/>
-                            <h2>{likesNumber}</h2>
+                            <h2>{likes}</h2>
                         </> 
                         :
                         <>
                             <AiOutlineLike/>
-                            <h2>{likesNumber}</h2>
+                            <h2>{likes}</h2>
                         </>
                     }
                 </Btn>
-                <Btn variation='primary--small' onClick={openComment}>
+                <Btn variation='primary--small' onClick={openComment} type='button'>
                     {isCommentOpened ? 
                     <>
                         <FaComment />

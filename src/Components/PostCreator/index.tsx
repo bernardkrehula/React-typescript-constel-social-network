@@ -8,20 +8,20 @@ type PostCreatorType = {
 }
 
 export type NewPostValueType = {
+    audio: null,
     comments: number,
-    created_at: Date,
+    created_at: string,
     image: string,
     liked: boolean,
     likes: number,
-    post_id: number | string,
+    post_id: string,
     text: string,
     user: {
         full_name: string,
         picture: string,
         username: string
     },
-    user_id: string,
-    isLiked: boolean
+    user_id: string
 }
 //new FormData na nju stavim tekst 
 const PostCreator = ({addNewPost}: PostCreatorType) => {
@@ -32,8 +32,9 @@ const PostCreator = ({addNewPost}: PostCreatorType) => {
     const passInputValue = (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
         const newPost: NewPostValueType = {
+                audio: null,
                 comments: 0,
-                created_at: new Date(),
+                created_at: new Date().toISOString(),
                 image: '',
                 liked: false,
                 likes: 0,
@@ -53,7 +54,7 @@ const PostCreator = ({addNewPost}: PostCreatorType) => {
     return(
         <form className='post-creator' onSubmit={passInputValue}>
             <img src="/user-logo.jpg"/>
-            <SingleInput placeholder="What's on your mind?" onChange={getInputValue} value={inputValue}/>
+            <SingleInput type='text' name='' placeholder="What's on your mind?" onChange={getInputValue} value={inputValue}/>
             <Btn variation='primary--large' type ='submit'>New Post</Btn>
         </form>
     )

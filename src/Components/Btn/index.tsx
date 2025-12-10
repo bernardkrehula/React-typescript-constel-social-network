@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import './index.css'
 
 type BtnType = {
-    onClick?: () => void;
+    onClick?: (e: React.MouseEvent) => void;
     variation?: string;
     children: string | ReactNode;
     type: 'button' | 'submit' | 'reset';

@@ -8,33 +8,27 @@ import type { SinglePostDataType } from '../SinglePost';
 
 type PostModalType = {
     data: SinglePostDataType;
-    setIsPostClicked: (value: boolean) => void;
+    closeModal: () => void;
+    likePost: (value: string, booleanValue: boolean) => void;
 }
 
-const PostModal = ({data, setIsPostClicked}: PostModalType) => {
-    const { user, image, text, created_at, likes, comments } = data;
+const PostModal = ({data, closeModal, likePost}: PostModalType) => {
+    const { user, image, text, created_at, likes, comments, post_id, liked } = data;
     const { full_name, username, picture } = user;
-    const [isLiked, setIsLiked ] = useState(false);
     const [isCommentOpened, setIsCommentOpened] = useState(false);
-    const [ likesNumber, setLikesNumber] = useState(likes);
  
-    const likePost = () => {
-      const likeState = !isLiked;
-      setIsLiked(prev => !prev);
-      setLikesNumber(prev => likeState ? prev += 1 : prev -= 1)
-    }
     const openComment = () => setIsCommentOpened(prev => !prev);
     //Prevent error from formatIso9075 
     if(!created_at) return null
     const date = format(new Date(created_at), "dd.MM.y.");
 
-    const handleOverlayClick = () => {
-        setIsPostClicked(false);
+    const handlePostlike = () => {
+        likePost(post_id, liked);
     }
 
     return(
         <>
-        <div className='modal-overlay' onClick={handleOverlayClick}></div>
+        <div className='modal-overlay' onClick={closeModal}></div>
         <div className='post-modal'>
             <div className='post-user-data'>
                 <img src={picture}/>
@@ -52,16 +46,16 @@ const PostModal = ({data, setIsPostClicked}: PostModalType) => {
                 </div>}
             <p className='post-content'>{text}</p>
             <div className='post-btns'>
-                <Btn variation='primary--small' onClick={likePost} type='button'>
-                    {isLiked ?
+                <Btn variation='primary--small' onClick={handlePostlike} type='button'>
+                    {liked ?
                         <>
                             <AiFillLike/>
-                            <h2>{likesNumber}</h2>
+                            <h2>{likes}</h2>
                         </> 
                         :
                         <>
                             <AiOutlineLike/>
-                            <h2>{likesNumber}</h2>
+                            <h2>{likes}</h2>
                         </>
                     }
                 </Btn>
