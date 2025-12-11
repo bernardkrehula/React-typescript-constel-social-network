@@ -9,7 +9,7 @@ type SingleInputType = {
     variation?: string;
     type: string;
     onChange: React.ChangeEventHandler<HTMLInputElement>
-    value: string
+    value?: string
 }
 
 //How to include prop conditionaly in react 

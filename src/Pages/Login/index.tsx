@@ -9,16 +9,13 @@ import { ValidationError } from '#/Classes/ValidationError';
 import { useNavigate } from 'react-router';
 import z, {  ZodError } from 'zod';
 
-//Kako ukloniti errore na vercelu
-//Kako prebaciti te funkcije u posebni file
-
 type FormInputTypes = {
     email: string;
     password: string;
 }
 
 const Login = () => {
-    const { register, handleSubmit } = useForm<FormInputTypes>();
+    const { register, handleSubmit } = useForm();
     const [ isDataFalse, setIsDataFalse ] = useState(false);
     const [ errorMessage, setErrorMessage ] = useState('');
     const navigate = useNavigate();
