@@ -3,16 +3,11 @@ import SingleInput from '#/Components/SingleInput';
 import './index.css'
 import { requestLoginData } from '#/api/getLoginData';
 import { useForm } from 'react-hook-form';
-import type { SubmitHandler } from 'react-hook-form';
+import type { FieldValue, FieldValues, SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
 import { ValidationError } from '#/Classes/ValidationError';
 import { useNavigate } from 'react-router';
 import z, {  ZodError } from 'zod';
-
-type FormInputTypes = {
-    email: string;
-    password: string;
-}
 
 const Login = () => {
     const { register, handleSubmit } = useForm();
@@ -20,7 +15,7 @@ const Login = () => {
     const [ errorMessage, setErrorMessage ] = useState('');
     const navigate = useNavigate();
 
-    const onSubmit: SubmitHandler<FormInputTypes> = async(data: FormInputTypes) => {
+    const onSubmit: SubmitHandler<FieldValues> = async(data: FieldValues) => {
         try{
             LocalErrorValidator(data);
             const responseData = await requestLoginData(data);
@@ -36,7 +31,7 @@ const Login = () => {
         }
     }
 
-    const LocalErrorValidator = (data: FormInputTypes) => {
+    const LocalErrorValidator = (data: FieldValues) => {
         const LoginSheme = z.object({
             email: z.email('Email has wrong format'),
             password: z.string().min(8, 'Password must have 8 or more characters')

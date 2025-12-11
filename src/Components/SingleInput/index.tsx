@@ -8,7 +8,7 @@ type SingleInputType = {
     register?: UseFormRegister<Record<string, string | number>>; //Ovo znaci kao da se uvijek ime definira kao string a to ime moze na sebe primiti string ili number
     variation?: string;
     type: string;
-    onChange: React.ChangeEventHandler<HTMLInputElement>
+    onChange?: React.ChangeEventHandler<HTMLInputElement>
     value?: string
 }
 

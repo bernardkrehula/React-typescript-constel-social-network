@@ -1,12 +1,8 @@
 import { ValidationError } from '#/Classes/ValidationError';
 import axios from 'axios';
+import type { FieldValues } from 'react-hook-form';
 
-type ValueTypes = {
-    email: string;
-    password: string;
-}
-
-export const requestLoginData = async(values: ValueTypes) => {
+export const requestLoginData = async(values: FieldValues) => {
     const { email, password } = values;
     try{
         const response = await axios.post('https://api.hr.constel.co/api/v1/login', {
