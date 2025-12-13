@@ -11,6 +11,7 @@ import { FaUser } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 import type { NewPostValueType } from '#/Components/PostCreator';
 import PostModal from '#/Components/PostModal';
+import { requestLikesStatus } from '#/api/requestLikesStatus';
 //Dodati da se moze lajkovati
 //Napraviti da se otvori modal na post 
 //Sredit typescript warninge
@@ -101,7 +102,8 @@ const Homepage = () => {
         setIsPostClicked(false);
         setSelectedPost(null);
     };
-    const likePost = (postId: string, currentlyLiked: boolean) => {
+    const likePost = (postId: string, currentlyLiked: boolean, method: string) => {
+        requestLikesStatus(postId, method)
         //Stavit u try blok iznad okinut request
          setUserHomepageData(prev => ({
             ...prev,

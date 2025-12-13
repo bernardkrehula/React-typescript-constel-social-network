@@ -12,7 +12,6 @@ type SingleInputType = {
     value?: string
 }
 
-//How to include prop conditionaly in react 
 const SingleInput = ({variation, placeholder, name, type, register, onChange, value}: SingleInputType) => {
     const extraconfig = {
         name: name,

@@ -24,7 +24,7 @@ export type SinglePostDataType = {
 type SinglePostPropsType = {
     data: SinglePostDataType;
     openPost: (value: SinglePostDataType) => void;
-    likePost: (value: string, booleanValue: boolean) => void;
+    likePost: (value: string, booleanValue: boolean, method: string) => void;
 }
 
 const SinglePost = ({data, openPost, likePost}: SinglePostPropsType) => {
@@ -34,7 +34,7 @@ const SinglePost = ({data, openPost, likePost}: SinglePostPropsType) => {
  
     const handlePostlike = (e: React.MouseEvent) => {
         e.stopPropagation();
-        likePost(post_id, liked);
+        likePost(post_id, liked, liked ? 'DELETE' : 'POST');
     } 
     const openComment = () => setIsCommentOpened(prev => !prev);
 

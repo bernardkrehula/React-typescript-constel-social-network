@@ -3,7 +3,7 @@ import SingleInput from '#/Components/SingleInput';
 import './index.css'
 import { requestLoginData } from '#/api/getLoginData';
 import { useForm } from 'react-hook-form';
-import type { FieldValue, FieldValues, SubmitHandler } from 'react-hook-form';
+import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
 import { ValidationError } from '#/Classes/ValidationError';
 import { useNavigate } from 'react-router';
@@ -36,7 +36,7 @@ const Login = () => {
             email: z.email('Email has wrong format'),
             password: z.string().min(8, 'Password must have 8 or more characters')
     })
-    const response = LoginSheme.safeParse(data)
+    const response = LoginSheme.safeParse(data);
         if(!response.success){
             throw response.error;
         }

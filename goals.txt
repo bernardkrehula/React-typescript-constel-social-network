@@ -16,3 +16,6 @@ He5r4dOVdy9x6IT
 
 13.8 u 6:00 
 -Pronaci i zamjeniti post sa postom u glavnom data koji se prikazuje na ekranu
+
+11.12 
+-Provjeriti kako pass default props to component
