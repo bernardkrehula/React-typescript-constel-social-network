@@ -104,7 +104,8 @@ const Homepage = () => {
     };
     const likePost = (postId: string, currentlyLiked: boolean, method: string) => {
         requestLikesStatus(postId, method)
-        //Stavit u try blok iznad okinut request
+/*         console.log(postId, method)
+ */        //Stavit u try blok iznad okinut request
          setUserHomepageData(prev => ({
             ...prev,
             posts: prev.posts.map(post => {
