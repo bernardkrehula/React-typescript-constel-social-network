@@ -41,15 +41,7 @@ const Homepage = () => {
             }],
             status: ''
         });
-    const [userProfileData, setUserProfileData] = useState<UserDataType>({
-        account: {
-            email: '',
-            full_name: '',
-            picture: '',
-            username: ''
-        },
-        userLogin: false
-    });
+    
     
     const displayProfleMenu = () => setProfileMenu(prev => !prev);
     
@@ -103,7 +95,10 @@ const Homepage = () => {
         setSelectedPost(null);
     };
     const likePost = (postId: string, currentlyLiked: boolean, method: string) => {
+        const token = localStorage.getItem('token')
         requestLikesStatus(postId, method)
+        getUserHomepageData(token)
+    
 /*         console.log(postId, method)
  */        //Stavit u try blok iznad okinut request
          setUserHomepageData(prev => ({
