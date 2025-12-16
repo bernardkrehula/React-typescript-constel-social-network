@@ -41,7 +41,15 @@ const Homepage = () => {
             }],
             status: ''
         });
-    
+    const [userProfileData, setUserProfileData] = useState<UserDataType>({
+        account: {
+            email: '',
+            full_name: '',
+            picture: '',
+            username: ''
+        },
+        userLogin: false
+    });
     
     const displayProfleMenu = () => setProfileMenu(prev => !prev);
     
