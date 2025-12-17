@@ -23,7 +23,15 @@ const Homepage = () => {
     const [ isPostClicked, setIsPostClicked ] = useState(false);
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
     const [selectedPost, setSelectedPost] = useState<SinglePostDataType | null>(null);
-    const [ selectedPostComments, setSelectedPostComments] = useState({comments: []});
+    const [ selectedPostComments, setSelectedPostComments] = useState([
+        {
+            created_at: '',
+            full_name: '',
+            picture: '',
+            text: '',
+            username: ''
+        }
+    ]);
     const [ userHomepageData, setUserHomepageData] = useState(
         {posts: [{
                 audio: null,
@@ -101,7 +109,6 @@ const Homepage = () => {
             setSelectedPost(data);
             setIsPostClicked(true);
             const comments = await requestComments(id, method);
-            console.log('komentari: ', comments) 
             setSelectedPostComments(comments)
         }
         catch(error){

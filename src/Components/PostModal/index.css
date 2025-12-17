@@ -38,3 +38,12 @@
     background: rgba(0, 0, 0, 0.3);
     left: 0;
 }
+.comments{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: rgb(21, 21, 21);
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+}

@@ -1,0 +1,25 @@
+.single-comment{
+    
+}
+.comment-profile{
+    display: flex;
+    gap: 10px;
+}
+.comment-profile img{
+    height: 40px;
+    border-radius: 100%;
+}
+.comment-profile-content{
+    color: white;
+    background-color: rgb(48, 48, 48);
+    width: fit-content;
+    padding-right: 20px;
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+}
+.single-comment p{
+    font-size: 1.8rem;
+    color: white;
+}

@@ -23,7 +23,6 @@ const PostModal = ({data, closeModal, likePost, selectedPostComments}: PostModal
     //Prevent error from formatIso9075 
     if(!created_at) return null
     const date = format(new Date(created_at), "dd.MM.y.");
-
     const handlePostlike = () => {
         likePost(post_id, liked);
     }
@@ -75,9 +74,11 @@ const PostModal = ({data, closeModal, likePost, selectedPostComments}: PostModal
                     }
                 </Btn>
             </div>
-            {/* {selectedPostComments.map(comment => {
-                return  <SingleComment comment={comment} />
-            })} */}
+            <div className='comments'>
+                {selectedPostComments.map(comment => {
+                    return  <SingleComment comment={comment} /> 
+                })} 
+            </div>
         </div>
         </>
     )
