@@ -8,9 +8,9 @@ type SingleCommentType = {
     username: string
 }
 
-const SingleComment = (data: SingleCommentType) => {
-    const { created_at, full_name, picture, text, username } = data;
-
+const SingleComment = (comment: SingleCommentType) => {
+    const { created_at, full_name, picture, text, username } = comment;
+    
     return(
         <div className='single-comment'>
 

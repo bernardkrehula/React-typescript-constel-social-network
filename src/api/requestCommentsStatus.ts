@@ -14,7 +14,7 @@ export const requestComments = async(id: string, method: string) => {
                 }
             })
         console.log('response: ', response.data.comments)
-        return { pageData: {token: response.data.comments}};
+        return response.data.comments;
     }
     
     catch(error: any){

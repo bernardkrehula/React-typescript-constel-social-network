@@ -96,13 +96,17 @@ const Homepage = () => {
         })) 
     } 
     //Dodati isExpanded u svaki singlePost
-    const openPost = (data: SinglePostDataType, id: string, method: string) => {
-        console.log(id, method)
-        setSelectedPost(data);
-        setIsPostClicked(true);
-        requestComments(id, method);
-        /* const commets = requestCommentsStatus(id, method);
-        console.log(commets) */
+    const openPost = async(data: SinglePostDataType, id: string, method: string) => {
+        try {
+            setSelectedPost(data);
+            setIsPostClicked(true);
+            const comments = await requestComments(id, method);
+            console.log('komentari: ', comments) 
+            setSelectedPostComments(comments)
+        }
+        catch(error){
+            console.error(error)
+        }
     }
     const closeModal = () => {
         setIsPostClicked(false);
@@ -158,7 +162,7 @@ const Homepage = () => {
             <div className='menu-border-line'></div>
             <div className='feed'>
                 <PostCreator addNewPost={addNewPost}/>
-                {isPostClicked && selectedPost && <PostModal data={selectedPost} closeModal={closeModal} likePost={likePost}/>}
+                {isPostClicked && selectedPost && <PostModal data={selectedPost} selectedPostComments={selectedPostComments} closeModal={closeModal} likePost={likePost}/>}
                 {userHomepageData.posts.map((post, key) => {
                     return  <SinglePost key={key} data={post} openPost={openPost} likePost={likePost} addComment={addComment}/>
                 })}

@@ -5,14 +5,16 @@ import Btn from '../Btn';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import { FaComment, FaRegComment } from 'react-icons/fa';
 import type { SinglePostDataType } from '../SinglePost';
+import SingleComment from '../SingleComment';
 
 type PostModalType = {
     data: SinglePostDataType;
     closeModal: () => void;
     likePost: (value: string, booleanValue: boolean) => void;
+    selectedPostComments: []
 }
 
-const PostModal = ({data, closeModal, likePost}: PostModalType) => {
+const PostModal = ({data, closeModal, likePost, selectedPostComments}: PostModalType) => {
     const { user, image, text, created_at, likes, comments, post_id, liked } = data;
     const { full_name, username, picture } = user;
     const [isCommentOpened, setIsCommentOpened] = useState(false);
@@ -73,6 +75,9 @@ const PostModal = ({data, closeModal, likePost}: PostModalType) => {
                     }
                 </Btn>
             </div>
+            {/* {selectedPostComments.map(comment => {
+                return  <SingleComment comment={comment} />
+            })} */}
         </div>
         </>
     )
