@@ -12,6 +12,7 @@ import { FiLogOut } from 'react-icons/fi';
 import type { NewPostValueType } from '#/Components/PostCreator';
 import PostModal from '#/Components/PostModal';
 import { requestLikesStatus } from '#/api/requestLikesStatus';
+import { requestCommentsStatus } from '#/api/requestCommentsStatus';
 //Dodati da se moze lajkovati
 //Napraviti da se otvori modal na post 
 //Sredit typescript warninge
@@ -94,9 +95,10 @@ const Homepage = () => {
         })) 
     } 
     //Dodati isExpanded u svaki singlePost
-    const openPost = (data: SinglePostDataType) => {
+    const openPost = (data: SinglePostDataType, id: string, method: string) => {
         setSelectedPost(data);
         setIsPostClicked(true);
+        requestCommentsStatus(id, method);
     }
     const closeModal = () => {
         setIsPostClicked(false);
@@ -131,6 +133,8 @@ const Homepage = () => {
             } : null);
         }
     }
+    const addComment = () => {
+    }
 
     if(isLoading) return
 
@@ -152,7 +156,7 @@ const Homepage = () => {
                 <PostCreator addNewPost={addNewPost}/>
                 {isPostClicked && selectedPost && <PostModal data={selectedPost} closeModal={closeModal} likePost={likePost}/>}
                 {userHomepageData.posts.map((post, key) => {
-                    return  <SinglePost key={key} data={post} openPost={openPost} likePost={likePost}/>
+                    return  <SinglePost key={key} data={post} openPost={openPost} likePost={likePost} addComment={addComment}/>
                 })}
             </div>
             <div className='profile-container'>

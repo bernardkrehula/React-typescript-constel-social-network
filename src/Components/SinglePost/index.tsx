@@ -23,11 +23,12 @@ export type SinglePostDataType = {
 }
 type SinglePostPropsType = {
     data: SinglePostDataType;
-    openPost: (value: SinglePostDataType) => void;
+    openPost: (value: SinglePostDataType, id: string, method: string) => void;
     likePost: (value: string, booleanValue: boolean, method: string) => void;
+    addComment: (value: string, method: string) => void;
 }
 
-const SinglePost = ({data, openPost, likePost}: SinglePostPropsType) => {
+const SinglePost = ({data, openPost, likePost, addComment}: SinglePostPropsType) => {
     const { user, image, text, created_at, likes, comments, post_id, liked } = data;
     const { full_name, username, picture } = user;
     const [isCommentOpened, setIsCommentOpened] = useState(false);
@@ -36,14 +37,17 @@ const SinglePost = ({data, openPost, likePost}: SinglePostPropsType) => {
         e.stopPropagation();
         likePost(post_id, liked, liked ? 'DELETE' : 'POST');
     } 
-    const openComment = () => setIsCommentOpened(prev => !prev);
+    const openComments = () => {
+        addComment(post_id, 'GET')
+        setIsCommentOpened(prev => !prev)
+    };
 
     if(!created_at) return null
     const date = format(new Date(created_at), "dd.MM.y.");
  
     return(
         <div className="single-post">
-            <div onClick={() => openPost(data)}>
+            <div onClick={() => openPost(data, post_id, 'GET')}>
             <div className='post-user-data'>
                 <img src={picture}/>
                 <div className='post-names'>
@@ -74,7 +78,7 @@ const SinglePost = ({data, openPost, likePost}: SinglePostPropsType) => {
                         </>
                     }
                 </Btn>
-                <Btn variation='primary--small' onClick={openComment} type='button'>
+                <Btn variation='primary--small' onClick={openComments} type='button'>
                     {isCommentOpened ? 
                     <>
                         <FaComment />

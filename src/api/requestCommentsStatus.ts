@@ -1,7 +1,7 @@
 import { ValidationError } from '#/Classes/ValidationError';
 import axios from 'axios';
 
-export const requestLikesStatus = async(id: string, method: string) => {
+export const requestCommentsStatus = async(id: string, method: string) => {
     const token = localStorage.getItem('token');
     try{
         const response = await axios({
