@@ -1,7 +1,7 @@
 import { ValidationError } from '#/Classes/ValidationError';
 import axios from 'axios';
 
-export const requestCommentsStatus = async(id: string, method: string) => {
+export const requestComments = async(id: string, method: string) => {
     const token = localStorage.getItem('token');
     try{
         const response = await axios({
@@ -13,8 +13,8 @@ export const requestCommentsStatus = async(id: string, method: string) => {
                 Authorization: `Bearer ${token}`
                 }
             })
-        console.log('response: ', response)
-        return { pageData: {token: response.data.token}};
+        console.log('response: ', response.data.comments)
+        return { pageData: {token: response.data.comments}};
     }
     
     catch(error: any){

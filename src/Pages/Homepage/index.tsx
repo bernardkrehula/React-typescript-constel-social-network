@@ -12,7 +12,7 @@ import { FiLogOut } from 'react-icons/fi';
 import type { NewPostValueType } from '#/Components/PostCreator';
 import PostModal from '#/Components/PostModal';
 import { requestLikesStatus } from '#/api/requestLikesStatus';
-import { requestCommentsStatus } from '#/api/requestCommentsStatus';
+import { requestComments } from '#/api/requestCommentsStatus';
 //Dodati da se moze lajkovati
 //Napraviti da se otvori modal na post 
 //Sredit typescript warninge
@@ -23,6 +23,7 @@ const Homepage = () => {
     const [ isPostClicked, setIsPostClicked ] = useState(false);
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
     const [selectedPost, setSelectedPost] = useState<SinglePostDataType | null>(null);
+    const [ selectedPostComments, setSelectedPostComments] = useState({comments: []});
     const [ userHomepageData, setUserHomepageData] = useState(
         {posts: [{
                 audio: null,
@@ -96,9 +97,12 @@ const Homepage = () => {
     } 
     //Dodati isExpanded u svaki singlePost
     const openPost = (data: SinglePostDataType, id: string, method: string) => {
+        console.log(id, method)
         setSelectedPost(data);
         setIsPostClicked(true);
-        requestCommentsStatus(id, method);
+        requestComments(id, method);
+        /* const commets = requestCommentsStatus(id, method);
+        console.log(commets) */
     }
     const closeModal = () => {
         setIsPostClicked(false);

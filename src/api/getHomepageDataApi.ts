@@ -6,7 +6,6 @@ export const requestHomepageData = async(token: string | null) => {
         const { data } = await axios.get('https://api.hr.constel.co/api/v1/posts', {
             headers: { Authorization: `Bearer ${token}` }
         })
-        console.log(data)
         return data;
     }catch(error){
         console.error(error);

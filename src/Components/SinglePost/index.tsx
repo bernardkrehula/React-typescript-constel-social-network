@@ -78,7 +78,7 @@ const SinglePost = ({data, openPost, likePost, addComment}: SinglePostPropsType)
                         </>
                     }
                 </Btn>
-                <Btn variation='primary--small' onClick={openComments} type='button'>
+                <Btn variation='primary--small' onClick={() => openPost(data, post_id, 'GET')} type='button'>
                     {isCommentOpened ? 
                     <>
                         <FaComment />
