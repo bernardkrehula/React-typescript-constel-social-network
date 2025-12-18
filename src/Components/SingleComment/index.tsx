@@ -1,6 +1,8 @@
 import './index.css'
-import { format } from 'date-fns';
+import { HiDotsVertical } from "react-icons/hi";
 import { formatDistanceStrict } from 'date-fns';
+import { LuDot } from "react-icons/lu";
+
 
 type SingleCommentType = {
     created_at: string;
@@ -21,9 +23,15 @@ const SingleComment = ({comment}: SingleCommentType) => {
             <div className='comment-profile'>
                 <img src={picture}/>
                 <div className='comment-profile-content'>
-                    <h2>{username}</h2>
-                    <h2>{time}</h2>
-                    <p>{text}</p>
+                    <div>
+                        <div className='comment-name-time'>
+                            <h2>{username}</h2>
+                            <LuDot />
+                            <h3>{time}</h3> 
+                        </div>
+                        <p>{text}</p>
+                    </div>
+                    <HiDotsVertical />
                 </div>
             </div>
         </div>

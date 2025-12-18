@@ -38,12 +38,14 @@
     background: rgba(0, 0, 0, 0.3);
     left: 0;
 }
+.post-modal hr{
+  margin-top: 15px;
+}
 .comments{
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  background-color: rgb(21, 21, 21);
-  margin-top: 20px;
+  gap: 18px;
+  margin-top: 10px;
   padding: 10px;
   border-radius: 5px;
 }

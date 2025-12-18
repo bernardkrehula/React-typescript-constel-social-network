@@ -74,6 +74,7 @@ const PostModal = ({data, closeModal, likePost, selectedPostComments}: PostModal
                     }
                 </Btn>
             </div>
+            <hr />
             <div className='comments'>
                 {selectedPostComments.map(comment => {
                     return  <SingleComment comment={comment} /> 
