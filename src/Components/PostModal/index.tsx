@@ -12,10 +12,11 @@ type PostModalType = {
     data: SinglePostDataType;
     closeModal: () => void;
     likePost: (value: string, booleanValue: boolean) => void;
-    selectedPostComments: []
+    selectedPostComments: [];
+    addComment: () => void;
 }
 
-const PostModal = ({data, closeModal, likePost, selectedPostComments}: PostModalType) => {
+const PostModal = ({data, closeModal, likePost, selectedPostComments, addComment}: PostModalType) => {
     const { user, image, text, created_at, likes, comments, post_id, liked } = data;
     const { full_name, username, picture } = user;
     const [isCommentOpened, setIsCommentOpened] = useState(false);
@@ -76,7 +77,7 @@ const PostModal = ({data, closeModal, likePost, selectedPostComments}: PostModal
                 </Btn>
             </div>
             <hr />
-            <CommentCreator />
+            <CommentCreator addComment={addComment}/>
             <div className='comments'>
                 {selectedPostComments.map((comment, key) => {
                     return  <SingleComment key={key} comment={comment} /> 

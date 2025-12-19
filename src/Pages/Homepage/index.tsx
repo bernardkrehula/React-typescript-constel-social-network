@@ -155,7 +155,9 @@ const Homepage = () => {
       );
     }
   };
-  const addComment = () => {};
+  const addComment = (newComment) => {
+    setSelectedPostComments(prev => [newComment, ...prev]);
+  };
 
   if (isLoading) return;
   else
@@ -230,6 +232,7 @@ const Homepage = () => {
               selectedPostComments={selectedPostComments}
               closeModal={closeModal}
               likePost={likePost}
+              addComment={addComment}
             />
           )}
           {userHomepageData.posts.map((post, key) => {
