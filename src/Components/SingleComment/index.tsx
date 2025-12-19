@@ -13,7 +13,6 @@ type SingleCommentType = {
 } 
 
 const SingleComment = ({comment}: SingleCommentType) => {
-     console.log('komentar: ', comment)
     const { created_at, full_name, picture, text, username } = comment;
     if(!created_at) return null
     const time = formatDistanceStrict(new Date(created_at), new Date(), { addSuffix: true });

@@ -49,3 +49,12 @@
   padding: 10px;
   border-radius: 5px;
 }
+.comment-creator{
+  display: flex;
+  margin-top: 10px;
+  gap: 10px;
+}
+.comment-creator img{
+  height: 50px;
+  border-radius: 100%;
+}

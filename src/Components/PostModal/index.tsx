@@ -6,6 +6,7 @@ import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import { FaComment, FaRegComment } from 'react-icons/fa';
 import type { SinglePostDataType } from '../SinglePost';
 import SingleComment from '../SingleComment';
+import SingleInput from '../SingleInput';
 
 type PostModalType = {
     data: SinglePostDataType;
@@ -75,9 +76,14 @@ const PostModal = ({data, closeModal, likePost, selectedPostComments}: PostModal
                 </Btn>
             </div>
             <hr />
+            <div className='comment-creator'>
+                <img src="/user-logo.jpg" />
+                <SingleInput />
+                <Btn>Add comment</Btn>
+            </div>
             <div className='comments'>
-                {selectedPostComments.map(comment => {
-                    return  <SingleComment comment={comment} /> 
+                {selectedPostComments.map((comment, key) => {
+                    return  <SingleComment key={key} comment={comment} /> 
                 })} 
             </div>
         </div>

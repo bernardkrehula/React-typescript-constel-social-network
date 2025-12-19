@@ -1,98 +1,132 @@
-import './index.css'
-import Btn from '../Btn'
-import { useState } from 'react';
-import { format } from 'date-fns';
-import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
-import { FaComment, FaRegComment } from 'react-icons/fa';
+import "./index.css";
+import Btn from "../Btn";
+import { useState } from "react";
+import { format } from "date-fns";
+import { AiFillLike, AiOutlineLike } from "react-icons/ai";
+import { FaComment, FaRegComment } from "react-icons/fa";
+import { requestComments } from "#/api/requestComments";
 
 export type SinglePostDataType = {
-        post_id: string;
-        user_id: string;
-        text: string;
-        image: string | null;
-        audio: null;
-        comments: number;
-        likes: number;
-        created_at: string;
-        user: {
-            username: string;
-            full_name: string;
-            picture: string;
-        },
-        liked: boolean; 
-}
+  post_id: string;
+  user_id: string;
+  text: string;
+  image: string | null;
+  audio: null;
+  comments: number;
+  likes: number;
+  created_at: string;
+  user: {
+    username: string;
+    full_name: string;
+    picture: string;
+  };
+  liked: boolean;
+};
 type SinglePostPropsType = {
-    data: SinglePostDataType;
-    openPost: (value: SinglePostDataType, id: string, method: string) => void;
-    likePost: (value: string, booleanValue: boolean, method: string) => void;
-    addComment: (value: string, method: string) => void;
-}
+  data: SinglePostDataType;
+  openPost: (value: SinglePostDataType) => void;
+  likePost: (value: string, booleanValue: boolean, method: string) => void;
+  addComment: (value: string, method: string) => void;
+};
 
-const SinglePost = ({data, openPost, likePost, addComment}: SinglePostPropsType) => {
-    const { user, image, text, created_at, likes, comments, post_id, liked } = data;
-    const { full_name, username, picture } = user;
-    const [isCommentOpened, setIsCommentOpened] = useState(false);
- 
-    const handlePostlike = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        likePost(post_id, liked, liked ? 'DELETE' : 'POST');
-    } 
-    const openComments = () => {
-        addComment(post_id, 'GET')
-        setIsCommentOpened(prev => !prev)
-    };
+const SinglePost = ({
+  data,
+  openPost,
+  likePost,
+  addComment,
+  setSelectedPostComments,
+}: SinglePostPropsType) => {
+  const { user, image, text, created_at, likes, comments, post_id, liked } = data;
+  const { full_name, username, picture } = user;
+  const [isCommentOpened, setIsCommentOpened] = useState(false);
 
-    if(!created_at) return null
-    const date = format(new Date(created_at), "dd.MM.y.");
- 
-    return(
-        <div className="single-post">
-            <div onClick={() => openPost(data, post_id, 'GET')}>
-            <div className='post-user-data'>
-                <img src={picture}/>
-                <div className='post-names'>
-                    <h2 className='username'>@{username}</h2>
-                    <h2 className='full-name'>{full_name}</h2>
-                </div>
-                <div className='post-time'>
-                    <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="calendar" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"></path></svg>
-                   <h2>{date}</h2>
-                </div>
-            </div>
-            {image && <div className='post-image-containter'>
-                    <img className='post-img' src={image} />
-                </div>}
-            <p className='post-content'>{text}</p>
-            </div>
-            <div className='post-btns'>
-                <Btn variation='primary--small' onClick={handlePostlike} type='button'>
-                    {liked ?
-                        <>
-                            <AiFillLike/>
-                            <h2>{likes}</h2>
-                        </> 
-                        :
-                        <>
-                            <AiOutlineLike/>
-                            <h2>{likes}</h2>
-                        </>
-                    }
-                </Btn>
-                <Btn variation='primary--small' onClick={() => openPost(data, post_id, 'GET')} type='button'>
-                    {isCommentOpened ? 
-                    <>
-                        <FaComment />
-                        <h2>{comments}</h2>
-                    </>
-                    :
-                    <>
-                        <FaRegComment />
-                        <h2>{comments}</h2>
-                    </>
-                    }
-                </Btn>
-            </div>
+  const handlePostlike = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    likePost(post_id, liked, liked ? "DELETE" : "POST");
+  };
+  const openComments = async () => {
+    /*         addComment(post_id, 'GET')
+     */ openPost(data);
+    try {
+      const comments = await requestComments(post_id, "GET");
+      setSelectedPostComments(comments); 
+      console.log('radi', comments)
+    } catch (error) {
+      console.error(error);
+    }
+    setIsCommentOpened((prev) => !prev);
+  };
+
+  if (!created_at) return null;
+  const date = format(new Date(created_at), "dd.MM.y.");
+
+  return (
+    <div className="single-post">
+      <div onClick={() => openPost(data, post_id, "GET")}>
+        <div className="post-user-data">
+          <img src={picture} />
+          <div className="post-names">
+            <h2 className="username">@{username}</h2>
+            <h2 className="full-name">{full_name}</h2>
+          </div>
+          <div className="post-time">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="far"
+              data-icon="calendar"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+            >
+              <path
+                fill="currentColor"
+                d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"
+              ></path>
+            </svg>
+            <h2>{date}</h2>
+          </div>
         </div>
-    )
-}
+        {image && (
+          <div className="post-image-containter">
+            <img className="post-img" src={image} />
+          </div>
+        )}
+        <p className="post-content">{text}</p>
+      </div>
+      <div className="post-btns">
+        <Btn variation="primary--small" onClick={handlePostlike} type="button">
+          {liked ? (
+            <>
+              <AiFillLike />
+              <h2>{likes}</h2>
+            </>
+          ) : (
+            <>
+              <AiOutlineLike />
+              <h2>{likes}</h2>
+            </>
+          )}
+        </Btn>
+        <Btn
+          variation="primary--small"
+          onClick={() => openComments()}
+          type="button"
+        >
+          {isCommentOpened ? (
+            <>
+              <FaComment />
+              <h2>{comments}</h2>
+            </>
+          ) : (
+            <>
+              <FaRegComment />
+              <h2>{comments}</h2>
+            </>
+          )}
+        </Btn>
+      </div>
+    </div>
+  );
+};
 export default SinglePost;
