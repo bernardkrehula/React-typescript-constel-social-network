@@ -78,8 +78,8 @@ const PostModal = ({data, closeModal, likePost, selectedPostComments}: PostModal
             <hr />
             <div className='comment-creator'>
                 <img src="/user-logo.jpg" />
-                <SingleInput />
-                <Btn>Add comment</Btn>
+                <SingleInput variation='input--mid'/>
+                <Btn variation='primary--mid'>Add comment</Btn>
             </div>
             <div className='comments'>
                 {selectedPostComments.map((comment, key) => {

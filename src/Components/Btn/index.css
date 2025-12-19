@@ -33,3 +33,10 @@
     color: white;
     background-color: rgb(241, 116, 38);
 }
+.primary--mid{
+    display: flex;
+    gap: 10px;
+    width: fit-content;
+    background-color: rgb(97, 30, 206);
+    white-space: nowrap;
+}
