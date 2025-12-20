@@ -19,16 +19,17 @@ type PostModalType = {
 }
 
 const PostModal = ({postData, closeModal, likePost, selectedPostComments, addComment}: PostModalType) => {
-    const { user, image, text, created_at, likes, comments, post_id, liked } = postData;
+    const { user, image, text, created_at, likes, comments: commentsNumber, post_id, liked } = postData;
     const { full_name, username, picture } = user;
     const [isCommentOpened, setIsCommentOpened] = useState(false);
 
     //Push comments in cache
-    const { data } = useQuery({
+    const { data: comments } = useQuery({
         queryKey: ['comments', post_id],
         queryFn: () => requestComments(post_id, 'GET')
     });
- 
+    console.log(postData)
+    console.log('query komentari', comments)
     const openComment = () => setIsCommentOpened(prev => !prev);
     //Prevent error from formatIso9075 
     if(!created_at) return null
@@ -74,12 +75,12 @@ const PostModal = ({postData, closeModal, likePost, selectedPostComments, addCom
                     {isCommentOpened ? 
                     <>
                         <FaComment />
-                        <h2>{comments}</h2>
+                        <h2>{commentsNumber}</h2>
                     </>
                     :
                     <>
                         <FaRegComment />
-                        <h2>{comments}</h2>
+                        <h2>{commentsNumber}</h2>
                     </>
                     }
                 </Btn>
@@ -87,12 +88,12 @@ const PostModal = ({postData, closeModal, likePost, selectedPostComments, addCom
             <hr />
             <CommentCreator addComment={addComment}/>
             <div className='comments'>
-                {selectedPostComments.map((comment, key) => {
+                {comments && comments.map((comment, key) => {
                     return  <SingleComment key={key} comment={comment} /> 
                 })} 
             </div>
         </div>
-        </>
+        </> 
     )
-}
+} 
 export default PostModal;
