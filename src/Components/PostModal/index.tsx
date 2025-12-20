@@ -7,19 +7,27 @@ import { FaComment, FaRegComment } from 'react-icons/fa';
 import type { SinglePostDataType } from '../SinglePost';
 import SingleComment from '../SingleComment';
 import CommentCreator from '../CommentCreator';
+import { useQuery } from '@tanstack/react-query';
+import { requestComments } from '#/api/requestComments';
 
 type PostModalType = {
-    data: SinglePostDataType;
+    postData: SinglePostDataType;
     closeModal: () => void;
     likePost: (value: string, booleanValue: boolean) => void;
     selectedPostComments: [];
     addComment: () => void;
 }
 
-const PostModal = ({data, closeModal, likePost, selectedPostComments, addComment}: PostModalType) => {
-    const { user, image, text, created_at, likes, comments, post_id, liked } = data;
+const PostModal = ({postData, closeModal, likePost, selectedPostComments, addComment}: PostModalType) => {
+    const { user, image, text, created_at, likes, comments, post_id, liked } = postData;
     const { full_name, username, picture } = user;
     const [isCommentOpened, setIsCommentOpened] = useState(false);
+
+    //Push comments in cache
+    const { data } = useQuery({
+        queryKey: ['comments', post_id],
+        queryFn: () => requestComments(post_id, 'GET')
+    });
  
     const openComment = () => setIsCommentOpened(prev => !prev);
     //Prevent error from formatIso9075 

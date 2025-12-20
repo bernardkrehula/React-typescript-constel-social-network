@@ -5,24 +5,24 @@ import React, { useState } from 'react';
 import { format } from 'date-fns';
 
 const CommentCreator = ({addComment}) => {
+    const time = format(new Date(), 'HH:mm');
     const [commentValue, setCommentValue] = useState<string>('');
     const [newComment, setNewComment] = useState({
-      created_at: "",
-      full_name: "bernard krehula",
-      picture: "",
-      text: "",
-      username: "",
+        comment_id: crypto.randomUUID(),
+        created_at: time,
+        full_name: "bernard krehula",
+        picture: "/user-logo.jpg",
+        text: "",
+        username: "bruxiii",
     })
-    const time = format(new Date(), 'H:m')
-    console.log('time')
     const changeCommentValue = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
+        setNewComment(prev => ({...prev, text: value}))
         setCommentValue(value);
     }
 
     const passCommentValueToParent = () => {
-        console.log(commentValue)
-        addComment(commentValue)
+        addComment(newComment)
         setCommentValue('');
     }
 

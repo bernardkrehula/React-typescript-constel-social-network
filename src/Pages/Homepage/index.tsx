@@ -156,8 +156,9 @@ const Homepage = () => {
     }
   };
   const addComment = (newComment) => {
-    setSelectedPostComments(prev => [newComment, ...prev]);
-  };
+    console.log('Novi komentar', newComment)
+/*     setSelectedPostComments(prev => [newComment, ...prev]);
+ */  };
 
   if (isLoading) return;
   else
@@ -228,7 +229,7 @@ const Homepage = () => {
           <PostCreator addNewPost={addNewPost} />
           {isPostClicked && selectedPost && (
             <PostModal
-              data={selectedPost}
+              postData={selectedPost}
               selectedPostComments={selectedPostComments}
               closeModal={closeModal}
               likePost={likePost}
