@@ -1,12 +1,12 @@
 import { ValidationError } from '#/Classes/ValidationError';
 import axios from 'axios';
 
-export const deleteComment = async(id: string, text: string) => {
+export const requestCommentDelete = async(postId: string, commentId: string) => {
     const token = localStorage.getItem('token');
     try{
         const response = await axios({
             method: 'DELETE',
-            url: `https://api.hr.constel.co/api/v1/posts/${id}/comments`,
+            url: `https://api.hr.constel.co/api/v1/posts/${postId}/comments/${commentId}`,
              
                 headers: {
                 'Content-Type': 'application/json',

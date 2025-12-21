@@ -7,18 +7,22 @@ import CommentPopUpModal from '../CommentPopUpModal';
 
 
 type SingleCommentType = {
-    created_at: string;
-    full_name: string;
-    picture: string;
-    text: string;
-    username: string
+    comment: {
+        comment_id: string;
+        created_at: string;
+        full_name: string;
+        picture: string;
+        text: string;
+        username: string;
+    }
+    postId: string;
 } 
 
-const SingleComment = ({comment}: SingleCommentType) => {
-    if(!comment) return null
+const SingleComment = ({comment, postId}: SingleCommentType) => {
+    if(!comment) return null;
     const [ isCommentClicked, setIsCommentClicked ] = useState<boolean>(false);
-    const { created_at, full_name, picture, text, username } = comment;
-
+    const { created_at, picture, text, username, comment_id: commentId } = comment;
+    console.log(comment)
     if(!created_at) return null
     const time = formatDistanceStrict(new Date(created_at), new Date(), { addSuffix: true });
     
@@ -39,7 +43,7 @@ const SingleComment = ({comment}: SingleCommentType) => {
                     </div>
                     <HiDotsVertical onClick={openCommentPopUpModal}/>
                 </div>
-                {isCommentClicked && <CommentPopUpModal />}
+                {isCommentClicked && <CommentPopUpModal username={username} commentId={commentId} postId={postId} />}
             </div>
         </div>
     )

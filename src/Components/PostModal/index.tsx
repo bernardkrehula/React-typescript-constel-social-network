@@ -1,9 +1,8 @@
 import './index.css'
-import { useState } from 'react';
 import { format } from 'date-fns';
 import Btn from '../Btn';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
-import { FaComment, FaRegComment } from 'react-icons/fa';
+import { FaRegComment } from 'react-icons/fa';
 import type { SinglePostDataType } from '../SinglePost';
 import SingleComment from '../SingleComment';
 import CommentCreator from '../CommentCreator';
@@ -17,13 +16,13 @@ type PostModalType = {
 }
 
 const PostModal = ({postData, closeModal, likePost}: PostModalType) => {
-    const { user, image, text, created_at, likes, comments: commentsNumber, post_id, liked } = postData;
+    const { user, image, text, created_at, likes, comments: commentsNumber, post_id: postId, liked } = postData;
     const { full_name, username, picture } = user;
 
     //Push comments in cache
     const { data: comments } = useQuery({
-        queryKey: ['comments', post_id],
-        queryFn: () => requestComments(post_id)
+        queryKey: ['comments', postId],
+        queryFn: () => requestComments(postId)
     });
 
     if(!created_at) return null
@@ -71,10 +70,10 @@ const PostModal = ({postData, closeModal, likePost}: PostModalType) => {
                 </Btn>
             </div>
             <hr />
-            <CommentCreator postId={post_id}/>
+            <CommentCreator postId={postId}/>
             <div className='comments'>
                 {comments && comments.map((comment, key) => {
-                    return  <SingleComment key={key} comment={comment} /> 
+                    return  <SingleComment key={key} comment={comment} postId={postId}/> 
                 })} 
             </div>
         </div>
