@@ -1,6 +1,8 @@
 .comment-popUp-modal{
     height: 50px;
     width: 70px;
+    transform-origin: left center;
+    animation: slideInFromLeft 220ms ease-out forwards;
 }
 .comment-popUp-modal button{
     display: flex;
@@ -10,5 +12,16 @@
 }
 .comment-popUp-modal h2{
     font-size: 1.4rem;
-    color: rgb(185, 185, 185);
+    color: rgb(214, 214, 214);
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-16px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
 }
