@@ -1,0 +1,14 @@
+.comment-popUp-modal{
+    height: 50px;
+    width: 70px;
+}
+.comment-popUp-modal button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+.comment-popUp-modal h2{
+    font-size: 1.4rem;
+    color: rgb(185, 185, 185);
+}

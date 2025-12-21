@@ -25,7 +25,7 @@ const PostModal = ({postData, closeModal, likePost}: PostModalType) => {
         queryKey: ['comments', post_id],
         queryFn: () => requestComments(post_id)
     });
-    console.log('komentari: ', comments)
+
     if(!created_at) return null
     const date = format(new Date(created_at), "dd.MM.y.");
     const handlePostlike = () => {

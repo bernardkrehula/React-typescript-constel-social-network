@@ -7,11 +7,11 @@ const CommentPopUpModal = ({}) => {
 
     return(
         <div className='comment-popUp-modal'>
-            <Btn>          
+            <Btn variation='secondary--small'>          
                 <h2>Edit</h2>
                 <FaPencil />
             </Btn>
-            <Btn>
+            <Btn variation='secondary--small'>
                <h2>Delete</h2> 
                <FaRegTrashCan />
             </Btn>

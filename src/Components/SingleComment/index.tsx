@@ -22,7 +22,7 @@ const SingleComment = ({comment}: SingleCommentType) => {
     if(!created_at) return null
     const time = formatDistanceStrict(new Date(created_at), new Date(), { addSuffix: true });
     
-    const openCommentPopUpModal = () => setIsCommentClicked(true);
+    const openCommentPopUpModal = () => setIsCommentClicked(prev => !prev);
 
     return(
         <div className='single-comment'>
@@ -38,8 +38,8 @@ const SingleComment = ({comment}: SingleCommentType) => {
                         <p>{text}</p>
                     </div>
                     <HiDotsVertical onClick={openCommentPopUpModal}/>
-                    {isCommentClicked && <CommentPopUpModal />}
                 </div>
+                {isCommentClicked && <CommentPopUpModal />}
             </div>
         </div>
     )
