@@ -13,7 +13,6 @@ export const requestComments = async(id: string) => {
                 Authorization: `Bearer ${token}`
                 }
             })
-        console.log('response: ', response.data.comments)
         return response.data.comments;
     }
     

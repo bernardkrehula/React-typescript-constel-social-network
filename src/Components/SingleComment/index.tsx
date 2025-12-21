@@ -2,6 +2,8 @@ import './index.css'
 import { HiDotsVertical } from "react-icons/hi";
 import { formatDistanceStrict } from 'date-fns';
 import { LuDot } from "react-icons/lu";
+import { useState } from 'react';
+import CommentPopUpModal from '../CommentPopUpModal';
 
 
 type SingleCommentType = {
@@ -13,12 +15,15 @@ type SingleCommentType = {
 } 
 
 const SingleComment = ({comment}: SingleCommentType) => {
-    console.log('komentar: ', comment)
     if(!comment) return null
+    const [ isCommentClicked, setIsCommentClicked ] = useState<boolean>(false);
     const { created_at, full_name, picture, text, username } = comment;
+
     if(!created_at) return null
     const time = formatDistanceStrict(new Date(created_at), new Date(), { addSuffix: true });
-   
+    
+    const openCommentPopUpModal = () => setIsCommentClicked(true);
+
     return(
         <div className='single-comment'>
             <div className='comment-profile'>
@@ -32,7 +37,8 @@ const SingleComment = ({comment}: SingleCommentType) => {
                         </div>
                         <p>{text}</p>
                     </div>
-                    <HiDotsVertical />
+                    <HiDotsVertical onClick={openCommentPopUpModal}/>
+                    {isCommentClicked && <CommentPopUpModal />}
                 </div>
             </div>
         </div>
