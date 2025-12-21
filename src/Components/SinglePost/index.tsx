@@ -32,29 +32,14 @@ type SinglePostPropsType = {
 const SinglePost = ({
   data,
   openPost,
-  likePost,
-  addComment,
-  setSelectedPostComments,
+  likePost
 }: SinglePostPropsType) => {
-  const { user, image, text, created_at, likes, comments, post_id, liked } = data;
+  const { user, image, text, created_at, likes, comments: commentsNumber, post_id, liked } = data;
   const { full_name, username, picture } = user;
-  const [isCommentOpened, setIsCommentOpened] = useState(false);
 
   const handlePostlike = (e: React.MouseEvent) => {
     e.stopPropagation();
     likePost(post_id, liked, liked ? "DELETE" : "POST");
-  };
-  const openComments = async () => {
-    /*         addComment(post_id, 'GET')
-     */ openPost(data);
-    try {
-      const comments = await requestComments(post_id, "GET");
-      setSelectedPostComments(comments); 
-      console.log('radi', comments)
-    } catch (error) {
-      console.error(error);
-    }
-    setIsCommentOpened((prev) => !prev);
   };
 
   if (!created_at) return null;
@@ -62,7 +47,7 @@ const SinglePost = ({
 
   return (
     <div className="single-post">
-      <div onClick={() => openPost(data, post_id, "GET")}>
+      <div onClick={() => openPost(data)}>
         <div className="post-user-data">
           <img src={picture} />
           <div className="post-names">
@@ -110,20 +95,10 @@ const SinglePost = ({
         </Btn>
         <Btn
           variation="primary--small"
-          onClick={() => openComments()}
           type="button"
         >
-          {isCommentOpened ? (
-            <>
-              <FaComment />
-              <h2>{comments}</h2>
-            </>
-          ) : (
-            <>
-              <FaRegComment />
-              <h2>{comments}</h2>
-            </>
-          )}
+          <FaRegComment />
+          <h2>{commentsNumber}</h2>
         </Btn>
       </div>
     </div>

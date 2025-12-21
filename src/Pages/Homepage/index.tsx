@@ -12,10 +12,6 @@ import { FiLogOut } from "react-icons/fi";
 import type { NewPostValueType } from "#/Components/PostCreator";
 import PostModal from "#/Components/PostModal";
 import { requestLikesStatus } from "#/api/requestLikesStatus";
-import { requestComments } from "#/api/requestComments";
-//Dodati da se moze lajkovati
-//Napraviti da se otvori modal na post
-//Sredit typescript warninge
 
 const Homepage = () => {
   const navigate = useNavigate();
@@ -25,15 +21,6 @@ const Homepage = () => {
   const [selectedPost, setSelectedPost] = useState<SinglePostDataType | null>(
     null
   );
-  const [selectedPostComments, setSelectedPostComments] = useState([
-    {
-      created_at: "",
-      full_name: "",
-      picture: "",
-      text: "",
-      username: "",
-    },
-  ]);
   const [userHomepageData, setUserHomepageData] = useState({
     posts: [
       {
@@ -230,7 +217,6 @@ const Homepage = () => {
           {isPostClicked && selectedPost && (
             <PostModal
               postData={selectedPost}
-              selectedPostComments={selectedPostComments}
               closeModal={closeModal}
               likePost={likePost}
               addComment={addComment}
@@ -244,7 +230,6 @@ const Homepage = () => {
                 openPost={openPost}
                 likePost={likePost}
                 addComment={addComment}
-                setSelectedPostComments={setSelectedPostComments}
               />
             );
           })}

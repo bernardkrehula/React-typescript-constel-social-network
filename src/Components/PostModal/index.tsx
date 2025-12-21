@@ -14,24 +14,18 @@ type PostModalType = {
     postData: SinglePostDataType;
     closeModal: () => void;
     likePost: (value: string, booleanValue: boolean) => void;
-    selectedPostComments: [];
-    addComment: () => void;
 }
 
-const PostModal = ({postData, closeModal, likePost, selectedPostComments, addComment}: PostModalType) => {
+const PostModal = ({postData, closeModal, likePost}: PostModalType) => {
     const { user, image, text, created_at, likes, comments: commentsNumber, post_id, liked } = postData;
     const { full_name, username, picture } = user;
-    const [isCommentOpened, setIsCommentOpened] = useState(false);
 
     //Push comments in cache
     const { data: comments } = useQuery({
         queryKey: ['comments', post_id],
-        queryFn: () => requestComments(post_id, 'GET')
+        queryFn: () => requestComments(post_id)
     });
-    console.log(postData)
-    console.log('query komentari', comments)
-    const openComment = () => setIsCommentOpened(prev => !prev);
-    //Prevent error from formatIso9075 
+    console.log('komentari: ', comments)
     if(!created_at) return null
     const date = format(new Date(created_at), "dd.MM.y.");
     const handlePostlike = () => {
@@ -71,22 +65,13 @@ const PostModal = ({postData, closeModal, likePost, selectedPostComments, addCom
                         </>
                     }
                 </Btn>
-                <Btn variation='primary--small' onClick={openComment} type='button'>
-                    {isCommentOpened ? 
-                    <>
-                        <FaComment />
-                        <h2>{commentsNumber}</h2>
-                    </>
-                    :
-                    <>
-                        <FaRegComment />
-                        <h2>{commentsNumber}</h2>
-                    </>
-                    }
+                <Btn variation='primary--small' type='button'>
+                    <FaRegComment />
+                    <h2>{commentsNumber}</h2>
                 </Btn>
             </div>
             <hr />
-            <CommentCreator addComment={addComment}/>
+            <CommentCreator postId={post_id}/>
             <div className='comments'>
                 {comments && comments.map((comment, key) => {
                     return  <SingleComment key={key} comment={comment} /> 
