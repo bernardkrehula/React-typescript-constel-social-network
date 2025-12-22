@@ -21,7 +21,7 @@ const CommentCreator = ({postId}) => {
 /*         setNewComment(prev => ({...prev, text: value}))
  */        setCommentValue(value);
     }
-    const { mutate: createComment, isLoading } = useCreateComment(postId);
+    const { mutate: createComment } = useCreateComment(postId);
 
     const passCommentValue = () => {
         if (!commentValue.trim()) return;

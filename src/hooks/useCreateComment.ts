@@ -1,6 +1,5 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { requestComments } from "#/api/requestComments"
 import { postComment } from "#/api/postComment";
 
 //Custom hook

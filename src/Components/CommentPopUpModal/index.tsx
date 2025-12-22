@@ -2,19 +2,14 @@ import './index.css'
 import { FaPencil } from "react-icons/fa6";
 import { FaRegTrashCan } from "react-icons/fa6";
 import Btn from '../Btn';
-import { requestCommentDelete } from '#/api/requestCommentDelete';
 
 type CommentPopUpModalType = {
     username: string;
-    postId: string;
     commentId: string;
+    deleteComment: (value: string) => void;
 }
 
-const CommentPopUpModal = ({username, postId, commentId}: CommentPopUpModalType) => {
-
-    const deleteComment = () => {
-        requestCommentDelete(postId, commentId);
-    }
+const CommentPopUpModal = ({username, commentId, deleteComment}: CommentPopUpModalType) => {
 
     return(
         <div className='comment-popUp-modal'>
@@ -22,7 +17,7 @@ const CommentPopUpModal = ({username, postId, commentId}: CommentPopUpModalType)
                 <h2>Edit</h2>
                 <FaPencil />
             </Btn>}
-            <Btn type='button' variation='secondary--small' onClick={deleteComment}>
+            <Btn type='button' variation='secondary--small' onClick={() => deleteComment(commentId)}>
                <h2>Delete</h2> 
                <FaRegTrashCan />
             </Btn>
