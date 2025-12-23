@@ -28,7 +28,7 @@ const SingleComment = ({comment, postId}: SingleCommentType) => {
     const time = formatDistanceStrict(new Date(created_at), new Date(), { addSuffix: true });
 
     const { mutate: deleteComment } = useDeleteComment(postId);
-    
+
     const openCommentPopUpModal = () => setIsCommentClicked(prev => !prev);
 
     return(
@@ -46,7 +46,7 @@ const SingleComment = ({comment, postId}: SingleCommentType) => {
                     </div>
                     <HiDotsVertical onClick={openCommentPopUpModal}/>
                 </div>
-                {isCommentClicked && <CommentPopUpModal username={username} deleteComment={deleteComment} commentId={commentId}/>}
+                {isCommentClicked && username === 'nemanja_malesija' && <CommentPopUpModal username={username} deleteComment={deleteComment} commentId={commentId}/>}
             </div>
         </div>
     )

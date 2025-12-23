@@ -5,6 +5,8 @@ import { format } from "date-fns";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { FaComment, FaRegComment } from "react-icons/fa";
 import { requestComments } from "#/api/requestComments";
+import { usePostLike } from "#/hooks/useLikePost";
+import { changeLikeStatus } from "#/api/changeLikeStatus";
 
 export type SinglePostDataType = {
   post_id: string;
@@ -25,21 +27,22 @@ export type SinglePostDataType = {
 type SinglePostPropsType = {
   data: SinglePostDataType;
   openPost: (value: SinglePostDataType) => void;
-  likePost: (value: string, booleanValue: boolean, method: string) => void;
+  likePost: (value: boolean) => void;
   addComment: (value: string, method: string) => void;
 };
 
 const SinglePost = ({
   data,
-  openPost,
-  likePost
+  openPost
 }: SinglePostPropsType) => {
-  const { user, image, text, created_at, likes, comments: commentsNumber, post_id, liked } = data;
+  const { user, image, text, created_at, likes, comments: commentsNumber, post_id: postId, liked } = data;
   const { full_name, username, picture } = user;
 
-  const handlePostlike = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    likePost(post_id, liked, liked ? "DELETE" : "POST");
+  const { mutate: likePost } = usePostLike(postId);
+  
+  const handlePostlike = () => {
+    likePost(liked);
+    console.log('like radi') 
   };
 
   if (!created_at) return null;

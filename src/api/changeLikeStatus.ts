@@ -1,11 +1,11 @@
 import { ValidationError } from '#/Classes/ValidationError';
 import axios from 'axios';
 
-export const requestLikesStatus = async(id: string, method: string) => {
+export const changeLikeStatus = async(id: string, liked: boolean) => {
     const token = localStorage.getItem('token');
     try{
         const response = await axios({
-            method: method,
+            method: liked ? 'DELETE' : 'POST',
             url: `https://api.hr.constel.co/api/v1/posts/${id}/like`,
              
                 headers: {
@@ -13,8 +13,8 @@ export const requestLikesStatus = async(id: string, method: string) => {
                 Authorization: `Bearer ${token}`
                 }
             })
-        console.log('response: ', response)
-        return { pageData: {token: response.data.token}};
+        console.log('response: ', response.data)
+        return response.data.status;
     }
     
     catch(error: any){

@@ -9,14 +9,14 @@ type CommentPopUpModalType = {
     deleteComment: (value: string) => void;
 }
 
-const CommentPopUpModal = ({username, commentId, deleteComment}: CommentPopUpModalType) => {
+const CommentPopUpModal = ({commentId, deleteComment}: CommentPopUpModalType) => {
 
     return(
         <div className='comment-popUp-modal'>
-            {username === 'nemanja_malesija' && <Btn type='button' variation='secondary--small'>          
+            <Btn type='button' variation='secondary--small'>          
                 <h2>Edit</h2>
                 <FaPencil />
-            </Btn>}
+            </Btn>
             <Btn type='button' variation='secondary--small' onClick={() => deleteComment(commentId)}>
                <h2>Delete</h2> 
                <FaRegTrashCan />

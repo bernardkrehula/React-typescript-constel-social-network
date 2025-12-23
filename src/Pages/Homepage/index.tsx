@@ -11,7 +11,7 @@ import { FaUser } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import type { NewPostValueType } from "#/Components/PostCreator";
 import PostModal from "#/Components/PostModal";
-import { requestLikesStatus } from "#/api/requestLikesStatus";
+import { changeLikeStatus } from "#/api/changeLikeStatus";
 
 const Homepage = () => {
   const navigate = useNavigate();
@@ -105,17 +105,17 @@ const Homepage = () => {
     setIsPostClicked(false);
     setSelectedPost(null);
   };
-  const likePost = (
+/*   const likePost = (
     postId: string,
     currentlyLiked: boolean,
     method: string
   ) => {
     const token = localStorage.getItem("token");
-    requestLikesStatus(postId, method);
+    changeLikeStatus(postId, method);
     getUserHomepageData(token);
 
     /*         console.log(postId, method)
-     */ //Stavit u try blok iznad okinut request
+     //Stavit u try blok iznad okinut request
     setUserHomepageData((prev) => ({
       ...prev,
       posts: prev.posts.map((post) => {
@@ -141,11 +141,7 @@ const Homepage = () => {
           : null
       );
     }
-  };
-  const addComment = (newComment) => {
-    console.log('Novi komentar', newComment)
-/*     setSelectedPostComments(prev => [newComment, ...prev]);
- */  };
+  }; */
 
   if (isLoading) return;
   else
@@ -218,9 +214,8 @@ const Homepage = () => {
             <PostModal
               postData={selectedPost}
               closeModal={closeModal}
-              likePost={likePost}
-              addComment={addComment}
-            />
+/*               likePost={likePost}
+ */            />
           )}
           {userHomepageData.posts.map((post, key) => {
             return (
@@ -228,9 +223,8 @@ const Homepage = () => {
                 key={key}
                 data={post}
                 openPost={openPost}
-                likePost={likePost}
-                addComment={addComment}
-              />
+/*                 likePost={likePost}
+ */              />
             );
           })}
         </div>
