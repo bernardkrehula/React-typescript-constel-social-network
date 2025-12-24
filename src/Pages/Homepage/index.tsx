@@ -12,88 +12,26 @@ import { FiLogOut } from "react-icons/fi";
 import type { NewPostValueType } from "#/Components/PostCreator";
 import PostModal from "#/Components/PostModal";
 import { changeLikeStatus } from "#/api/changeLikeStatus";
+import { useQuery } from "@tanstack/react-query";
 
 const Homepage = () => {
   const navigate = useNavigate();
   const [showProfileMenu, setProfileMenu] = useState<boolean>(false);
   const [isPostClicked, setIsPostClicked] = useState(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selectedPost, setSelectedPost] = useState<SinglePostDataType | null>(
     null
   );
-  const [userHomepageData, setUserHomepageData] = useState({
-    posts: [
-      {
-        audio: null,
-        comments: 0,
-        created_at: "",
-        image: "",
-        liked: false,
-        likes: 0,
-        post_id: "",
-        text: "",
-        user: {
-          full_name: "",
-          picture: "",
-          username: "",
-        },
-        user_id: "",
-      },
-    ],
-    status: "",
-  });
-  /* const [userProfileData, setUserProfileData] = useState<UserDataType>({
-    account: {
-      email: "",
-      full_name: "",
-      picture: "",
-      username: "",
-    },
-    userLogin: false,
-  }); */
-
+  const token = localStorage.getItem("token");
+  const { data: homepageData, isLoading } = useQuery({
+      queryKey: ['homepage'],
+      queryFn: () => requestHomepageData(token),
+      enabled: !!token
+    });
   const displayProfleMenu = () => setProfileMenu((prev) => !prev);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    fetchData(token);
-  }, []);
 
   const logoutUser = () => {
     localStorage.removeItem("token");
     navigate("/login");
-  };
-  const fetchData = async (token: string | null) => {
-    setIsLoading(true);
-    /* getUserProfileData(token); */
-    getUserHomepageData(token);
-    setIsLoading(false);
-  };
-  /* const getUserProfileData = async (token: string | null) => {
-    try {
-      const userData = await requestUserData(token);
-      setUserProfileData({
-        account: userData.account,
-        userLogin: true,
-      });
-    } catch (error) {
-      console.error("Failed to fetch user data:", error);
-    }
-  }; */
-  const getUserHomepageData = async (token: string | null) => {
-    try {
-      const homepageData = await requestHomepageData(token);
-      setUserHomepageData(homepageData);
-    } catch (error) {
-      console.error("Failed to fetch homepage data:", error);
-    }
-  };
-  //Trenutno nepotreban
-  const addNewPost = (newPost: NewPostValueType) => {
-    setUserHomepageData((prev) => ({
-      ...prev,
-      posts: [newPost, ...prev.posts],
-    }));
   };
 
   //Dodati isExpanded u svaki singlePost
@@ -142,8 +80,9 @@ const Homepage = () => {
       );
     }
   }; */
+ 
+  if (isLoading) return null;
 
-  if (isLoading) return;
   else
     return (
       <div
@@ -209,22 +148,20 @@ const Homepage = () => {
         </div>
         <div className="menu-border-line"></div>
         <div className="feed">
-          <PostCreator addNewPost={addNewPost} />
+          <PostCreator />
           {isPostClicked && selectedPost && (
             <PostModal
               postData={selectedPost}
               closeModal={closeModal}
-/*               likePost={likePost}
- */            />
+              />
           )}
-          {userHomepageData.posts.map((post, key) => {
+          {homepageData.posts.map((post, key) => {
             return (
               <SinglePost
                 key={key}
                 data={post}
                 openPost={openPost}
-/*                 likePost={likePost}
- */              />
+                />
             );
           })}
         </div>

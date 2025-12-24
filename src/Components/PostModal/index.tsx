@@ -8,6 +8,7 @@ import SingleComment from '../SingleComment';
 import CommentCreator from '../CommentCreator';
 import { useQuery } from '@tanstack/react-query';
 import { requestComments } from '#/api/requestComments';
+import { useEffect } from 'react';
 
 type PostModalType = {
     postData: SinglePostDataType;
@@ -19,7 +20,7 @@ const PostModal = ({postData, closeModal, likePost}: PostModalType) => {
     const { user, image, text, created_at, likes, comments: commentsNumber, post_id: postId, liked } = postData;
     const { full_name, username, picture } = user;
 
-    //Push comments in cache
+    //Get comments from cache
     const { data: comments } = useQuery({
         queryKey: ['comments', postId],
         queryFn: () => requestComments(postId)
@@ -28,9 +29,9 @@ const PostModal = ({postData, closeModal, likePost}: PostModalType) => {
     if(!created_at) return null
     const date = format(new Date(created_at), "dd.MM.y.");
     const handlePostlike = () => {
-        likePost(post_id, liked);
+        likePost(postId, liked);
     }
-
+    console.log('PostModal broj komentara: ', commentsNumber)
     return(
         <>
         <div className='modal-overlay' onClick={closeModal}></div>

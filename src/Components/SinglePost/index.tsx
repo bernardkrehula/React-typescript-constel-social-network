@@ -7,6 +7,7 @@ import { FaComment, FaRegComment } from "react-icons/fa";
 import { requestComments } from "#/api/requestComments";
 import { usePostLike } from "#/hooks/useLikePost";
 import { changeLikeStatus } from "#/api/changeLikeStatus";
+import { useQuery } from "@tanstack/react-query";
 
 export type SinglePostDataType = {
   post_id: string;
@@ -27,8 +28,6 @@ export type SinglePostDataType = {
 type SinglePostPropsType = {
   data: SinglePostDataType;
   openPost: (value: SinglePostDataType) => void;
-  likePost: (value: boolean) => void;
-  addComment: (value: string, method: string) => void;
 };
 
 const SinglePost = ({
@@ -39,12 +38,12 @@ const SinglePost = ({
   const { full_name, username, picture } = user;
 
   const { mutate: likePost } = usePostLike(postId);
-  
+
   const handlePostlike = () => {
     likePost(liked);
-    console.log('like radi') 
+    console.log('like radi', liked) 
   };
-
+ 
   if (!created_at) return null;
   const date = format(new Date(created_at), "dd.MM.y.");
 

@@ -1,5 +1,5 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { changeLikeStatus } from "#/api/changeLikeStatus";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 export const usePostLike = (postId: string) => {
   const queryClient = useQueryClient();
@@ -7,39 +7,38 @@ export const usePostLike = (postId: string) => {
   return useMutation({
     mutationFn: (liked: boolean) =>
       changeLikeStatus(postId, liked),
-    
+
     onMutate: async (liked: boolean) => {
-      await queryClient.cancelQueries(['post', postId]);
+      await queryClient.cancelQueries(['posts']);
 
-      const previousPost =
-        queryClient.getQueryData<any>(['post', postId]);
+      const previousPosts =
+        queryClient.getQueryData(['posts']);
 
-      queryClient.setQueryData(['post', postId], (old: any) => {
+      queryClient.setQueryData(['posts'], (old: any[]) => {
         if (!old) return old;
 
-        return {
-          ...old,
-          liked: !liked,
-          likes: liked ? old.likes - 1 : old.likes + 1
-        };
+        return old.map(post =>
+          post.post_id === postId
+            ? {
+                ...post,
+                liked: !liked,
+                likes: liked ? post.likes - 1 : post.likes + 1
+              }
+            : post
+        );
       });
 
-      return { previousPost };
+      return { previousPosts };
     },
 
-    // ❌ rollback
     onError: (_err, _liked, context) => {
-      if (context?.previousPost) {
-        queryClient.setQueryData(
-          ['post', postId],
-          context.previousPost
-        );
+      if (context?.previousPosts) {
+        queryClient.setQueryData(['posts'], context.previousPosts);
       }
     },
 
-    // 🔄 sigurnost
     onSettled: () => {
-      queryClient.invalidateQueries(['post', postId]);
+      queryClient.invalidateQueries(['posts']);
     }
   });
 };

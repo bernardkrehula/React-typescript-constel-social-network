@@ -2,6 +2,7 @@ import './index.css'
 import SingleInput from '../SingleInput';
 import Btn from '../Btn';
 import { useState } from 'react';
+import { useCreatePost } from '#/hooks/useCreatePost';
 
 type PostCreatorType = {
     addNewPost: (post: NewPostValueType) => void;
@@ -24,8 +25,9 @@ export type NewPostValueType = {
     user_id: string
 }
 //new FormData na nju stavim tekst 
-const PostCreator = ({addNewPost}: PostCreatorType) => {
+const PostCreator = () => {
     const [ inputValue, setInputValue ] = useState('');
+    const { mutate: createPost } = useCreatePost();
 
     const getInputValue = (e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
 
@@ -48,7 +50,7 @@ const PostCreator = ({addNewPost}: PostCreatorType) => {
                 user_id: crypto.randomUUID()
             }
         setInputValue('');
-        addNewPost(newPost);
+        createPost(newPost);
     };
 
     return(
