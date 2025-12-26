@@ -7,8 +7,11 @@ import CommentPopUpModal from '../CommentPopUpModal';
 import { useDeleteComment } from '#/hooks/useDeleteComment';
 
 
-type SingleCommentType = {
-    comment: {
+type SingleCommentTypes = {
+    comment: SingleCommentType;
+    postId: string;
+}
+export type SingleCommentType = {
         comment_id: string;
         created_at: string;
         full_name: string;
@@ -16,10 +19,8 @@ type SingleCommentType = {
         text: string;
         username: string;
     }
-    postId: string;
-} 
 
-const SingleComment = ({comment, postId}: SingleCommentType) => {
+const SingleComment = ({comment, postId}: SingleCommentTypes) => {
     if(!comment) return null;
     const [ isCommentClicked, setIsCommentClicked ] = useState<boolean>(false);
     const { created_at, picture, text, username, comment_id: commentId } = comment;

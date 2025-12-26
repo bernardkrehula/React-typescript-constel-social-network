@@ -4,7 +4,7 @@ import Btn from '../Btn';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
 import type { SinglePostDataType } from '../SinglePost';
-import SingleComment from '../SingleComment';
+import SingleComment, { type SingleCommentType } from '../SingleComment';
 import CommentCreator from '../CommentCreator';
 import { useQuery } from '@tanstack/react-query';
 import { requestComments } from '#/api/requestComments';
@@ -33,7 +33,7 @@ const PostModal = ({postData, closeModal}: PostModalType) => {
     const handlePostlike = () => {
         likePost(liked);
     }
-    console.log('PostModal broj komentara: ', commentsNumber)
+
     return(
         <>
         <div className='modal-overlay' onClick={closeModal}></div>
@@ -75,7 +75,7 @@ const PostModal = ({postData, closeModal}: PostModalType) => {
             <hr />
             <CommentCreator postId={postId}/>
             <div className='comments'>
-                {comments && comments.map((comment, key) => {
+                {comments && comments.map((comment: SingleCommentType, key: number) => {
                     return  <SingleComment key={key} comment={comment} postId={postId}/> 
                 })} 
             </div>
