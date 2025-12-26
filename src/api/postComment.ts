@@ -1,7 +1,7 @@
 import { ValidationError } from '#/Classes/ValidationError';
 import axios from 'axios';
 
-export const postComment = async(id: string, text: string) => {
+export const postComment = async(id: string | undefined, text: string) => {
     const token = localStorage.getItem('token');
     try{
         const response = await axios({

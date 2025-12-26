@@ -1,13 +1,9 @@
 import "./index.css";
 import Btn from "../Btn";
-import { useState } from "react";
 import { format } from "date-fns";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
-import { FaComment, FaRegComment } from "react-icons/fa";
-import { requestComments } from "#/api/requestComments";
+import { FaRegComment } from "react-icons/fa";
 import { usePostLike } from "#/hooks/useLikePost";
-import { changeLikeStatus } from "#/api/changeLikeStatus";
-import { useQuery } from "@tanstack/react-query";
 
 export type SinglePostDataType = {
   post_id: string;
@@ -27,13 +23,12 @@ export type SinglePostDataType = {
 };
 type SinglePostPropsType = {
   data: SinglePostDataType;
-  openPost: (value: SinglePostDataType) => void;
+  openPost: (value: string) => void;
 };
 
-const SinglePost = ({
-  data,
-  openPost
-}: SinglePostPropsType) => {
+const SinglePost = ({ data, openPost }: SinglePostPropsType) => {
+  if(!data) return null;
+
   const { user, image, text, created_at, likes, comments: commentsNumber, post_id: postId, liked } = data;
   const { full_name, username, picture } = user;
 
@@ -41,15 +36,14 @@ const SinglePost = ({
 
   const handlePostlike = () => {
     likePost(liked);
-    console.log('like radi', liked) 
   };
- 
+  
   if (!created_at) return null;
   const date = format(new Date(created_at), "dd.MM.y.");
 
   return (
     <div className="single-post">
-      <div onClick={() => openPost(data)}>
+      <div onClick={() => openPost(postId)}>
         <div className="post-user-data">
           <img src={picture} />
           <div className="post-names">

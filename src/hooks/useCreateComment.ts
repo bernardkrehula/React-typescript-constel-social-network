@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { postComment } from "#/api/postComment";
 
 //Custom hook
-export const useCreateComment = (postId: string) => {
+export const useCreateComment = (postId: string | undefined) => {
     //Daje pristup query cache
     const queryClient = useQueryClient();
     //Definira write operaciju
@@ -21,9 +21,9 @@ export const useCreateComment = (postId: string) => {
       const optimisticComment = {
         comment_id: `temp-${Date.now()}`,
         text: newText,
-        username: 'bruxiii', // ako imaš user state
-        full_name: 'bernard_krehula',
-        picture: '/user-logo.jpg',
+        username: 'nemanja_malesija', // ako imaš user state
+        full_name: 'Nemanja Malesija',
+        picture: 'https://constel-hr-frontend.s3.eu-central-1.amazonaws.com/nemanja_malesija.jpeg',
         created_at: new Date().toISOString(),
         optimistic: true
       };

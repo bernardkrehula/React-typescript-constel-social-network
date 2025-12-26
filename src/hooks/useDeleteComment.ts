@@ -11,8 +11,7 @@ export const useDeleteComment = (postId: string) => {
     onMutate: async (commentId: string) => {
       await queryClient.cancelQueries(['comments', postId]);
 
-      const previousComments =
-        queryClient.getQueryData<any[]>(['comments', postId]);
+      const previousComments = queryClient.getQueryData<any[]>(['comments', postId]);
 
       queryClient.setQueryData(['comments', postId], (old: any[] = []) =>
         old.filter(c => c.comment_id !== commentId)

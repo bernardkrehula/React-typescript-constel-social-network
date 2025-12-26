@@ -8,15 +8,14 @@ import SingleComment from '../SingleComment';
 import CommentCreator from '../CommentCreator';
 import { useQuery } from '@tanstack/react-query';
 import { requestComments } from '#/api/requestComments';
-import { useEffect } from 'react';
+import { usePostLike } from '#/hooks/useLikePost';
 
 type PostModalType = {
     postData: SinglePostDataType;
     closeModal: () => void;
-    likePost: (value: string, booleanValue: boolean) => void;
 }
 
-const PostModal = ({postData, closeModal, likePost}: PostModalType) => {
+const PostModal = ({postData, closeModal}: PostModalType) => {
     const { user, image, text, created_at, likes, comments: commentsNumber, post_id: postId, liked } = postData;
     const { full_name, username, picture } = user;
 
@@ -28,8 +27,11 @@ const PostModal = ({postData, closeModal, likePost}: PostModalType) => {
 
     if(!created_at) return null
     const date = format(new Date(created_at), "dd.MM.y.");
+
+    const { mutate: likePost } = usePostLike(postId);
+
     const handlePostlike = () => {
-        likePost(postId, liked);
+        likePost(liked);
     }
     console.log('PostModal broj komentara: ', commentsNumber)
     return(

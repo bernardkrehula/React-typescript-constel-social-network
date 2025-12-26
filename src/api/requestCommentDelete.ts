@@ -8,10 +8,10 @@ export const requestCommentDelete = async(postId: string, commentId: string) => 
             method: 'DELETE',
             url: `https://api.hr.constel.co/api/v1/posts/${postId}/comments/${commentId}`,
              
-                headers: {
+            headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`
-                }
+            }
             })
         return response.data.comments;
     }

@@ -1,26 +1,37 @@
 import PostCreator from "#/Components/PostCreator";
 import { useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./index.css";
 import SinglePost, { type SinglePostDataType } from "#/Components/SinglePost";
 import Btn from "#/Components/Btn";
 import { requestHomepageData } from "#/api/getHomepageDataApi";
-import { requestUserData } from "#/api/getUserData";
-import type { UserDataType } from "#/App";
 import { FaUser } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
-import type { NewPostValueType } from "#/Components/PostCreator";
 import PostModal from "#/Components/PostModal";
-import { changeLikeStatus } from "#/api/changeLikeStatus";
 import { useQuery } from "@tanstack/react-query";
+
+type PostValueType = {
+    audio: null,
+    comments: number,
+    created_at: string,
+    image: string,
+    liked: boolean,
+    likes: number,
+    post_id: string,
+    text: string,
+    user: {
+        full_name: string,
+        picture: string,
+        username: string
+    },
+    user_id: string
+}
 
 const Homepage = () => {
   const navigate = useNavigate();
   const [showProfileMenu, setProfileMenu] = useState<boolean>(false);
   const [isPostClicked, setIsPostClicked] = useState(false);
-  const [selectedPost, setSelectedPost] = useState<SinglePostDataType | null>(
-    null
-  );
+  const [selectedPostId, setSelectedPostId] = useState<string | null>('');
   const token = localStorage.getItem("token");
   const { data: homepageData, isLoading } = useQuery({
       queryKey: ['homepage'],
@@ -33,54 +44,18 @@ const Homepage = () => {
     localStorage.removeItem("token");
     navigate("/login");
   };
-
-  //Dodati isExpanded u svaki singlePost
-  const openPost = (data: SinglePostDataType) => {
-    setSelectedPost(data);
+  const openPost = (postId: string) => {
+    setSelectedPostId(postId);
     setIsPostClicked(true);
   };
   const closeModal = () => {
     setIsPostClicked(false);
-    setSelectedPost(null);
+    setSelectedPostId(null);
   };
-/*   const likePost = (
-    postId: string,
-    currentlyLiked: boolean,
-    method: string
-  ) => {
-    const token = localStorage.getItem("token");
-    changeLikeStatus(postId, method);
-    getUserHomepageData(token);
 
-    /*         console.log(postId, method)
-     //Stavit u try blok iznad okinut request
-    setUserHomepageData((prev) => ({
-      ...prev,
-      posts: prev.posts.map((post) => {
-        if (post.post_id === postId) {
-          return {
-            ...post,
-            liked: !currentlyLiked,
-            likes: currentlyLiked ? post.likes - 1 : post.likes + 1,
-          };
-        }
-        return post;
-      }),
-    }));
+  const selectedPost = homepageData?.posts.find(
+    (p: PostValueType) => p.post_id === selectedPostId);
 
-    if (selectedPost && selectedPost.post_id === postId) {
-      setSelectedPost((prev) =>
-        prev
-          ? {
-              ...prev,
-              liked: !currentlyLiked,
-              likes: currentlyLiked ? prev.likes - 1 : prev.likes + 1,
-            }
-          : null
-      );
-    }
-  }; */
- 
   if (isLoading) return null;
 
   else
@@ -155,7 +130,7 @@ const Homepage = () => {
               closeModal={closeModal}
               />
           )}
-          {homepageData.posts.map((post, key) => {
+          {homepageData.posts.map((post: SinglePostDataType, key: number) => {
             return (
               <SinglePost
                 key={key}
