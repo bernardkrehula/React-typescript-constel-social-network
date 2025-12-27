@@ -9,23 +9,21 @@ export const usePostLike = (postId: string) => {
       changeLikeStatus(postId, liked),
 
     onMutate: async (liked: boolean) => {
-      await queryClient.cancelQueries(['posts']);
+      await queryClient.cancelQueries(['homepage']);
 
-      const previousPosts =
-        queryClient.getQueryData(['posts']);
+      const previousPosts = queryClient.getQueryData(['homepage']);
 
-      queryClient.setQueryData(['posts'], (old: any[]) => {
-        if (!old) return old;
+      queryClient.setQueryData(['homepage'], (old: any[]) => {
+        if (!old?.posts) return old;
 
-        return old.map(post =>
-          post.post_id === postId
-            ? {
-                ...post,
-                liked: !liked,
-                likes: liked ? post.likes - 1 : post.likes + 1
-              }
-            : post
-        );
+        return{
+          ...old,
+          posts: old.posts.map(post =>
+            post.post_id === postId
+              ? { ...post, liked: !liked, likes: liked ? post.likes - 1 : post.likes + 1 }
+              : post 
+            ),
+        };
       });
 
       return { previousPosts };
@@ -33,12 +31,8 @@ export const usePostLike = (postId: string) => {
 
     onError: (_err, _liked, context) => {
       if (context?.previousPosts) {
-        queryClient.setQueryData(['posts'], context.previousPosts);
+        queryClient.setQueryData(['homepage'], context.previousPosts);
       }
-    },
-
-    onSettled: () => {
-      queryClient.invalidateQueries(['posts']);
     }
   });
 };

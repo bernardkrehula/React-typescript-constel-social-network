@@ -13,7 +13,6 @@ export const changeLikeStatus = async(id: string, liked: boolean) => {
                 Authorization: `Bearer ${token}`
                 }
             })
-        console.log('response: ', response.data)
         return response.data.status;
     }
     

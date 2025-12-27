@@ -9,6 +9,7 @@ import { FaUser } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import PostModal from "#/Components/PostModal";
 import { useQuery } from "@tanstack/react-query";
+//Napraviti responzivni dizajn sa css i sliku svakog stanja css
 
 type PostValueType = {
     audio: null,
@@ -52,7 +53,6 @@ const Homepage = () => {
     setIsPostClicked(false);
     setSelectedPostId(null);
   };
-
   const selectedPost = homepageData?.posts.find(
     (p: PostValueType) => p.post_id === selectedPostId);
 
@@ -124,16 +124,17 @@ const Homepage = () => {
         <div className="menu-border-line"></div>
         <div className="feed">
           <PostCreator />
+          {/* Za postModal napraviti novi request */}
           {isPostClicked && selectedPost && (
             <PostModal
               postData={selectedPost}
               closeModal={closeModal}
               />
           )}
-          {homepageData.posts.map((post: SinglePostDataType, key: number) => {
+          {homepageData.posts.map((post: SinglePostDataType) => {
             return (
               <SinglePost
-                key={key}
+                key={post.post_id}
                 data={post}
                 openPost={openPost}
                 />
@@ -141,7 +142,7 @@ const Homepage = () => {
           })}
         </div>
         <div className="profile-container">
-          <img src="/user-logo.jpg" onClick={displayProfleMenu} />
+          <img src="https://constel-hr-frontend.s3.eu-central-1.amazonaws.com/nemanja_malesija.jpeg" onClick={displayProfleMenu} />
           {showProfileMenu && (
             <div className="profile-menu">
               <Btn onClick={logoutUser} type="button">

@@ -6,16 +6,9 @@ HomePage
 malesija.nemanja@gmail.com
 He5r4dOVdy9x6IT
 
-23.11
--U getLoginData Napraviti if usporedbu sa custom errorom iz klase 
--Destrukturirati podatke sa error requesta tako da do login data dodu cisti podaci naci samo poruka errora
-
-12.8 
--Promjeniti da je dizajn modala na klik realativan kontentu u modalu ✔
--Rijesiti errore u post modalu
-
-13.8 u 6:00 
--Pronaci i zamjeniti post sa postom u glavnom data koji se prikazuje na ekranu
-
-11.12 
--Provjeriti kako pass default props to component
+ZA ODRADITI
+//Posalji request za komentar neoptimisticno, nepotrebno za komentare (useCreateComment)
+//Napraviti fetch request za post (PostModal)
+//Neki state napraviti user, isUserClicked (Singlecomment)
+//Maknuti sve svg i staviti react icons, u btn staviti umjesto react fragment div, a umjesto h2 span (SinglePost)
+//Napraviti responzivni dizajn sa css i sliku svakog stanja css

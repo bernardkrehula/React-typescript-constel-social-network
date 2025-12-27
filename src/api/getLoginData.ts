@@ -13,7 +13,6 @@ export const requestLoginData = async(values: FieldValues) => {
             'Content-Type': 'application/json; charset=utf-8'
             }
         })
-        console.log('response: ', response)
         return { pageData: {token: response.data.token}};
     }
     

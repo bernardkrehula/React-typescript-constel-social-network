@@ -76,6 +76,7 @@ const SinglePost = ({ data, openPost }: SinglePostPropsType) => {
         <p className="post-content">{text}</p>
       </div>
       <div className="post-btns">
+        {/* Staviti fragment pod div i h2 zamjenit spanom*/}
         <Btn variation="primary--small" onClick={handlePostlike} type="button">
           {liked ? (
             <>

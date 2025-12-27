@@ -77,10 +77,6 @@ export const useCreatePost = () => {
           ),
         };
       });
-    },
-
-    onSettled: () => {
-      queryClient.invalidateQueries(['homepage']);
-    },
+    }
   });
 };

@@ -16,7 +16,6 @@ export const postComment = async(id: string | undefined, text: string) => {
                     text: text,
                 }
             })
-        console.log('response: ', response, 'text:', text, 'id: ', id)
         return response.data.comments;
     }
     

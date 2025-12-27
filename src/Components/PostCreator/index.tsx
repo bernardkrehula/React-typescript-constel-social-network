@@ -18,7 +18,7 @@ const PostCreator = () => {
 
     return(
         <form className='post-creator' onSubmit={passInputValue}>
-            <img src="/user-logo.jpg"/>
+            <img src="https://constel-hr-frontend.s3.eu-central-1.amazonaws.com/nemanja_malesija.jpeg"/>
             <SingleInput type='text' name='' placeholder="What's on your mind?" onChange={getInputValue} value={inputValue}/>
             <Btn variation='primary--large' type ='submit'>New Post</Btn>
         </form>

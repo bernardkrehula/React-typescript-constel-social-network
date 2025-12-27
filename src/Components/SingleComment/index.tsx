@@ -47,7 +47,8 @@ const SingleComment = ({comment, postId}: SingleCommentTypes) => {
                     </div>
                     <HiDotsVertical onClick={openCommentPopUpModal}/>
                 </div>
-                {isCommentClicked && username === 'nemanja_malesija' && <CommentPopUpModal username={username} deleteComment={deleteComment} commentId={commentId}/>}
+                {/* Neki state napraviti user, isUserClicked */}
+                {isCommentClicked && <CommentPopUpModal username={username} deleteComment={deleteComment} commentId={commentId}/>}
             </div>
         </div>
     )
