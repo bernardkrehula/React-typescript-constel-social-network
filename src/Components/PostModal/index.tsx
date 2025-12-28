@@ -9,19 +9,37 @@ import CommentCreator from '../CommentCreator';
 import { useQuery } from '@tanstack/react-query';
 import { requestComments } from '#/api/requestComments';
 import { usePostLike } from '#/hooks/useLikePost';
+import { useEffect, useState } from 'react';
 
 type PostModalType = {
     postData: SinglePostDataType;
     closeModal: () => void;
 }
 
-const PostModal = ({postData, closeModal, comments}: PostModalType) => {
+const PostModal = ({postData, closeModal}: PostModalType) => {
     const {  image, text, created_at, likes, comments: commentsNumber, post_id: postId, liked } = postData;
-    console.log('PostModal: ', )
+    const [selectedPostComments, setSelectedPostComments] = useState(null);
+    const [ comments, setComments ] = useState([{
+            comment_id: "",
+            text: "",
+            created_at: "",
+            username: "",
+            full_name: "",
+            picture: ""
+        }]
+    );
+    
+   /*  console.log('PostModal: ', postData) */
     /* const { full_name, username, picture } = user; */
+    const getComments = async() => {
+        const postComments = await requestComments(postId);
+        setComments(postComments);
+    } 
+    useEffect(() => {
+        getComments();
+    },[postData])
 
-
-
+    
     if(!created_at) return null
     const date = format(new Date(created_at), "dd.MM.y.");
 

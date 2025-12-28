@@ -11,6 +11,7 @@ import PostModal from "#/Components/PostModal";
 import { useQuery } from "@tanstack/react-query";
 import { requestSinglePost } from "#/api/requestSinglePost";
 import { requestComments } from "#/api/requestComments";
+import { requestPostLikes } from "#/api/requestPostLikes";
 //Napraviti responzivni dizajn sa css i sliku svakog stanja css
 
 type PostValueType = {
@@ -35,8 +36,7 @@ const Homepage = () => {
   const [showProfileMenu, setProfileMenu] = useState<boolean>(false);
   const [isPostClicked, setIsPostClicked] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
-  const [selectedPostComments, setSelectedPostComments] = useState(null);
-  const 
+  const [selectedPostLikes, setSelectedPostLikes] = useState(null);
   const token = localStorage.getItem("token");
   const { data: homepageData, isLoading } = useQuery({
       queryKey: ['homepage'],
@@ -52,10 +52,8 @@ const Homepage = () => {
   const openPost = async(postId: string) => {
     setIsPostClicked(true);
     const post = await requestSinglePost(postId);
-    const comments = await requestComments(postId);
+    /* const likes = await requestPostLikes(postId); */
     setSelectedPost(post);
-    setSelectedPostComments(comments)
-    console.log('requested post: ', post)
   };
   const closeModal = () => {
     setIsPostClicked(false);
@@ -135,7 +133,6 @@ const Homepage = () => {
             <PostModal
               postData={selectedPost}
               closeModal={closeModal}
-              comments={selectedPostComments}
               />
           )}
           {homepageData.posts.map((post: SinglePostDataType) => {
