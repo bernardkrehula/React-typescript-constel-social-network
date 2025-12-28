@@ -15,15 +15,12 @@ type PostModalType = {
     closeModal: () => void;
 }
 
-const PostModal = ({postData, closeModal}: PostModalType) => {
-    const { user, image, text, created_at, likes, comments: commentsNumber, post_id: postId, liked } = postData;
-    const { full_name, username, picture } = user;
+const PostModal = ({postData, closeModal, comments}: PostModalType) => {
+    const {  image, text, created_at, likes, comments: commentsNumber, post_id: postId, liked } = postData;
+    console.log('PostModal: ', )
+    /* const { full_name, username, picture } = user; */
 
-    //Get comments from cache
-    const { data: comments } = useQuery({
-        queryKey: ['comments', postId],
-        queryFn: () => requestComments(postId)
-    });
+
 
     if(!created_at) return null
     const date = format(new Date(created_at), "dd.MM.y.");
@@ -39,11 +36,11 @@ const PostModal = ({postData, closeModal}: PostModalType) => {
         <div className='modal-overlay' onClick={closeModal}></div>
         <div className='post-modal'>
             <div className='post-user-data'>
-                <img src={picture}/>
+                {/*<img src={picture}/>
                 <div className='post-names'>
                     <h2 className='username'>@{username}</h2>
                     <h2 className='full-name'>{full_name}</h2>
-                </div>
+                </div>  */}
                 <div className='post-time'>
                     <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="calendar" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"></path></svg>
                    <h2>{date}</h2>
@@ -69,7 +66,7 @@ const PostModal = ({postData, closeModal}: PostModalType) => {
                 </Btn>
                 <Btn variation='primary--small' type='button'>
                     <FaRegComment />
-                    <h2>{commentsNumber}</h2>
+                    <h2>{comments.length}</h2>
                 </Btn>
             </div>
             <hr />

@@ -9,6 +9,8 @@ import { FaUser } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import PostModal from "#/Components/PostModal";
 import { useQuery } from "@tanstack/react-query";
+import { requestSinglePost } from "#/api/requestSinglePost";
+import { requestComments } from "#/api/requestComments";
 //Napraviti responzivni dizajn sa css i sliku svakog stanja css
 
 type PostValueType = {
@@ -32,7 +34,9 @@ const Homepage = () => {
   const navigate = useNavigate();
   const [showProfileMenu, setProfileMenu] = useState<boolean>(false);
   const [isPostClicked, setIsPostClicked] = useState(false);
-  const [selectedPostId, setSelectedPostId] = useState<string | null>('');
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [selectedPostComments, setSelectedPostComments] = useState(null);
+  const 
   const token = localStorage.getItem("token");
   const { data: homepageData, isLoading } = useQuery({
       queryKey: ['homepage'],
@@ -45,16 +49,18 @@ const Homepage = () => {
     localStorage.removeItem("token");
     navigate("/login");
   };
-  const openPost = (postId: string) => {
-    setSelectedPostId(postId);
+  const openPost = async(postId: string) => {
     setIsPostClicked(true);
+    const post = await requestSinglePost(postId);
+    const comments = await requestComments(postId);
+    setSelectedPost(post);
+    setSelectedPostComments(comments)
+    console.log('requested post: ', post)
   };
   const closeModal = () => {
     setIsPostClicked(false);
-    setSelectedPostId(null);
+ 
   };
-  const selectedPost = homepageData?.posts.find(
-    (p: PostValueType) => p.post_id === selectedPostId);
 
   if (isLoading) return null;
 
@@ -129,6 +135,7 @@ const Homepage = () => {
             <PostModal
               postData={selectedPost}
               closeModal={closeModal}
+              comments={selectedPostComments}
               />
           )}
           {homepageData.posts.map((post: SinglePostDataType) => {
