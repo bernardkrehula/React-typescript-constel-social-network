@@ -4,8 +4,7 @@ import { formatDistanceStrict } from 'date-fns';
 import { LuDot } from "react-icons/lu";
 import { useState } from 'react';
 import CommentPopUpModal from '../CommentPopUpModal';
-import { useDeleteComment } from '#/hooks/useDeleteComment';
-
+import { requestCommentDelete } from '#/api/requestCommentDelete';
 
 type SingleCommentTypes = {
     comment: SingleCommentType;
@@ -23,13 +22,15 @@ export type SingleCommentType = {
 const SingleComment = ({comment, postId}: SingleCommentTypes) => {
     if(!comment) return null;
     const [ isCommentClicked, setIsCommentClicked ] = useState<boolean>(false);
+    const [ userComment, setUserComment ] = useState(comment);
     const { created_at, picture, text, username, comment_id: commentId } = comment;
 
     if(!created_at) return null
     const time = formatDistanceStrict(new Date(created_at), new Date(), { addSuffix: true });
 
-    const { mutate: deleteComment } = useDeleteComment(postId);
-
+    const deleteComment = () => {
+        requestCommentDelete(postId, commentId)
+    }
     const openCommentPopUpModal = () => setIsCommentClicked(prev => !prev);
 
     return(
