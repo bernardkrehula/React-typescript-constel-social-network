@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { usePostLike } from "#/hooks/useLikePost";
+import { FaRegCalendar } from "react-icons/fa6";
 
 export type SinglePostDataType = {
   post_id: string;
@@ -51,20 +52,7 @@ const SinglePost = ({ data, openComments }: SinglePostPropsType) => {
             <h2 className="full-name">{full_name}</h2>
           </div>
           <div className="post-time">
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              data-prefix="far"
-              data-icon="calendar"
-              role="img"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 448 512"
-            >
-              <path
-                fill="currentColor"
-                d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"
-              ></path>
-            </svg>
+            <FaRegCalendar />
             <h2>{date}</h2>
           </div>
         </div>
@@ -76,18 +64,17 @@ const SinglePost = ({ data, openComments }: SinglePostPropsType) => {
         <p className="post-content">{text}</p>
       </div>
       <div className="post-btns">
-        {/* Staviti fragment pod div i h2 zamjenit spanom*/}
         <Btn variation="primary--small" onClick={handlePostlike} type="button">
           {liked ? (
-            <>
+            <div className="like-icon">
               <AiFillLike />
-              <h2>{likes}</h2>
-            </>
+              <span>{likes}</span>
+            </div>
           ) : (
-            <>
+            <div className="like-icon">
               <AiOutlineLike />
-              <h2>{likes}</h2>
-            </>
+              <span>{likes}</span>
+            </div>
           )}
         </Btn>
         <Btn
@@ -95,8 +82,10 @@ const SinglePost = ({ data, openComments }: SinglePostPropsType) => {
           type="button"
           onClick={() => openComments(postId)}
         >
-          <FaRegComment />
-          <h2>{commentsNumber}</h2>
+          <div className="comment-icon">
+            <FaRegComment />
+            <span>{commentsNumber}</span>
+          </div>
         </Btn>
       </div>
     </div>

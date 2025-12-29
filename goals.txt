@@ -9,6 +9,6 @@ He5r4dOVdy9x6IT
 ZA ODRADITI
 //Posalji request za komentar neoptimisticno, nepotrebno za komentare (useCreateComment) - odradeno
 //Napraviti fetch request za post (PostModal) - nepotrebno
-//Neki state napraviti user, isUserClicked (Singlecomment)
+//Neki state napraviti user, isUserClicked (Singlecomment) - rijeseno
 //Maknuti sve svg i staviti react icons, u btn staviti umjesto react fragment div, a umjesto h2 span (SinglePost)
 //Napraviti responzivni dizajn sa css i sliku svakog stanja css

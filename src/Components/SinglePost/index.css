@@ -30,12 +30,13 @@
     display: flex;
     margin-left: auto;
     align-items: center;
-    gap: 5px;
+    gap: 2px;
     color: rgb(151, 151, 151);
 }
 .post-time svg{
-    height: 20px;
-    margin-bottom: 4px;
+    height: 16px;
+    width: 16px;
+    margin-bottom: 2px;
     color: rgb(151, 151, 151);
 }
 .post-image-containter{
@@ -62,11 +63,25 @@
     gap: 10px;
     margin-top: 10px;
 }
+.like-icon{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.like-icon span{
+    color: white;
+    font-size: 2.16rem;
+}
+.comment-icon{
+    display: flex;
+    align-items: center;
+    gap: 5px; 
+}
+.comment-icon span{
+    color: white;
+    font-size: 2.15rem;
+}
 .post-btns svg{
     height: 22px;
     width: 22px;
-}
-.post-btns h2{
-    color: white;
-    font-size: 2rem;
 }
