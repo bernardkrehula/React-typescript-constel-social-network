@@ -6,10 +6,11 @@ import Btn from '../Btn';
 type CommentPopUpModalType = {
     username: string;
     commentId: string;
-    deleteComment: (value: string) => void;
+    deleteComment: (postId: string, commentId: string) => void;
+    postId: string;
 }
 
-const CommentPopUpModal = ({commentId, deleteComment}: CommentPopUpModalType) => {
+const CommentPopUpModal = ({commentId, deleteComment, postId}: CommentPopUpModalType) => {
 
     return(
         <div className='comment-popUp-modal'>
@@ -17,7 +18,7 @@ const CommentPopUpModal = ({commentId, deleteComment}: CommentPopUpModalType) =>
                 <h2>Edit</h2>
                 <FaPencil />
             </Btn>
-            <Btn type='button' variation='secondary--small' onClick={() => deleteComment(commentId)}>
+            <Btn type='button' variation='secondary--small' onClick={() => deleteComment(postId, commentId)}>
                <h2>Delete</h2> 
                <FaRegTrashCan />
             </Btn>

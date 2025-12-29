@@ -13,7 +13,7 @@ export const requestCommentDelete = async(postId: string, commentId: string) => 
                 Authorization: `Bearer ${token}`
             }
             })
-        return response.data.comments;
+        return response.data.status;
     }
     
     catch(error: any){

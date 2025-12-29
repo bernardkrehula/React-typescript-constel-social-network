@@ -31,16 +31,15 @@
   cursor: pointer;
 }
 .modal-overlay{
-    position: fixed;
-    height: 100vh;
-    width: 100%;
-    backdrop-filter: blur(8px);
-    background: rgba(0, 0, 0, 0.3);
-    left: 0;
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.3);
+  left: 0;
+  cursor: pointer;
 }
-.post-modal hr{
-  margin-top: 15px;
-}
+
 .comments{
   display: flex;
   flex-direction: column;
@@ -49,3 +48,26 @@
   padding: 10px;
   border-radius: 5px;
 }
+.loader {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border: 5px solid #FFF;
+  border-bottom-color: #FF3D00;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  top: 350px;
+  left: 700px;
+  z-index: 2;
+  }
+
+  @keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+  } 

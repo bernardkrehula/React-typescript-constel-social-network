@@ -19,7 +19,7 @@ const Login = () => {
         try{
             LocalErrorValidator(data);
             const responseData = await requestLoginData(data);
-            localStorage.setItem('token', responseData.pageData.token)
+            localStorage.setItem('token', responseData.pageData.token);
             navigate('/homepage');  
         }
         catch(error){
@@ -30,7 +30,7 @@ const Login = () => {
             }
         }
     }
-
+    
     const LocalErrorValidator = (data: FieldValues) => {
         const LoginSheme = z.object({
             email: z.email('Email has wrong format'),

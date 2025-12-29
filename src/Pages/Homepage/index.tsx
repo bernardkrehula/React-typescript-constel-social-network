@@ -7,11 +7,10 @@ import Btn from "#/Components/Btn";
 import { requestHomepageData } from "#/api/getHomepageDataApi";
 import { FaUser } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
-import PostModal from "#/Components/PostModal";
+import Comments from "#/Components/Comments";
 import { useQuery } from "@tanstack/react-query";
-import { requestSinglePost } from "#/api/requestSinglePost";
-import { requestComments } from "#/api/requestComments";
-import { requestPostLikes } from "#/api/requestPostLikes";
+import type { UserDataType } from "#/App";
+import { requestUserData } from "#/api/getUserData";
 //Napraviti responzivni dizajn sa css i sliku svakog stanja css
 
 type PostValueType = {
@@ -34,30 +33,32 @@ type PostValueType = {
 const Homepage = () => {
   const navigate = useNavigate();
   const [showProfileMenu, setProfileMenu] = useState<boolean>(false);
-  const [isPostClicked, setIsPostClicked] = useState(false);
-  const [selectedPost, setSelectedPost] = useState(null);
-  const [selectedPostLikes, setSelectedPostLikes] = useState(null);
+  const [isCommetnsBtnClicked, setisCommetnsBtnClicked] = useState(false);
+  const [selectedPostId, setSelectedPostId] = useState<string>('');
   const token = localStorage.getItem("token");
   const { data: homepageData, isLoading } = useQuery({
       queryKey: ['homepage'],
       queryFn: () => requestHomepageData(token),
       enabled: !!token
     });
+
+  const userProfileData = useQuery({
+      queryKey: ['userProfileData'],
+      queryFn: () => requestUserData(token)
+  });
+
   const displayProfleMenu = () => setProfileMenu((prev) => !prev);
 
   const logoutUser = () => {
     localStorage.removeItem("token");
     navigate("/login");
   };
-  const openPost = async(postId: string) => {
-    setIsPostClicked(true);
-    const post = await requestSinglePost(postId);
-    /* const likes = await requestPostLikes(postId); */
-    setSelectedPost(post);
+  const openComments = async(postId: string) => {
+    setisCommetnsBtnClicked(true);
+    setSelectedPostId(postId);
   };
-  const closeModal = () => {
-    setIsPostClicked(false);
- 
+  const closeComments = () => {
+    setisCommetnsBtnClicked(false); 
   };
 
   if (isLoading) return null;
@@ -66,7 +67,7 @@ const Homepage = () => {
     return (
       <div
         className="homepage"
-        style={{ overflow: isPostClicked ? "hidden" : "" }}
+        style={{ overflow: isCommetnsBtnClicked ? "hidden" : "" }}
       >
         <div className="homepage-horizontal-border-line"></div>
         <div className="menu">
@@ -128,19 +129,15 @@ const Homepage = () => {
         <div className="menu-border-line"></div>
         <div className="feed">
           <PostCreator />
-          {/* Za postModal napraviti novi request */}
-          {isPostClicked && selectedPost && (
-            <PostModal
-              postData={selectedPost}
-              closeModal={closeModal}
-              />
+          {isCommetnsBtnClicked && (
+            <Comments postId={selectedPostId} closeComments={closeComments}/>
           )}
           {homepageData.posts.map((post: SinglePostDataType) => {
             return (
               <SinglePost
                 key={post.post_id}
                 data={post}
-                openPost={openPost}
+                openComments={openComments}
                 />
             );
           })}

@@ -23,10 +23,10 @@ export type SinglePostDataType = {
 };
 type SinglePostPropsType = {
   data: SinglePostDataType;
-  openPost: (value: string) => void;
+  openComments: (value: string) => void;
 };
 
-const SinglePost = ({ data, openPost }: SinglePostPropsType) => {
+const SinglePost = ({ data, openComments }: SinglePostPropsType) => {
   if(!data) return null;
 
   const { user, image, text, created_at, likes, comments: commentsNumber, post_id: postId, liked } = data;
@@ -43,7 +43,7 @@ const SinglePost = ({ data, openPost }: SinglePostPropsType) => {
 
   return (
     <div className="single-post">
-      <div onClick={() => openPost(postId)}>
+      <div>
         <div className="post-user-data">
           <img src={picture} />
           <div className="post-names">
@@ -93,6 +93,7 @@ const SinglePost = ({ data, openPost }: SinglePostPropsType) => {
         <Btn
           variation="primary--small"
           type="button"
+          onClick={() => openComments(postId)}
         >
           <FaRegComment />
           <h2>{commentsNumber}</h2>

@@ -4,11 +4,11 @@ import { formatDistanceStrict } from 'date-fns';
 import { LuDot } from "react-icons/lu";
 import { useState } from 'react';
 import CommentPopUpModal from '../CommentPopUpModal';
-import { requestCommentDelete } from '#/api/requestCommentDelete';
 
 type SingleCommentTypes = {
     comment: SingleCommentType;
     postId: string;
+    deleteComment: (postId: string, commentId: string) => void;
 }
 export type SingleCommentType = {
         comment_id: string;
@@ -19,28 +19,19 @@ export type SingleCommentType = {
         username: string;
     }
 
-const SingleComment = ({comment, postId}: SingleCommentTypes) => {
+const SingleComment = ({comment, postId, deleteComment}: SingleCommentTypes) => {
     if(!comment) return null;
+    console.log(comment)
     const [ isCommentClicked, setIsCommentClicked ] = useState<boolean>(false);
-    const [ userComment, setUserComment ] = useState({
-        comment_id: '',
-        created_at: '',
-        full_name: '',
-        picture: '',
-        text: '',
-        username: ''
-    });
     const { created_at, picture, text, username, comment_id: commentId } = comment;
+    const [userComment, setUserComment] = useState();
 
     if(!created_at) return null
     const time = formatDistanceStrict(new Date(created_at), new Date(), { addSuffix: true });
 
-    const deleteComment = () => {
-        requestCommentDelete(postId, commentId);
-    }
     const openCommentPopUpModal = () => {
         setIsCommentClicked(prev => !prev);
-        setUserComment(comment);
+        /* setUserComment(comment); */
     }
 
     return(
@@ -59,7 +50,7 @@ const SingleComment = ({comment, postId}: SingleCommentTypes) => {
                     <HiDotsVertical onClick={openCommentPopUpModal}/>
                 </div>
                 {/* Neki state napraviti user, isUserClicked */}
-                {isCommentClicked && userComment && <CommentPopUpModal username={username} deleteComment={deleteComment} commentId={commentId}/>}
+                {isCommentClicked && <CommentPopUpModal username={username} deleteComment={deleteComment} commentId={commentId} postId={postId}/>}
             </div>
         </div>
     )

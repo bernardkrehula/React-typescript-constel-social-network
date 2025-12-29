@@ -6,9 +6,10 @@ import { postComment } from '#/api/postComment';
 
 type CommentCreatorType = {
     postId?: string;
+    getComments: () => void;
 }
 
-const CommentCreator = ({postId}: CommentCreatorType) => {
+const CommentCreator = ({postId, getComments}: CommentCreatorType) => {
     const [commentValue, setCommentValue] = useState<string>('');
     const changeCommentValue = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -18,6 +19,7 @@ const CommentCreator = ({postId}: CommentCreatorType) => {
     const addComment = () => {
         if (!commentValue.trim()) return;
         postComment(postId, commentValue);
+        getComments();
         setCommentValue('');
     };
    

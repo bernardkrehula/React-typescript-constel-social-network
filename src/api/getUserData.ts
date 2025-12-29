@@ -6,7 +6,7 @@ export const requestUserData = async(token: string | null) => {
         const response = await axios.get('https://api.hr.constel.co/api/v1/accounts/me', {
             headers: { Authorization: `Bearer ${token}` }
         })
-        return response;
+        return response.data.account;
     }catch(error){
         console.error(error);
     }

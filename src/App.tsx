@@ -15,7 +15,7 @@ const App = () => {
     const navigate = useNavigate();
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if(!token) navigate('/login')
+        if(!token) navigate('/login');
         else navigate('/homepage');
     },[])
     
