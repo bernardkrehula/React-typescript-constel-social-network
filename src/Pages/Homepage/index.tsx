@@ -42,7 +42,7 @@ const Homepage = () => {
       enabled: !!token
     });
 
-  const userProfileData = useQuery({
+  const {data: userProfileData} = useQuery({
       queryKey: ['userProfileData'],
       queryFn: () => requestUserData(token)
   });
@@ -130,7 +130,7 @@ const Homepage = () => {
         <div className="feed">
           <PostCreator />
           {isCommetnsBtnClicked && (
-            <Comments postId={selectedPostId} closeComments={closeComments}/>
+            <Comments postId={selectedPostId} closeComments={closeComments} userProfileData={userProfileData}/>
           )}
           {homepageData.posts.map((post: SinglePostDataType) => {
             return (

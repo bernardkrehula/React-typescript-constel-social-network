@@ -8,9 +8,10 @@ import { requestCommentDelete } from '#/api/requestCommentDelete';
 type PostModalType = {
     postId: string;
     closeComments: () => void;
+    userProfileData: SingleCommentType;
 }
 
-const Comments = ({postId, closeComments}: PostModalType) => {
+const Comments = ({postId, closeComments, userProfileData}: PostModalType) => {
     const [ isLoading, setIsLoading ] = useState<boolean>(true);
     const [ comments, setComments ] = useState([{
             comment_id: "",
@@ -51,7 +52,7 @@ const Comments = ({postId, closeComments}: PostModalType) => {
             <CommentCreator postId={postId} getComments={getComments}/>
             <div className='comments'>
                 {comments && comments.map((comment: SingleCommentType, key: number) => {
-                    return  <SingleComment key={key} comment={comment} postId={postId} deleteComment={deleteComment}/> 
+                    return  <SingleComment key={key} comment={comment} postId={postId} deleteComment={deleteComment} userProfileData={userProfileData}/> 
                 })} 
             </div>
         </div> 

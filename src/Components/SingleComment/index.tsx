@@ -9,6 +9,7 @@ type SingleCommentTypes = {
     comment: SingleCommentType;
     postId: string;
     deleteComment: (postId: string, commentId: string) => void;
+    userProfileData: SingleCommentType;
 }
 export type SingleCommentType = {
         comment_id: string;
@@ -19,19 +20,22 @@ export type SingleCommentType = {
         username: string;
     }
 
-const SingleComment = ({comment, postId, deleteComment}: SingleCommentTypes) => {
+const SingleComment = ({comment, postId, deleteComment, userProfileData}: SingleCommentTypes) => {
     if(!comment) return null;
-    console.log(comment)
+
     const [ isCommentClicked, setIsCommentClicked ] = useState<boolean>(false);
     const { created_at, picture, text, username, comment_id: commentId } = comment;
-    const [userComment, setUserComment] = useState();
-
+    const [userComment, setUserComment] = useState<boolean>(false);
+    
     if(!created_at) return null
     const time = formatDistanceStrict(new Date(created_at), new Date(), { addSuffix: true });
 
     const openCommentPopUpModal = () => {
         setIsCommentClicked(prev => !prev);
-        /* setUserComment(comment); */
+        checkIfCommetIsByUser();
+    }
+    const checkIfCommetIsByUser = () => {
+        userProfileData.username === username ? setUserComment(true) : setUserComment(false);
     }
 
     return(
@@ -50,7 +54,7 @@ const SingleComment = ({comment, postId, deleteComment}: SingleCommentTypes) => 
                     <HiDotsVertical onClick={openCommentPopUpModal}/>
                 </div>
                 {/* Neki state napraviti user, isUserClicked */}
-                {isCommentClicked && <CommentPopUpModal username={username} deleteComment={deleteComment} commentId={commentId} postId={postId}/>}
+                {isCommentClicked && userComment && <CommentPopUpModal username={username} deleteComment={deleteComment} commentId={commentId} postId={postId}/>}
             </div>
         </div>
     )
