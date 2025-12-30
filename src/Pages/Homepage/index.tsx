@@ -26,7 +26,7 @@ const Homepage = () => {
   const [isCommetnsBtnClicked, setisCommetnsBtnClicked] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<string>('');
   const token = localStorage.getItem("token");
-  const { data: homepageData, isLoading } = useQuery({
+  const { data: homepageData, isLoading, refetch } = useQuery({
       queryKey: ['homepage'],
       queryFn: () => requestHomepageData(token),
       enabled: !!token
@@ -49,6 +49,7 @@ const Homepage = () => {
   };
   const closeComments = () => {
     setisCommetnsBtnClicked(false); 
+    refetch();
   };
   console.log(homepageData)
   if (isLoading) return null;

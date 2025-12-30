@@ -38,7 +38,7 @@ const Comments = ({postId, closeComments, userProfileData}: PostModalType) => {
         setTimeout(() => {
             setIsLoading(false);
         }, 700)
-    },[])
+    },[]);
 
     if(isLoading) return(
         <>
