@@ -109,7 +109,7 @@ const Homepage = () => {
         </div>
         <div className="menu-border-line"></div>
         <div className="feed">
-          <PostCreator userProfileData={userProfileData}/>
+          <PostCreator/>
           {isCommetnsBtnClicked && (
             <Comments postId={selectedPostId} closeComments={closeComments} userProfileData={userProfileData}/>
           )}
