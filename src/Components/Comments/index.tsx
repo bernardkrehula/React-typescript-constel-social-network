@@ -4,11 +4,12 @@ import CommentCreator from '../CommentCreator';
 import { requestComments } from '#/api/requestComments';
 import { useEffect, useState } from 'react';
 import { requestCommentDelete } from '#/api/requestCommentDelete';
+import type { UserProfileDataType } from '#/Pages/Homepage';
 
 type PostModalType = {
     postId: string;
     closeComments: () => void;
-    userProfileData: SingleCommentType;
+    userProfileData: UserProfileDataType;
 }
 
 const Comments = ({postId, closeComments, userProfileData}: PostModalType) => {

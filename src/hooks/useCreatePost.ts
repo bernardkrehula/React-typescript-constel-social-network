@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createPost } from '#/api/createPost';
+import type { UserProfileDataType } from '#/Pages/Homepage';
 
 type NewPostValueType = {
     audio: null,
@@ -18,7 +19,7 @@ type NewPostValueType = {
     user_id: string
 }
 
-export const useCreatePost = () => {
+export const useCreatePost = ({userProfileData}: UserProfileDataType) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -26,25 +27,26 @@ export const useCreatePost = () => {
 
     onMutate: async (postText) => {
       await queryClient.cancelQueries(['homepage']);
-
       const previousHomepage = queryClient.getQueryData<any>(['homepage']);
 
-        const optimisticPost: NewPostValueType = {
-                audio: null,
-                comments: 0,
-                created_at: new Date().toISOString(),
-                image: '',
-                liked: false,
-                likes: 0,
-                post_id: crypto.randomUUID(),
-                text: postText,
-                user: {
-                    full_name: '',
-                    picture: '',
-                    username: ''
-                },
-                user_id: crypto.randomUUID()
-            }
+      const { username, full_name, pitcure } = userProfileData;
+      const optimisticPost: NewPostValueType = {
+              audio: null,
+              comments: 0,
+              created_at: new Date().toISOString(),
+              image: '',
+              liked: false,
+              likes: 0,
+              post_id: crypto.randomUUID(),
+              text: postText,
+              user: {
+                  full_name: full_name,
+                  picture: pitcure,
+                  username: username
+              },
+              user_id: crypto.randomUUID()
+          }
+      console.log('radi')
       queryClient.setQueryData(['homepage'], (old: any) => {
         if (!old) return old;
 

@@ -4,7 +4,6 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import Btn from '../Btn';
 
 type CommentPopUpModalType = {
-    username: string;
     commentId: string;
     deleteComment: (postId: string, commentId: string) => void;
     postId: string;

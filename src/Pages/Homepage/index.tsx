@@ -13,21 +13,11 @@ import { FaHouseChimney } from "react-icons/fa6";
 import { requestUserData } from "#/api/getUserData";
 //Napraviti responzivni dizajn sa css i sliku svakog stanja css
 
-type PostValueType = {
-    audio: null,
-    comments: number,
-    created_at: string,
-    image: string,
-    liked: boolean,
-    likes: number,
-    post_id: string,
-    text: string,
-    user: {
-        full_name: string,
-        picture: string,
-        username: string
-    },
-    user_id: string
+export type UserProfileDataType = {
+  username: "",
+  email: "",
+  full_name: "",
+  picture: ""
 }
 
 const Homepage = () => {
@@ -60,7 +50,7 @@ const Homepage = () => {
   const closeComments = () => {
     setisCommetnsBtnClicked(false); 
   };
-
+  console.log(homepageData)
   if (isLoading) return null;
 
   else
@@ -119,7 +109,7 @@ const Homepage = () => {
         </div>
         <div className="menu-border-line"></div>
         <div className="feed">
-          <PostCreator />
+          <PostCreator userProfileData={userProfileData}/>
           {isCommetnsBtnClicked && (
             <Comments postId={selectedPostId} closeComments={closeComments} userProfileData={userProfileData}/>
           )}

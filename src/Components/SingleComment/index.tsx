@@ -4,12 +4,13 @@ import { formatDistanceStrict } from 'date-fns';
 import { LuDot } from "react-icons/lu";
 import { useState } from 'react';
 import CommentPopUpModal from '../CommentPopUpModal';
+import type { UserProfileDataType } from '#/Pages/Homepage';
 
 type SingleCommentTypes = {
     comment: SingleCommentType;
     postId: string;
     deleteComment: (postId: string, commentId: string) => void;
-    userProfileData: SingleCommentType;
+    userProfileData: UserProfileDataType;
 }
 export type SingleCommentType = {
         comment_id: string;
@@ -53,7 +54,7 @@ const SingleComment = ({comment, postId, deleteComment, userProfileData}: Single
                     </div>
                     <HiDotsVertical onClick={openCommentPopUpModal}/>
                 </div>
-                {isCommentClicked && userComment && <CommentPopUpModal username={username} deleteComment={deleteComment} commentId={commentId} postId={postId}/>}
+                {isCommentClicked && userComment && <CommentPopUpModal deleteComment={deleteComment} commentId={commentId} postId={postId}/>}
             </div>
         </div>
     )

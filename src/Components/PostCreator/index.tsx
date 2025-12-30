@@ -3,10 +3,15 @@ import SingleInput from '../SingleInput';
 import Btn from '../Btn';
 import { useState } from 'react';
 import { useCreatePost } from '#/hooks/useCreatePost';
+import type { UserProfileDataType } from '#/Pages/Homepage';
 
-const PostCreator = () => {
+type PostCreatorPropsType = {
+    userProfileData: UserProfileDataType;
+}
+
+const PostCreator = ({userProfileData}: PostCreatorPropsType) => {
     const [ inputValue, setInputValue ] = useState('');
-    const { mutate: createPost } = useCreatePost();
+    const { mutate: createPost } = useCreatePost(userProfileData);
 
     const getInputValue = (e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
 
@@ -14,6 +19,7 @@ const PostCreator = () => {
         e.preventDefault();
         setInputValue('');
         createPost(inputValue);
+        console.log('radi', inputValue)
     };
 
     return(
