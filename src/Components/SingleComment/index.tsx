@@ -54,7 +54,7 @@ const SingleComment = ({comment, postId, deleteComment, userProfileData}: Single
                     </div>
                     <HiDotsVertical onClick={openCommentPopUpModal}/>
                 </div>
-                {isCommentClicked && userComment && <CommentPopUpModal deleteComment={deleteComment} commentId={commentId} postId={postId}/>}
+                {isCommentClicked && userComment && <CommentPopUpModal deleteComment={deleteComment} setIsCommentClicked={setIsCommentClicked} commentId={commentId} postId={postId}/>}
             </div>
         </div>
     )

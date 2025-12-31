@@ -10,3 +10,26 @@
     object-fit: cover;
     border-radius: 100px;
 }
+@media (max-width: 1080px){
+    .post-creator button{
+        display: block;
+    }
+    .post-creator{
+        display: grid;
+        grid-template-columns: 60px 1fr;
+        background-color: rgb(30, 30, 30);
+        border-radius: 10px;
+        padding: 20px;
+    }
+    .post-creator button{
+        grid-column: 2;
+        justify-self: end;
+    }
+}
+@media (max-width: 750px){
+    .post-creator button{
+        justify-self: stretch;
+        width: 100%;
+        grid-column: 1 / -1;
+    }
+}

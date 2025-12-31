@@ -7,9 +7,15 @@ type CommentPopUpModalType = {
     commentId: string;
     deleteComment: (postId: string, commentId: string) => void;
     postId: string;
+    setIsCommentClicked: (value: boolean) => void;
 }
 
-const CommentPopUpModal = ({commentId, deleteComment, postId}: CommentPopUpModalType) => {
+const CommentPopUpModal = ({commentId, deleteComment, postId, setIsCommentClicked}: CommentPopUpModalType) => {
+
+    const handleDeleteComment = () => {
+        deleteComment(postId, commentId)
+        setIsCommentClicked(false);
+    }
 
     return(
         <div className='comment-popUp-modal'>
@@ -17,7 +23,7 @@ const CommentPopUpModal = ({commentId, deleteComment, postId}: CommentPopUpModal
                 <h2>Edit</h2>
                 <FaPencil />
             </Btn>
-            <Btn type='button' variation='secondary--small' onClick={() => deleteComment(postId, commentId)}>
+            <Btn type='button' variation='secondary--small' onClick={handleDeleteComment}>
                <h2>Delete</h2> 
                <FaRegTrashCan />
             </Btn>

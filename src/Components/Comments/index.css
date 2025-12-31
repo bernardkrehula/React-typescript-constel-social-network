@@ -58,8 +58,8 @@
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
-  top: 350px;
-  left: 700px;
+  top: 52%; /* 350px */
+  left: 49%; /* 700px */
   z-index: 2;
   }
 
@@ -71,3 +71,14 @@
       transform: rotate(360deg);
   }
   } 
+@media (max-width: 1080px){
+  .modal-overlay{
+    top: 0;
+    z-index: 1;
+  }
+  .post-modal{
+    top: 0;
+    z-index: 2;
+    margin: 0;
+  }
+}
