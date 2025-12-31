@@ -51,7 +51,7 @@ const Homepage = () => {
     setisCommetnsBtnClicked(false); 
     refetch();
   };
-  console.log(homepageData)
+
   if (isLoading) return null;
 
   else
