@@ -49,7 +49,7 @@ const Comments = ({postId, closeComments, userProfileData}: PostModalType) => {
     return(
         <>
         <div className='modal-overlay' onClick={closeComments}></div>
-        <div className='post-modal'>
+        <div className='comments-modal'>
             <CommentCreator postId={postId} getComments={getComments}/>
             <div className='comments'>
                 {comments && comments.map((comment: SingleCommentType, key: number) => {

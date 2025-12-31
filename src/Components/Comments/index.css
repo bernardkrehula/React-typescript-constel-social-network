@@ -1,32 +1,35 @@
-.post-modal{
-    display: flex;
-    flex-direction: column;
-    height: 99vh;
-    position: fixed;
-    width: 720px;
-    padding: 20px;
-    background-color: black;
-    margin: 0 auto;
-    border-radius: 10px;
-    overflow-y: auto;
+.comments-modal{
+  display: flex;
+  flex-direction: column;
+  height: 99vh;
+  position: fixed;
+  width: 720px;
+  z-index: 2;
+  padding: 20px;
+  background-color: black;
+  border-radius: 10px;
+  overflow-y: auto;
+  top: 50%;
+  left: 51%;
+  transform: translate(-50%, -50%);
 }
-.post-modal::-webkit-scrollbar {
+.comments-modal::-webkit-scrollbar {
   width: 12px; 
 }
 
-.post-modal::-webkit-scrollbar-track {
+.comments-modal::-webkit-scrollbar-track {
   background: #222; 
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
 }
 
-.post-modal::-webkit-scrollbar-thumb {
+.comments-modal::-webkit-scrollbar-thumb {
   background-color: #555;  
   border-radius: 6px;
   border: 3.5px solid #222; 
 }
 
-.post-modal::-webkit-scrollbar-thumb:hover {
+.comments-modal::-webkit-scrollbar-thumb:hover {
   background-color: #888;
   cursor: pointer;
 }
@@ -76,9 +79,8 @@
     top: 0;
     z-index: 1;
   }
-  .post-modal{
-    top: 0;
+  .comments-modal{
     z-index: 2;
-    margin: 0;
+    width: clamp(500px, 90%, 720px);
   }
 }
