@@ -16,7 +16,6 @@ export const createPost = async (postText: string) => {
         },
       }
     );
-    console.log('createPost: ', response)
     return response.data;
   } 
   catch (error) {

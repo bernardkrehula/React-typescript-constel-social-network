@@ -4,7 +4,11 @@ import Btn from '../Btn';
 import { useState } from 'react';
 import { useCreatePost } from '#/hooks/useCreatePost';
 
-const PostCreator = () => {
+type PostCreatorType = {
+    setIsNewPostAdded: (value: boolean) => void;
+}
+
+const PostCreator = ({setIsNewPostAdded}:PostCreatorType) => {
     const [ inputValue, setInputValue ] = useState('');
     const { mutate: createPost } = useCreatePost();
 
@@ -14,6 +18,7 @@ const PostCreator = () => {
         e.preventDefault();
         setInputValue('');
         createPost(inputValue);
+        setIsNewPostAdded(true);
     };
 
     return(
