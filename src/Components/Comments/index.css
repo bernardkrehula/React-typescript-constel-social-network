@@ -61,8 +61,8 @@
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
-  top: 52%; /* 350px */
-  left: 49%; /* 700px */
+  top: 52%;
+  left: 49%;
   z-index: 2;
   }
 
