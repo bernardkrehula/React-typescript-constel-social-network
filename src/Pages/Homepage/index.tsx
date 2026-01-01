@@ -23,6 +23,7 @@ export type UserProfileDataType = {
 const Homepage = () => {
   const navigate = useNavigate();
   const [showProfileMenu, setProfileMenu] = useState<boolean>(false);
+  const [isProfileMenuClicked, setIsProfileMenuClicked] = useState<boolean>(false);
   const [isCommetnsBtnClicked, setisCommetnsBtnClicked] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<string>('');
   const token = localStorage.getItem("token");
@@ -37,8 +38,10 @@ const Homepage = () => {
       queryFn: () => requestUserData(token)
   });
 
-  const displayProfleMenu = () => setProfileMenu((prev) => !prev);
-
+  const displayProfleMenu = () => {
+    setProfileMenu((prev) => !prev);
+    setTimeout(() => {setIsProfileMenuClicked(prev => !prev)},1)
+  }
   const logoutUser = () => {
     localStorage.removeItem("token");
     navigate("/login");
@@ -126,8 +129,7 @@ const Homepage = () => {
         </div>
         <div className="profile-container">
           <img src="https://constel-hr-frontend.s3.eu-central-1.amazonaws.com/nemanja_malesija.jpeg" onClick={displayProfleMenu} />
-          {showProfileMenu && (
-            <div className="profile-menu">
+            {showProfileMenu && <div className={`profile-menu ${isProfileMenuClicked ? 'show' : ''}`}>
               <Btn onClick={logoutUser} type="button">
                 <FiLogOut />
                 <h2>Logout</h2>
@@ -136,8 +138,7 @@ const Homepage = () => {
                 <FaUser />
                 <h2>Profile</h2>
               </Btn>
-            </div>
-          )}
+            </div>}
         </div>
       </div>
     );
