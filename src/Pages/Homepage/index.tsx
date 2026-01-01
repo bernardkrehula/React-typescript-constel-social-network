@@ -11,6 +11,7 @@ import Comments from "#/Components/Comments";
 import { useQuery } from "@tanstack/react-query";
 import { FaHouseChimney } from "react-icons/fa6";
 import { requestUserData } from "#/api/getUserData";
+import PostCreatorSuccessModal from "#/Components/PostCreatorSuccessModal";
 //Napraviti responzivni dizajn sa css i sliku svakog stanja css
 
 export type UserProfileDataType = {
@@ -26,7 +27,7 @@ const Homepage = () => {
   const [isProfileMenuClicked, setIsProfileMenuClicked] = useState<boolean>(false);
   const [isCommetnsBtnClicked, setisCommetnsBtnClicked] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<string>('');
-  const [isNewPostAdded, setIsNewPostAdded] = useState<boolean>(false);
+  const [isNewPostAdded, setIsNewPostAdded] = useState<boolean>(true);
   const token = localStorage.getItem("token");
   const { data: homepageData, isLoading, refetch, isFetched } = useQuery({
       queryKey: ['homepage'],
@@ -55,6 +56,12 @@ const Homepage = () => {
     setisCommetnsBtnClicked(false); 
     refetch();
   };
+  const manageIsNewPostAdded = () => {
+    setIsNewPostAdded(prev => !prev);
+    setTimeout(() => {
+      setIsNewPostAdded(prev => !prev);
+    }, 2000)
+  }
 
   if (isLoading) return null;
 
@@ -64,7 +71,6 @@ const Homepage = () => {
         className="homepage"
         style={{ overflow: isCommetnsBtnClicked ? "hidden" : "" }}
       >
-        {isNewPostAdded && isFetched ?}
         <div className="homepage-horizontal-border-line"></div>
         <div className="menu">
           <div className="menu-logo-content">
@@ -115,7 +121,8 @@ const Homepage = () => {
         </div>
         <div className="menu-border-line"></div>
         <div className="feed">
-          <PostCreator setIsNewPostAdded={setIsNewPostAdded}/>
+          <PostCreator manageIsNewPostAdded={manageIsNewPostAdded}/>
+          {isNewPostAdded && isFetched && <PostCreatorSuccessModal />}
           {isCommetnsBtnClicked && (
             <Comments postId={selectedPostId} closeComments={closeComments} userProfileData={userProfileData}/>
           )}

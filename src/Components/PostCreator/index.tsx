@@ -5,10 +5,10 @@ import { useState } from 'react';
 import { useCreatePost } from '#/hooks/useCreatePost';
 
 type PostCreatorType = {
-    setIsNewPostAdded: (value: boolean) => void;
+    manageIsNewPostAdded: () => void;
 }
 
-const PostCreator = ({setIsNewPostAdded}:PostCreatorType) => {
+const PostCreator = ({manageIsNewPostAdded}: PostCreatorType) => {
     const [ inputValue, setInputValue ] = useState('');
     const { mutate: createPost } = useCreatePost();
 
@@ -18,7 +18,7 @@ const PostCreator = ({setIsNewPostAdded}:PostCreatorType) => {
         e.preventDefault();
         setInputValue('');
         createPost(inputValue);
-        setIsNewPostAdded(true);
+        manageIsNewPostAdded();
     };
 
     return(
