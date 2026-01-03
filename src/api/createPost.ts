@@ -19,6 +19,6 @@ export const createPost = async (postText: string) => {
     return response.data;
   } 
   catch (error) {
-    console.error(error);
+    throw error;
   }
 };

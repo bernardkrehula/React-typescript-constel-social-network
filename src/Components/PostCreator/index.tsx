@@ -10,7 +10,7 @@ type PostCreatorType = {
 
 const PostCreator = ({manageIsNewPostAdded}: PostCreatorType) => {
     const [ inputValue, setInputValue ] = useState('');
-    const { mutate: createPost } = useCreatePost();
+    const { mutate: createPost, isSuccess, error } = useCreatePost();
 
     const getInputValue = (e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
 
@@ -18,7 +18,7 @@ const PostCreator = ({manageIsNewPostAdded}: PostCreatorType) => {
         e.preventDefault();
         setInputValue('');
         createPost(inputValue);
-        manageIsNewPostAdded();
+        if(isSuccess) manageIsNewPostAdded();
     };
 
     return(

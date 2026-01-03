@@ -9,6 +9,9 @@ export const useCreatePost = () => {
 
     onSuccess: () => {
       queryClient.invalidateQueries(['homepage']);
+    },
+    onError: (error) => {
+      return error;
     }
   });
 };
