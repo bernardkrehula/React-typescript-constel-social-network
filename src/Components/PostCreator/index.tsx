@@ -18,7 +18,7 @@ const PostCreator = ({manageIsNewPostAdded}: PostCreatorType) => {
         e.preventDefault();
         setInputValue('');
         createPost(inputValue);
-        if(isSuccess) manageIsNewPostAdded();
+        manageIsNewPostAdded(isSuccess);
     };
 
     return(

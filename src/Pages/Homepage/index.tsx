@@ -11,7 +11,7 @@ import Comments from "#/Components/Comments";
 import { useQuery } from "@tanstack/react-query";
 import { FaHouseChimney } from "react-icons/fa6";
 import { requestUserData } from "#/api/getUserData";
-import PostCreatorSuccessModal from "#/Components/PostCreatorSuccessModal";
+import PostCreatorMessageModal from "#/Components/PostCreatorMessageModal";
 //Merge request napraviti na nemanjinom projektu
 //Error handling dodati na ekranu kada se posalje prazni input
 //Post modal vratiti s komentarima
@@ -32,7 +32,8 @@ const Homepage = () => {
   const [isProfileMenuClicked, setIsProfileMenuClicked] = useState<boolean>(false);
   const [isCommetnsBtnClicked, setisCommetnsBtnClicked] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<string>('');
-  const [isNewPostAdded, setIsNewPostAdded] = useState<boolean>(false);
+  const [isPostAdded, setIsPostAdded] = useState<boolean>(false);
+  const [showPostModalMessage, setPostModalMessage] = useState<boolean>(false);
   const token = localStorage.getItem("token");
   const { data: homepageData, isLoading, refetch, isFetched } = useQuery({
       queryKey: ['homepage'],
@@ -61,11 +62,13 @@ const Homepage = () => {
     setisCommetnsBtnClicked(false); 
     refetch();
   };
-  const manageIsNewPostAdded = () => {
-    setIsNewPostAdded(prev => !prev);
+  const manageIsNewPostAdded = (isSuccess: boolean) => {
+    setIsPostAdded(isSuccess);
+    setPostModalMessage(prev => !prev);
     setTimeout(() => {
-      setIsNewPostAdded(prev => !prev);
+      setPostModalMessage(prev => !prev);
     }, 2000)
+    console.log('je li uspjelo', isSuccess)
   }
 
   if (isLoading) return null;
@@ -127,7 +130,7 @@ const Homepage = () => {
         <div className="menu-border-line"></div>
         <div className="feed">
           <PostCreator manageIsNewPostAdded={manageIsNewPostAdded}/>
-          {isNewPostAdded && isFetched && <PostCreatorSuccessModal />}
+          {showPostModalMessage && isFetched && <PostCreatorMessageModal isPostAdded={isPostAdded} />}
           {isCommetnsBtnClicked && (
             <Comments postId={selectedPostId} closeComments={closeComments} userProfileData={userProfileData}/>
           )}
