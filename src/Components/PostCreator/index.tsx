@@ -5,12 +5,15 @@ import { useState } from 'react';
 import { useCreatePost } from '#/hooks/useCreatePost';
 
 type PostCreatorType = {
-    manageIsNewPostAdded: () => void;
+    manageIsPostAdded: (isSuccess: boolean, errorMessage: string) => void;
 }
 
-const PostCreator = ({manageIsNewPostAdded}: PostCreatorType) => {
+const PostCreator = ({manageIsPostAdded}: PostCreatorType) => {
     const [ inputValue, setInputValue ] = useState('');
-    const { mutate: createPost, isSuccess, error } = useCreatePost();
+    const { mutate: createPost } = useCreatePost({
+        onSuccess: (onSuccess) => manageIsPostAdded(true, onSuccess),
+        onError: (error) => manageIsPostAdded(false, error.response.data.error.message),
+    });
 
     const getInputValue = (e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
 
@@ -18,7 +21,6 @@ const PostCreator = ({manageIsNewPostAdded}: PostCreatorType) => {
         e.preventDefault();
         setInputValue('');
         createPost(inputValue);
-        manageIsNewPostAdded(isSuccess);
     };
 
     return(

@@ -33,7 +33,10 @@ const Homepage = () => {
   const [isCommetnsBtnClicked, setisCommetnsBtnClicked] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<string>('');
   const [isPostAdded, setIsPostAdded] = useState<boolean>(false);
-  const [showPostModalMessage, setPostModalMessage] = useState<boolean>(false);
+  const [showPostModalMessage, setPostModalMessage] = useState<{showMessage: boolean, message: string}>({
+    showMessage: false,
+    message: ''
+  });
   const token = localStorage.getItem("token");
   const { data: homepageData, isLoading, refetch, isFetched } = useQuery({
       queryKey: ['homepage'],
@@ -62,13 +65,13 @@ const Homepage = () => {
     setisCommetnsBtnClicked(false); 
     refetch();
   };
-  const manageIsNewPostAdded = (isSuccess: boolean) => {
+  const manageIsPostAdded = async(isSuccess: boolean, errorMessage: string) => {
+    setPostModalMessage(prev => ({...prev, message: errorMessage}))
     setIsPostAdded(isSuccess);
-    setPostModalMessage(prev => !prev);
+    setPostModalMessage(prev => ({...prev, showMessage: !prev.showMessage}));
     setTimeout(() => {
-      setPostModalMessage(prev => !prev);
+      setPostModalMessage(prev => ({...prev, showMessage: !prev.showMessage}));
     }, 2000)
-    console.log('je li uspjelo', isSuccess)
   }
 
   if (isLoading) return null;
@@ -129,8 +132,8 @@ const Homepage = () => {
         </div>
         <div className="menu-border-line"></div>
         <div className="feed">
-          <PostCreator manageIsNewPostAdded={manageIsNewPostAdded}/>
-          {showPostModalMessage && isFetched && <PostCreatorMessageModal isPostAdded={isPostAdded} />}
+          <PostCreator manageIsPostAdded={manageIsPostAdded}/>
+          {showPostModalMessage.showMessage && isFetched && <PostCreatorMessageModal isPostAdded={isPostAdded} postModalMessage={showPostModalMessage.message} />}
           {isCommetnsBtnClicked && (
             <Comments postId={selectedPostId} closeComments={closeComments} userProfileData={userProfileData}/>
           )}
