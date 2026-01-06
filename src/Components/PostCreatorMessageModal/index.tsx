@@ -45,7 +45,7 @@ const PostCreatorMessageModal = ({
           />
         </svg>
       )}
-      <span>{postModalMessage}</span>
+      <span>{isPostAdded ? 'Post successfully added.' : postModalMessage}</span>
     </div>
   );
 };

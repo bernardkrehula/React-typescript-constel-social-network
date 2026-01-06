@@ -15,7 +15,6 @@ export const useCreatePost = (callbacks?: Callbacks) => {
     onSuccess: (onSuccess) => {
       queryClient.invalidateQueries(['homepage']);
       callbacks?.onSuccess?.()
-      console.log('uspjesno: ', onSuccess)
     },
     onError: (error) => {
       callbacks?.onError?.(error as Error)
