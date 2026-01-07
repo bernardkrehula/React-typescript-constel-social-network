@@ -1,3 +1,4 @@
+import { baseUrl } from "#/utils/baseUrl";
 import axios from "axios";
 
 export const createPost = async (postText: string) => {
@@ -8,7 +9,7 @@ export const createPost = async (postText: string) => {
   
   try {
     const response = await axios.post(
-      "https://api.hr.constel.co/api/v1/posts",
+      `${baseUrl}/posts`,
       formData,
       {
         headers: {

@@ -1,3 +1,4 @@
+import { baseUrl } from '#/utils/baseUrl';
 import axios from 'axios';
 
 export const requestPostLikes = async(postId: string) => {
@@ -5,7 +6,7 @@ export const requestPostLikes = async(postId: string) => {
     try{
         const response = await axios({
             method: 'GET',
-            url: `https://api.hr.constel.co/api/v1/posts/${postId}/likes`,
+            url: `${baseUrl}/posts/${postId}/likes`,
              
                 headers: {
                 'Content-Type': 'application/json',

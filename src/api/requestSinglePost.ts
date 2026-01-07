@@ -1,3 +1,4 @@
+import { baseUrl } from '#/utils/baseUrl';
 import axios from 'axios';
 
 export const requestSinglePost = async(postId: string) => {
@@ -5,7 +6,7 @@ export const requestSinglePost = async(postId: string) => {
     try{
         const response = await axios({
             method: 'GET',
-            url: `https://api.hr.constel.co/api/v1/posts/${postId}`,
+            url: `${baseUrl}/posts/${postId}`,
              
                 headers: {
                 'Content-Type': 'application/json',

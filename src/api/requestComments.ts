@@ -1,4 +1,5 @@
 import { ValidationError } from '#/Classes/ValidationError';
+import { baseUrl } from '#/utils/baseUrl';
 import axios from 'axios';
 
 export const requestComments = async(postId: string) => {
@@ -6,7 +7,7 @@ export const requestComments = async(postId: string) => {
     try{
         const response = await axios({
             method: 'GET',
-            url: `https://api.hr.constel.co/api/v1/posts/${postId}/comments`,
+            url: `${baseUrl}/posts/${postId}/comments`,
              
                 headers: {
                 'Content-Type': 'application/json',

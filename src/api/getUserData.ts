@@ -1,9 +1,10 @@
+import { baseUrl } from "#/utils/baseUrl";
 import axios from "axios";
 
 export const requestUserData = async(token: string | null) => {
 
     try{
-        const response = await axios.get('https://api.hr.constel.co/api/v1/accounts/me', {
+        const response = await axios.get(`${baseUrl}/accounts/me`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         return response.data.account;

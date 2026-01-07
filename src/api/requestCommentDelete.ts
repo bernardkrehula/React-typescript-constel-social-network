@@ -1,4 +1,5 @@
 import { ValidationError } from '#/Classes/ValidationError';
+import { baseUrl } from '#/utils/baseUrl';
 import axios from 'axios';
 
 export const requestCommentDelete = async(postId: string, commentId: string) => {
@@ -6,7 +7,7 @@ export const requestCommentDelete = async(postId: string, commentId: string) => 
     try{
         const response = await axios({
             method: 'DELETE',
-            url: `https://api.hr.constel.co/api/v1/posts/${postId}/comments/${commentId}`,
+            url: `${baseUrl}/posts/${postId}/comments/${commentId}`,
              
             headers: {
                 'Content-Type': 'application/json',

@@ -1,4 +1,5 @@
 import { ValidationError } from '#/Classes/ValidationError';
+import { baseUrl } from '#/utils/baseUrl';
 import axios from 'axios';
 
 export const changeLikeStatus = async(id: string, liked: boolean) => {
@@ -6,7 +7,7 @@ export const changeLikeStatus = async(id: string, liked: boolean) => {
     try{
         const response = await axios({
             method: liked ? 'DELETE' : 'POST',
-            url: `https://api.hr.constel.co/api/v1/posts/${id}/like`,
+            url: `${baseUrl}/posts/${id}/like`,
              
                 headers: {
                 'Content-Type': 'application/json',
