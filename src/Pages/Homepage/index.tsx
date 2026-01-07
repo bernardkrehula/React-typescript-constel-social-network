@@ -12,9 +12,6 @@ import { useQuery } from "@tanstack/react-query";
 import { FaHouseChimney } from "react-icons/fa6";
 import { requestUserData } from "#/api/getUserData";
 import PostCreatorMessageModal from "#/Components/PostCreatorMessageModal";
-//Merge request napraviti na nemanjinom projektu
-//Error handling dodati na ekranu kada se posalje prazni input
-//Post modal vratiti s komentarima
 
 export type UserProfileDataType = {
   username: "",
@@ -25,9 +22,6 @@ export type UserProfileDataType = {
 
 const Homepage = () => {
   const navigate = useNavigate();
-  //Custom hook useOutsideClick 
-  //Modal with outside click in react 
-  //How to detect where I click outside element in react
   const [showProfileMenu, setProfileMenu] = useState<boolean>(false);
   const [isProfileMenuClicked, setIsProfileMenuClicked] = useState<boolean>(false);
   const [isCommetnsBtnClicked, setisCommetnsBtnClicked] = useState(false);

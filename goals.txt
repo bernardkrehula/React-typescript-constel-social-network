@@ -12,3 +12,17 @@ ZA ODRADITI
 //Neki state napraviti user, isUserClicked (Singlecomment) - rijeseno
 //Maknuti sve svg i staviti react icons, u btn staviti umjesto react fragment div, a umjesto h2 span (SinglePost)
 //Napraviti responzivni dizajn sa css i sliku svakog stanja css
+
+ZA ODRADITI
+Posloziti strukuru foldera(
+    -odvojiti types u posebne filove
+    -odvojiti formate vremena
+    -posebna mapa za url sa kojeg pozivam request
+)
+
+Merge request napraviti na nemanjinom projektu - (pronasao gresku, na upitu kod nemanje sto dalje)
+Error handling dodati na ekranu kada se posalje prazni input - odradeno
+Post modal vratiti s komentarima
+Custom hook useOutsideClick 
+Modal with outside click in react 
+How to detect where I click outside element in react
