@@ -2,7 +2,7 @@ import PostCreator from "#/Components/PostCreator";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import "./index.css";
-import SinglePost, { type SinglePostDataType } from "#/Components/SinglePost";
+import SinglePost from "#/Components/SinglePost";
 import Btn from "#/Components/Btn";
 import { requestHomepageData } from "#/api/getHomepageDataApi";
 import { FaUser } from "react-icons/fa";
@@ -12,13 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FaHouseChimney } from "react-icons/fa6";
 import { requestUserData } from "#/api/getUserData";
 import PostCreatorMessageModal from "#/Components/PostCreatorMessageModal";
-
-export type UserProfileDataType = {
-  username: "",
-  email: "",
-  full_name: "",
-  picture: ""
-}
+import type { SinglePostDataType } from "#/types/SinglePostDataType";
 
 const Homepage = () => {
   const navigate = useNavigate();

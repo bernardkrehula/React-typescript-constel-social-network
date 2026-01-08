@@ -5,23 +5,8 @@ import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { usePostLike } from "#/hooks/useLikePost";
 import { FaRegCalendar } from "react-icons/fa6";
+import type { SinglePostDataType } from "#/types/SinglePostDataType";
 
-export type SinglePostDataType = {
-  post_id: string;
-  user_id: string;
-  text: string;
-  image: string | null;
-  audio: null;
-  comments: number;
-  likes: number;
-  created_at: string;
-  user: {
-    username: string;
-    full_name: string;
-    picture: string;
-  };
-  liked: boolean;
-};
 type SinglePostPropsType = {
   data: SinglePostDataType;
   openComments: (value: string) => void;

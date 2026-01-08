@@ -1,10 +1,11 @@
 import './index.css'
-import SingleComment, { type SingleCommentType } from '../SingleComment';
+import SingleComment from '../SingleComment';
 import CommentCreator from '../CommentCreator';
 import { requestComments } from '#/api/requestComments';
 import { useEffect, useState } from 'react';
 import { requestCommentDelete } from '#/api/requestCommentDelete';
-import type { UserProfileDataType } from '#/Pages/Homepage';
+import type { UserProfileDataType } from '#/types/UserProfileDataType';
+import type { SingleCommentType } from '#/types/SingleCommentType';
 
 type PostModalType = {
     postId: string;

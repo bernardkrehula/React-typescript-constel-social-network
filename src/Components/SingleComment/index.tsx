@@ -4,7 +4,8 @@ import { formatDistanceStrict } from 'date-fns';
 import { LuDot } from "react-icons/lu";
 import { useState } from 'react';
 import CommentPopUpModal from '../CommentPopUpModal';
-import type { UserProfileDataType } from '#/Pages/Homepage';
+import type { UserProfileDataType } from '#/types/UserProfileDataType';
+import type { SingleCommentType } from '#/types/SingleCommentType';
 
 type SingleCommentTypes = {
     comment: SingleCommentType;
@@ -12,14 +13,6 @@ type SingleCommentTypes = {
     deleteComment: (postId: string, commentId: string) => void;
     userProfileData: UserProfileDataType;
 }
-export type SingleCommentType = {
-        comment_id: string;
-        created_at: string;
-        full_name: string;
-        picture: string;
-        text: string;
-        username: string;
-    }
 
 const SingleComment = ({comment, postId, deleteComment, userProfileData}: SingleCommentTypes) => {
     if(!comment) return null;
