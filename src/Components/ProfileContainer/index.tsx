@@ -3,6 +3,7 @@ import Btn from '../Btn';
 import { FaUser } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import './index.css'
+import { useOutsideClick } from '#/hooks/useOutsideClick';
 
 const ProfileContainer = ({logoutUser}: {logoutUser: () => void}) => {
     const [isProfileMenuClicked, setIsProfileMenuClicked] = useState<boolean>(false);
@@ -14,7 +15,7 @@ const ProfileContainer = ({logoutUser}: {logoutUser: () => void}) => {
         setTimeout(() => {setIsProfileMenuClicked(prev => !prev)},1)
     }
 
-
+    useOutsideClick(profileRef, displayProfleMenu)
 
     return(
         <div className="profile-container" ref={profileRef}>
