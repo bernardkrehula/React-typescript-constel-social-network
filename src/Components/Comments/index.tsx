@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { requestCommentDelete } from '#/api/requestCommentDelete';
 import type { UserProfileDataType } from '#/types/UserProfileDataType';
 import type { SingleCommentType } from '#/types/SingleCommentType';
+import { useOutsideClick } from '#/hooks/useOutsideClick';
 
 type PostModalType = {
     postId: string;
@@ -24,15 +25,9 @@ const Comments = ({postId, closeComments, userProfileData}: PostModalType) => {
             picture: ""
         }]
     );
-    const commentRef = useRef();
+    const commentRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        document.addEventListener('mousedown', (e) => {
-            if(commentRef.current.contains(e.target)){
-                console.log('radi')
-            }
-        })
-    })
+    useOutsideClick(commentRef, closeComments);
 
     const getComments = async() => {
         const postComments = await requestComments(postId);
@@ -58,8 +53,8 @@ const Comments = ({postId, closeComments, userProfileData}: PostModalType) => {
     ) 
     return(
         <>
-        <div className='modal-overlay' onClick={closeComments}></div>
-        <div className='comments-modal'>
+        <div className='modal-overlay'></div>
+        <div className='comments-modal' ref={commentRef}>
             <CommentCreator postId={postId} getComments={getComments}/>
             <div className='comments'>
                 {comments && comments.map((comment: SingleCommentType, key: number) => {
