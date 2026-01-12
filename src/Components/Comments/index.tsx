@@ -2,7 +2,7 @@ import './index.css'
 import SingleComment from '../SingleComment';
 import CommentCreator from '../CommentCreator';
 import { requestComments } from '#/api/requestComments';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { requestCommentDelete } from '#/api/requestCommentDelete';
 import type { UserProfileDataType } from '#/types/UserProfileDataType';
 import type { SingleCommentType } from '#/types/SingleCommentType';
@@ -24,7 +24,16 @@ const Comments = ({postId, closeComments, userProfileData}: PostModalType) => {
             picture: ""
         }]
     );
-    
+    const commentRef = useRef();
+
+    useEffect(() => {
+        document.addEventListener('mousedown', (e) => {
+            if(commentRef.current.contains(e.target)){
+                console.log('radi')
+            }
+        })
+    })
+
     const getComments = async() => {
         const postComments = await requestComments(postId);
         setComments(postComments);

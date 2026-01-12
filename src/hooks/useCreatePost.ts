@@ -12,7 +12,7 @@ export const useCreatePost = (callbacks?: Callbacks) => {
   return useMutation({
     mutationFn: createPost,
 
-    onSuccess: (onSuccess) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['homepage']);
       callbacks?.onSuccess?.()
     },

@@ -3,6 +3,7 @@
     border-radius: 10px;
     padding: 20px;
     background-color: rgb(30, 30, 30);
+    cursor: pointer;
 }
 .post-user-data{
     display: flex;
