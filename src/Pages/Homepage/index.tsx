@@ -3,21 +3,17 @@ import { useNavigate } from "react-router";
 import { useState } from "react";
 import "./index.css";
 import SinglePost from "#/Components/SinglePost";
-import Btn from "#/Components/Btn";
 import { requestHomepageData } from "#/api/getHomepageDataApi";
-import { FaUser } from "react-icons/fa";
-import { FiLogOut } from "react-icons/fi";
 import Comments from "#/Components/Comments";
 import { useQuery } from "@tanstack/react-query";
 import { FaHouseChimney } from "react-icons/fa6";
 import { requestUserData } from "#/api/getUserData";
 import PostCreatorMessageModal from "#/Components/PostCreatorMessageModal";
 import type { SinglePostDataType } from "#/types/SinglePostDataType";
+import ProfileContainer from "#/Components/ProfileContainer";
 
 const Homepage = () => {
   const navigate = useNavigate();
-  const [showProfileMenu, setProfileMenu] = useState<boolean>(false);
-  const [isProfileMenuClicked, setIsProfileMenuClicked] = useState<boolean>(false);
   const [isCommetnsBtnClicked, setisCommetnsBtnClicked] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<string>('');
   const [isPostAdded, setIsPostAdded] = useState<boolean>(false);
@@ -37,10 +33,6 @@ const Homepage = () => {
       queryFn: () => requestUserData(token)
   });
 
-  const displayProfleMenu = () => {
-    setProfileMenu((prev) => !prev);
-    setTimeout(() => {setIsProfileMenuClicked(prev => !prev)},1)
-  }
   const logoutUser = () => {
     localStorage.removeItem("token");
     navigate("/login");
@@ -135,19 +127,7 @@ const Homepage = () => {
             );
           })}
         </div>
-        <div className="profile-container">
-          <img src="https://constel-hr-frontend.s3.eu-central-1.amazonaws.com/nemanja_malesija.jpeg" onClick={displayProfleMenu} />
-            {showProfileMenu && <div className={`profile-menu ${isProfileMenuClicked ? 'show' : ''}`}>
-              <Btn onClick={logoutUser} type="button">
-                <FiLogOut />
-                <h2>Logout</h2>
-              </Btn>
-              <Btn type="button">
-                <FaUser />
-                <h2>Profile</h2>
-              </Btn>
-            </div>}
-        </div>
+        <ProfileContainer logoutUser={logoutUser}/>
       </div>
     );
 };

@@ -1,0 +1,46 @@
+.profile-container{
+    flex: 1;
+    padding-top: 20px;
+    padding-right: 40px;
+}
+.profile-container img{
+    display: block;
+    border-radius: 100%;
+    height: 50px;
+    margin-left: auto;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+.profile-menu{
+  display: block;
+  background-color: rgb(58, 58, 58);
+  padding: 10px;
+  border-radius: 15px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: 10px;
+  position: absolute;
+  width: 180px;
+  right: 30px;
+  top: 80px;
+  transform-origin: 80% 1%;
+  transform: scale(0.7);
+  transition: transform 100ms ease, opacity 100ms ease;
+}
+.profile-menu.show{
+  transform: scale(1);
+  transition: transform 200ms ease-out, opacity 200ms ease-out; 
+}
+.profile-menu button{
+    display: flex;
+    background-color: rgb(58, 58, 58);
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.profile-menu svg{
+    height: 20px;
+}
+.profile-menu h2{
+    font-size: 2rem;
+}
