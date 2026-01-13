@@ -11,10 +11,12 @@ import { requestUserData } from "#/api/getUserData";
 import PostCreatorMessageModal from "#/Components/PostCreatorMessageModal";
 import type { SinglePostDataType } from "#/types/SinglePostDataType";
 import ProfileContainer from "#/Components/ProfileContainer";
+import PostModal from "#/Components/PostModal";
 
 const Homepage = () => {
   const navigate = useNavigate();
-  const [isCommetnsBtnClicked, setisCommetnsBtnClicked] = useState(false);
+  const [isCommetnsBtnClicked, setisCommetnsBtnClicked] = useState<boolean>(false);
+  const [isSinglePostClicked, setSinglePostClick] = useState<boolean>(false);
   const [selectedPostId, setSelectedPostId] = useState<string>('');
   const [isPostAdded, setIsPostAdded] = useState<boolean>(false);
   const [showPostModalMessage, setPostModalMessage] = useState<{showMessage: boolean, message: string}>({
@@ -45,6 +47,9 @@ const Homepage = () => {
     setisCommetnsBtnClicked(false); 
     refetch();
   };
+  const closeModal = () => {
+    setSinglePostClick(prev => !prev);
+  }
   const manageIsPostAdded = async(isSuccess: boolean, errorMessage: string) => {
     setPostModalMessage(prev => ({...prev, message: errorMessage}))
     setIsPostAdded(isSuccess);
@@ -116,6 +121,9 @@ const Homepage = () => {
           {showPostModalMessage.showMessage && isFetched && <PostCreatorMessageModal isPostAdded={isPostAdded} postModalMessage={showPostModalMessage.message} />}
           {isCommetnsBtnClicked && (
             <Comments postId={selectedPostId} closeComments={closeComments} userProfileData={userProfileData}/>
+          )}
+          {isSinglePostClicked && (
+            <PostModal closeModal={closeModal}/>
           )}
           {homepageData.posts.map((post: SinglePostDataType) => {
             return (

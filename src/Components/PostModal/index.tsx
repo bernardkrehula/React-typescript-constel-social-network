@@ -1,15 +1,20 @@
+import { useOutsideClick } from "#/hooks/useOutsideClick";
 import { useRef, useState } from "react";
 
-const PostModal = () => {
+type PostModalType = {
+    closeModal: () => void;
+}
+
+const PostModal = ({closeModal}: PostModalType) => {
     const [isLoading, setLoading] = useState<boolean>(false);
     const postRef = useRef<HTMLDivElement>(null);
+    useOutsideClick(postRef, closeModal)
 
-    const closeModal
 
     if(!isLoading) return(
         <>
             <span className="loader"></span>
-            <div className='modal-overlay' onClick={closeComments}></div>
+            <div className='modal-overlay' onClick={closeModal}></div>
         </>
     )
     return(
