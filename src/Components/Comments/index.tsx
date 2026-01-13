@@ -15,7 +15,7 @@ type PostModalType = {
 }
 
 const Comments = ({postId, closeComments, userProfileData}: PostModalType) => {
-    const [ isLoading, setIsLoading ] = useState<boolean>(true);
+    const [ isLoading, setIsLoading ] = useState<boolean>(false);
     const [ comments, setComments ] = useState([{
             comment_id: "",
             text: "",
@@ -45,7 +45,7 @@ const Comments = ({postId, closeComments, userProfileData}: PostModalType) => {
         }, 700)
     },[]);
 
-    if(isLoading) return(
+    if(!isLoading) return(
         <>
             <span className="loader"></span>
             <div className='modal-overlay' onClick={closeComments}></div>
