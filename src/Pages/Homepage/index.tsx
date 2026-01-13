@@ -47,8 +47,11 @@ const Homepage = () => {
     setisCommetnsBtnClicked(false); 
     refetch();
   };
-  const closeModal = () => {
-    setSinglePostClick(prev => !prev);
+  const openPost = () => {
+    setSinglePostClick(true);
+  }
+  const closePost = () => {
+    setSinglePostClick(false);
   }
   const manageIsPostAdded = async(isSuccess: boolean, errorMessage: string) => {
     setPostModalMessage(prev => ({...prev, message: errorMessage}))
@@ -123,7 +126,7 @@ const Homepage = () => {
             <Comments postId={selectedPostId} closeComments={closeComments} userProfileData={userProfileData}/>
           )}
           {isSinglePostClicked && (
-            <PostModal closeModal={closeModal}/>
+            <PostModal closePost={closePost} postId={selectedPostId} userProfileData={userProfileData} closeComments={closeComments}/>
           )}
           {homepageData.posts.map((post: SinglePostDataType) => {
             return (
@@ -131,6 +134,7 @@ const Homepage = () => {
                 key={post.post_id}
                 data={post}
                 openComments={openComments}
+                openPost={openPost}
                 />
             );
           })}

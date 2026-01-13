@@ -45,13 +45,13 @@ const Comments = ({postId, closeComments, userProfileData}: PostModalType) => {
         }, 700)
     },[]);
 
-    if(!isLoading) return(
+    if(isLoading) return(
         <>
             <span className="loader"></span>
-            <div className='modal-overlay' onClick={closeComments}></div>
+            <div className='modal-overlay'></div>
         </>
     ) 
-    return(
+    else return(
         <>
         <div className='modal-overlay'></div>
         <div className='comments-modal' ref={commentRef}>

@@ -1,28 +1,38 @@
 import { useOutsideClick } from "#/hooks/useOutsideClick";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Comments from "../Comments";
+import type { UserProfileDataType } from "#/types/UserProfileDataType";
 
 type PostModalType = {
-    closeModal: () => void;
+    closePost: () => void;
+    postId: string;
+    userProfileData: UserProfileDataType;
+    closeComments: () => void;
 }
 
-const PostModal = ({closeModal}: PostModalType) => {
+const PostModal = ({closePost, postId, userProfileData, closeComments}: PostModalType) => {
     const [isLoading, setLoading] = useState<boolean>(false);
     const postRef = useRef<HTMLDivElement>(null);
-    useOutsideClick(postRef, closeModal)
+    useOutsideClick(postRef, closePost)
 
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 700)
+    },[]);
 
     if(!isLoading) return(
         <>
             <span className="loader"></span>
-            <div className='modal-overlay' onClick={closeModal}></div>
+            <div className='modal-overlay' onClick={closePost}></div>
         </>
     )
     return(
         <>
             <div className='modal-overlay'></div>
             <div className="post-modal" ref={postRef}>
-
-            </div>
+{/*                 <Comments postId={postId} userProfileData={userProfileData} closeComments={closeComments}/>
+ */}            </div>
         </>
     )
 }

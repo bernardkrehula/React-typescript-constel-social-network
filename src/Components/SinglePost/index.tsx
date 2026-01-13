@@ -10,9 +10,10 @@ import type { SinglePostDataType } from "#/types/SinglePostDataType";
 type SinglePostPropsType = {
   data: SinglePostDataType;
   openComments: (value: string) => void;
+  openPost: (value: string) => void;
 };
 
-const SinglePost = ({ data, openComments }: SinglePostPropsType) => {
+const SinglePost = ({ data, openComments, openPost }: SinglePostPropsType) => {
   if(!data) return null;
 
   const { user, image, text, created_at, likes, comments: commentsNumber, post_id: postId, liked } = data;
@@ -28,7 +29,7 @@ const SinglePost = ({ data, openComments }: SinglePostPropsType) => {
   const date = format(new Date(created_at), "dd.MM.y.");
 
   return (
-    <div className="single-post">
+    <div className="single-post" onClick={() => openPost('')}>
       <div>
         <div className="post-user-data">
           <img src={picture} />

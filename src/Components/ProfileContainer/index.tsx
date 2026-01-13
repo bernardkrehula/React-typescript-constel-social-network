@@ -10,16 +10,21 @@ const ProfileContainer = ({logoutUser}: {logoutUser: () => void}) => {
     const [showProfileMenu, setProfileMenu] = useState<boolean>(false);
     const profileRef = useRef<HTMLDivElement>(null);
 
-    const displayProfleMenu = () => {
-        setProfileMenu((prev) => !prev);
-        setTimeout(() => {setIsProfileMenuClicked(prev => !prev)},1)
+    const openProfileMenu = () => {
+      setProfileMenu(prev => !prev);
+      setTimeout(() => {setIsProfileMenuClicked(prev => !prev)},1) 
+    }
+    const closeProfleMenu = () => {
+        setProfileMenu(false);
+        setIsProfileMenuClicked(false);
+        console.log(isProfileMenuClicked)
     }
 
-    useOutsideClick(profileRef, displayProfleMenu)
+    useOutsideClick(profileRef, closeProfleMenu)
 
     return(
         <div className="profile-container" ref={profileRef}>
-          <img src="https://constel-hr-frontend.s3.eu-central-1.amazonaws.com/nemanja_malesija.jpeg" onClick={displayProfleMenu} />
+          <img src="https://constel-hr-frontend.s3.eu-central-1.amazonaws.com/nemanja_malesija.jpeg" onClick={openProfileMenu}/>
             {showProfileMenu && <div className={`profile-menu ${isProfileMenuClicked ? 'show' : ''}`}>
               <Btn onClick={logoutUser} type="button">
                 <FiLogOut />
