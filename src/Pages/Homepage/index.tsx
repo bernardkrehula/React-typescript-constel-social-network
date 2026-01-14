@@ -19,6 +19,7 @@ const Homepage = () => {
   const [isSinglePostClicked, setSinglePostClick] = useState<boolean>(false);
   const [selectedPostId, setSelectedPostId] = useState<string>('');
   const [isPostAdded, setIsPostAdded] = useState<boolean>(false);
+  const [postModalUserData, setPostModalUserData] = useState();
   const [showPostModalMessage, setPostModalMessage] = useState<{showMessage: boolean, message: string}>({
     showMessage: false,
     message: ''
@@ -47,8 +48,9 @@ const Homepage = () => {
     setisCommetnsBtnClicked(false); 
     refetch();
   };
-  const openPost = () => {
+  const openPost = (user) => {
     setSinglePostClick(true);
+    setPostModalUserData(user)
   }
   const closePost = () => {
     setSinglePostClick(false);
@@ -126,7 +128,7 @@ const Homepage = () => {
             <Comments postId={selectedPostId} closeComments={closeComments} userProfileData={userProfileData}/>
           )}
           {isSinglePostClicked && (
-            <PostModal closePost={closePost} postId={selectedPostId} userProfileData={userProfileData} closeComments={closeComments}/>
+            <PostModal closePost={closePost} postId={selectedPostId} postModalUserData={postModalUserData} userProfileData={userProfileData} closeComments={closeComments}/>
           )}
           {homepageData.posts.map((post: SinglePostDataType) => {
             return (
