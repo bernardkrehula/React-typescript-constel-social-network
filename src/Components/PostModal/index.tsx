@@ -4,11 +4,11 @@ import Comments from "../Comments";
 import type { UserProfileDataType } from "#/types/UserProfileDataType";
 import SinglePost from "../SinglePost";
 import { type SinglePostDataType } from "#/types/SinglePostDataType";
-import { requestSinglePost } from "#/api/requestSinglePost";
+import { requestSinglePost } from "#/api/requestSinglePosts";
 
 type PostModalType = {
     closePost: () => void;
-    postId: string;
+    postID: string;
     userProfileData: UserProfileDataType;
     closeComments: () => void;
     postModalUserData: {
@@ -18,7 +18,7 @@ type PostModalType = {
   };
 }
 
-const PostModal = ({closePost, postId, userProfileData, closeComments, postModalUserData}: PostModalType) => {
+const PostModal = ({closePost, postID, userProfileData, closeComments, postModalUserData}: PostModalType) => {
     const [isLoading, setLoading] = useState<boolean>(false);
     const [postData, setPostData] = useState<SinglePostDataType>({
         post_id: '',
@@ -32,24 +32,27 @@ const PostModal = ({closePost, postId, userProfileData, closeComments, postModal
         user: postModalUserData,
         liked: false
     });
+    const { user, image, text, created_at, likes, comments: commentsNumber, post_id: postId, liked } = postData;
+    const { full_name, username, picture } = user;
     const postRef = useRef<HTMLDivElement>(null);
-    useOutsideClick(postRef, closePost)
+    useOutsideClick(postRef, closePost)               
 
     const handlePostData = async() => {
-        const singlePostData = await requestSinglePost(postId);
+        const singlePostData = await requestSinglePost(postID);
         Object.keys(singlePostData).forEach(key => {
             setPostData(prev => ({
             ...prev, 
             [key]: singlePostData[key]
         }))
-        })
+        }) 
     }
-    
+   
     useEffect(() => {
         handlePostData();
         setTimeout(() => {
-            setLoading(false);
+            setLoading(true);
         }, 700)
+        console.log('radi')
     },[]);
 
     if(!isLoading) return(
@@ -62,9 +65,10 @@ const PostModal = ({closePost, postId, userProfileData, closeComments, postModal
         <>
             <div className='modal-overlay'></div>
             <div className="post-modal" ref={postRef}>
-                {/* <SinglePost /> */}
-{/*                 <Comments postId={postId} userProfileData={userProfileData} closeComments={closeComments}/>
- */}        </div>
+                <h1>Alo</h1>
+                {/* <SinglePost data={postData}/> */}
+                <Comments postId={postId} userProfileData={userProfileData} closeComments={closeComments} atciveModalComments={true}/>
+           </div>
         </>
     )
 }

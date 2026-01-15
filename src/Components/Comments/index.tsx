@@ -12,9 +12,10 @@ type PostModalType = {
     postId: string;
     closeComments: () => void;
     userProfileData: UserProfileDataType;
+    atciveModalComments: boolean;
 }
 
-const Comments = ({postId, closeComments, userProfileData}: PostModalType) => {
+const Comments = ({postId, closeComments, userProfileData, atciveModalComments}: PostModalType) => {
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
     const [ comments, setComments ] = useState([{
             comment_id: "",
@@ -54,7 +55,7 @@ const Comments = ({postId, closeComments, userProfileData}: PostModalType) => {
     else return(
         <>
         <div className='modal-overlay'></div>
-        <div className='comments-modal' ref={commentRef}>
+        <div className={atciveModalComments ? 'comments-modal active' : 'comments-modal'} ref={commentRef}>
             <CommentCreator postId={postId} getComments={getComments}/>
             <div className='comments'>
                 {comments && comments.map((comment: SingleCommentType, key: number) => {

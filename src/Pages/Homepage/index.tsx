@@ -48,9 +48,10 @@ const Homepage = () => {
     setisCommetnsBtnClicked(false); 
     refetch();
   };
-  const openPost = (user) => {
+  const openPost = (user, id) => {
     setSinglePostClick(true);
     setPostModalUserData(user)
+    setSelectedPostId(id);
   }
   const closePost = () => {
     setSinglePostClick(false);

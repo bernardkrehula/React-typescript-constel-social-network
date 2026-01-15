@@ -13,6 +13,9 @@
   left: 51%;
   transform: translate(-50%, -50%);
 }
+.comments-modal .active{
+  top: 70%;
+}
 .comments-modal::-webkit-scrollbar {
   width: 12px; 
 }

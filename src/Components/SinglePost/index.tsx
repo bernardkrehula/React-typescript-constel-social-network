@@ -6,6 +6,7 @@ import { FaRegComment } from "react-icons/fa";
 import { usePostLike } from "#/hooks/useLikePost";
 import { FaRegCalendar } from "react-icons/fa6";
 import type { SinglePostDataType } from "#/types/SinglePostDataType";
+import type { MouseEvent } from "react";
 
 type SinglePostPropsType = {
   data: SinglePostDataType;
@@ -14,9 +15,18 @@ type SinglePostPropsType = {
 };
 
 const SinglePost = ({ data, openComments, openPost }: SinglePostPropsType) => {
-  if(!data) return null;
+  if (!data) return null;
 
-  const { user, image, text, created_at, likes, comments: commentsNumber, post_id: postId, liked } = data;
+  const {
+    user,
+    image,
+    text,
+    created_at,
+    likes,
+    comments: commentsNumber,
+    post_id: postId,
+    liked,
+  } = data;
   const { full_name, username, picture } = user;
 
   const { mutate: likePost } = usePostLike(postId);
@@ -24,12 +34,16 @@ const SinglePost = ({ data, openComments, openPost }: SinglePostPropsType) => {
   const handlePostlike = () => {
     likePost(liked);
   };
-  
+  const showPostComments = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    openComments(postId);
+  };
+
   if (!created_at) return null;
   const date = format(new Date(created_at), "dd.MM.y.");
 
   return (
-    <div className="single-post" onClick={() => openPost(user)}>
+    <div className="single-post" onClick={() => openPost(user, postId)}>
       <div>
         <div className="post-user-data">
           <img src={picture} />
@@ -66,7 +80,7 @@ const SinglePost = ({ data, openComments, openPost }: SinglePostPropsType) => {
         <Btn
           variation="primary--small"
           type="button"
-          onClick={() => openComments(postId)}
+          onClick={showPostComments}
         >
           <div className="comment-icon">
             <FaRegComment />
