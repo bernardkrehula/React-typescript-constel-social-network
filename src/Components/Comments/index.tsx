@@ -54,7 +54,7 @@ const Comments = ({postId, closeComments, userProfileData, atciveModalComments}:
     ) 
     else return(
         <>
-        <div className='modal-overlay'></div>
+        {!atciveModalComments && <div className='modal-overlay'></div>}
         <div className={atciveModalComments ? 'comments-modal active' : 'comments-modal'} ref={commentRef}>
             <CommentCreator postId={postId} getComments={getComments}/>
             <div className='comments'>

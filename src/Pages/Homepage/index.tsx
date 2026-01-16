@@ -11,7 +11,7 @@ import { requestUserData } from "#/api/getUserData";
 import PostCreatorMessageModal from "#/Components/PostCreatorMessageModal";
 import type { SinglePostDataType } from "#/types/SinglePostDataType";
 import ProfileContainer from "#/Components/ProfileContainer";
-import PostModal from "#/Components/PostModal";
+import PostModal, { type postUserDataType } from "#/Components/PostModal";
 
 const Homepage = () => {
   const navigate = useNavigate();
@@ -19,7 +19,15 @@ const Homepage = () => {
   const [isSinglePostClicked, setSinglePostClick] = useState<boolean>(false);
   const [selectedPostId, setSelectedPostId] = useState<string>('');
   const [isPostAdded, setIsPostAdded] = useState<boolean>(false);
-  const [postModalUserData, setPostModalUserData] = useState();
+  const [postModalUserData, setPostModalUserData] = useState<{user: postUserDataType, likes: number, commentsNumber: number}>({
+    user: { 
+      username: '',
+      full_name: '',
+      picture: ''
+    },
+    likes: 0,
+    commentsNumber: 0
+  });
   const [showPostModalMessage, setPostModalMessage] = useState<{showMessage: boolean, message: string}>({
     showMessage: false,
     message: ''
@@ -48,9 +56,14 @@ const Homepage = () => {
     setisCommetnsBtnClicked(false); 
     refetch();
   };
-  const openPost = (user, id) => {
+  const openPost = (user: postUserDataType, id: string, likes: string, commentsNumber: number) => {
     setSinglePostClick(true);
-    setPostModalUserData(user)
+    setPostModalUserData({
+      user,
+      likes: parseInt(likes),
+      commentsNumber
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setSelectedPostId(id);
   }
   const closePost = () => {

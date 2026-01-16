@@ -6,15 +6,16 @@ import { FaRegComment } from "react-icons/fa";
 import { usePostLike } from "#/hooks/useLikePost";
 import { FaRegCalendar } from "react-icons/fa6";
 import type { SinglePostDataType } from "#/types/SinglePostDataType";
-import type { MouseEvent } from "react";
+import type { postUserDataType } from "../PostModal";
 
 type SinglePostPropsType = {
   data: SinglePostDataType;
   openComments: (value: string) => void;
-  openPost: () => void;
+  openPost: (user: postUserDataType, postId: string, likes: number, commentsNumber: number) => void;
+  activePost: boolean;
 };
 
-const SinglePost = ({ data, openComments, openPost }: SinglePostPropsType) => {
+const SinglePost = ({ data, openComments, openPost, activePost }: SinglePostPropsType) => {
   if (!data) return null;
 
   const {
@@ -31,19 +32,24 @@ const SinglePost = ({ data, openComments, openPost }: SinglePostPropsType) => {
 
   const { mutate: likePost } = usePostLike(postId);
 
-  const handlePostlike = () => {
+  const handlePostlike = (e: React.MouseEvent) => {
+    e.stopPropagation();
     likePost(liked);
+    /* console.log('radi like', liked, likes) */
   };
   const showPostComments = (e: React.MouseEvent) => {
     e.stopPropagation();
     openComments(postId);
   };
-
+  const handleOpenPost = () => {
+    openPost(user, postId, likes, commentsNumber)
+  }
+  console.log(data)
   if (!created_at) return null;
   const date = format(new Date(created_at), "dd.MM.y.");
 
   return (
-    <div className="single-post" onClick={() => openPost(user, postId)}>
+    <div className={activePost ? 'single-post active' : 'single-post'} onClick={handleOpenPost}>
       <div>
         <div className="post-user-data">
           <img src={picture} />
