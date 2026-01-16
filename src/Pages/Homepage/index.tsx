@@ -11,7 +11,7 @@ import { requestUserData } from "#/api/getUserData";
 import PostCreatorMessageModal from "#/Components/PostCreatorMessageModal";
 import type { SinglePostDataType } from "#/types/SinglePostDataType";
 import ProfileContainer from "#/Components/ProfileContainer";
-import PostModal, { type postUserDataType } from "#/Components/PostModal";
+import PostModal from "#/Components/PostModal";
 
 const Homepage = () => {
   const navigate = useNavigate();
@@ -19,15 +19,6 @@ const Homepage = () => {
   const [isSinglePostClicked, setSinglePostClick] = useState<boolean>(false);
   const [selectedPostId, setSelectedPostId] = useState<string>('');
   const [isPostAdded, setIsPostAdded] = useState<boolean>(false);
-  const [postModalUserData, setPostModalUserData] = useState<{user: postUserDataType, likes: number, commentsNumber: number}>({
-    user: { 
-      username: '',
-      full_name: '',
-      picture: ''
-    },
-    likes: 0,
-    commentsNumber: 0
-  });
   const [showPostModalMessage, setPostModalMessage] = useState<{showMessage: boolean, message: string}>({
     showMessage: false,
     message: ''
@@ -56,13 +47,8 @@ const Homepage = () => {
     setisCommetnsBtnClicked(false); 
     refetch();
   };
-  const openPost = (user: postUserDataType, id: string, likes: string, commentsNumber: number) => {
+  const openPost = (id: string) => {
     setSinglePostClick(true);
-    setPostModalUserData({
-      user,
-      likes: parseInt(likes),
-      commentsNumber
-    });
     window.scrollTo({ top: 0, behavior: "smooth" });
     setSelectedPostId(id);
   }
@@ -142,7 +128,7 @@ const Homepage = () => {
             <Comments postId={selectedPostId} closeComments={closeComments} userProfileData={userProfileData}/>
           )}
           {isSinglePostClicked && (
-            <PostModal closePost={closePost} postId={selectedPostId} postModalUserData={postModalUserData} userProfileData={userProfileData} closeComments={closeComments}/>
+            <PostModal closePost={closePost} isSinglePostClicked={isSinglePostClicked} postId={selectedPostId} userProfileData={userProfileData} closeComments={closeComments}/>
           )}
           {homepageData.posts.map((post: SinglePostDataType) => {
             return (
@@ -151,6 +137,8 @@ const Homepage = () => {
                 data={post}
                 openComments={openComments}
                 openPost={openPost}
+                isSinglePostClicked={isSinglePostClicked}
+                activePost={false}
                 />
             );
           })}

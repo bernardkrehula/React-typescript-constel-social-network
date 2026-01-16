@@ -6,19 +6,14 @@ import { FaRegComment } from "react-icons/fa";
 import { usePostLike } from "#/hooks/useLikePost";
 import { FaRegCalendar } from "react-icons/fa6";
 import type { SinglePostDataType } from "#/types/SinglePostDataType";
-import type { postUserDataType } from "../PostModal";
 
 type SinglePostPropsType = {
   data: SinglePostDataType;
-  openComments: (value: string) => void;
-  openPost: (
-    user: postUserDataType,
-    postId: string,
-    likes: number,
-    commentsNumber: number
-  ) => void;
+  openComments?: (value: string) => void;
+  openPost?: (postId: string) => void;
   activePost: boolean;
   handlePostData?: () => void;
+  isSinglePostClicked: boolean;
 };
 
 const SinglePost = ({
@@ -27,6 +22,7 @@ const SinglePost = ({
   openPost,
   activePost,
   handlePostData,
+  isSinglePostClicked
 }: SinglePostPropsType) => {
   if (!data) return null;
 
@@ -49,14 +45,13 @@ const SinglePost = ({
     if(isPending) return
     likePost(liked);
     handlePostData?.();
-    /* console.log('radi', liked) */
   };
   const showPostComments = (e: React.MouseEvent) => {
     e.stopPropagation();
-    openComments(postId);
+    openComments?.(postId);
   };
   const handleOpenPost = () => {
-    openPost(user, postId, likes, commentsNumber);
+    openPost?.(postId);
   };
   if (!created_at) return null;
   const date = format(new Date(created_at), "dd.MM.y.");
@@ -103,6 +98,7 @@ const SinglePost = ({
           variation="primary--small"
           type="button"
           onClick={showPostComments}
+          disabled={isSinglePostClicked}
         >
           <div className="comment-icon">
             <FaRegComment />

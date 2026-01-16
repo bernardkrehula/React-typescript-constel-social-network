@@ -12,10 +12,11 @@ type PostModalType = {
     postId: string;
     closeComments: () => void;
     userProfileData: UserProfileDataType;
-    atciveModalComments: boolean;
+    atciveModalComments?: boolean;
+    updateCommentsNumber?: (value: number) => void;
 }
 
-const Comments = ({postId, closeComments, userProfileData, atciveModalComments}: PostModalType) => {
+const Comments = ({postId, closeComments, userProfileData, atciveModalComments, updateCommentsNumber}: PostModalType) => {
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
     const [ comments, setComments ] = useState([{
             comment_id: "",
@@ -33,6 +34,7 @@ const Comments = ({postId, closeComments, userProfileData, atciveModalComments}:
     const getComments = async() => {
         const postComments = await requestComments(postId);
         setComments(postComments);
+        updateCommentsNumber?.(postComments.length)
     }
     const deleteComment = async(postId: string, commentId: string) => {
         await requestCommentDelete(postId, commentId);

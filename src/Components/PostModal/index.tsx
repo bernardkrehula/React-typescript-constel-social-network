@@ -17,14 +17,10 @@ type PostModalType = {
     postId: string;
     userProfileData: UserProfileDataType;
     closeComments: () => void;
-    postModalUserData: {
-        user: postUserDataType;
-        likes: number;
-        commentsNumber: number;
-    }
+    isSinglePostClicked: boolean;
 }
 
-const PostModal = ({closePost, postId, userProfileData, closeComments, postModalUserData}: PostModalType) => {
+const PostModal = ({closePost, postId, userProfileData, closeComments, isSinglePostClicked}: PostModalType) => {
     const queryClient = useQueryClient();
     const [isLoading, setLoading] = useState<boolean>(false);
     const [postData, setPostData] = useState<SinglePostDataType>({
@@ -36,7 +32,11 @@ const PostModal = ({closePost, postId, userProfileData, closeComments, postModal
         comments: 0,
         likes: 0,
         created_at: '',
-        user: postModalUserData.user,
+        user: {
+            username: '',
+            full_name: '',
+            picture: ''
+        },
         liked: false
     });
     const postRef = useRef<HTMLDivElement>(null);
@@ -44,23 +44,19 @@ const PostModal = ({closePost, postId, userProfileData, closeComments, postModal
 
     const handlePostData = async() => {
         const singlePostData = await requestSinglePost(postId);
-        const newPosts = queryClient.getQueryData(["homepage"]);
-        const post = newPosts.posts.find(p => p.post_id === postId); 
+        const homepagePosts = queryClient.getQueryData(["homepage"]) as { posts: SinglePostDataType[] };
+        const post = homepagePosts.posts.find((p) => p.post_id === postId);
+
         setPostData(prev => ({ 
             ...prev,
             ...singlePostData,
-            comments: post.comments,
-            likes: post.likes,
-            user: post.user,
-            liked: post.liked
+            likes: post?.likes,
+            user: post?.user,
+            liked: post?.liked
             }));
-        console.log('query ', post)
     }
-    const handleQuery = () => {
-        const newPosts = queryClient.getQueryData(["homepage"]);
-        const post = newPosts.posts.find(p => p.post_id === postId); 
-        
-    }
+    const updateCommentsNumber = (commentsNumber: number) => setPostData(prev => ({...prev, comments: commentsNumber}))
+
     useEffect(() => {
         handlePostData();
         setTimeout(() => {
@@ -78,8 +74,8 @@ const PostModal = ({closePost, postId, userProfileData, closeComments, postModal
         <>
             <div className='modal-overlay'></div>
             <div className="post-modal" ref={postRef}>
-                <SinglePost data={postData} activePost={true} handlePostData={handlePostData}/> 
-                <Comments postId={postId} userProfileData={userProfileData} closeComments={closeComments} atciveModalComments={true}/>
+                <SinglePost data={postData} activePost={true} handlePostData={handlePostData} isSinglePostClicked={isSinglePostClicked}/> 
+                <Comments postId={postId} userProfileData={userProfileData} closeComments={closeComments} atciveModalComments={true} updateCommentsNumber={updateCommentsNumber}/>
            </div>
         </>
     )
