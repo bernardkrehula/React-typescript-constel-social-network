@@ -11,11 +11,23 @@ import type { postUserDataType } from "../PostModal";
 type SinglePostPropsType = {
   data: SinglePostDataType;
   openComments: (value: string) => void;
-  openPost: (user: postUserDataType, postId: string, likes: number, commentsNumber: number) => void;
+  openPost: (
+    user: postUserDataType,
+    postId: string,
+    likes: number,
+    commentsNumber: number
+  ) => void;
   activePost: boolean;
+  handlePostData?: () => void;
 };
 
-const SinglePost = ({ data, openComments, openPost, activePost }: SinglePostPropsType) => {
+const SinglePost = ({
+  data,
+  openComments,
+  openPost,
+  activePost,
+  handlePostData,
+}: SinglePostPropsType) => {
   if (!data) return null;
 
   const {
@@ -30,26 +42,30 @@ const SinglePost = ({ data, openComments, openPost, activePost }: SinglePostProp
   } = data;
   const { full_name, username, picture } = user;
 
-  const { mutate: likePost } = usePostLike(postId);
+  const { mutate: likePost, isPending } = usePostLike(postId);
 
   const handlePostlike = (e: React.MouseEvent) => {
     e.stopPropagation();
+    if(isPending) return
     likePost(liked);
-    /* console.log('radi like', liked, likes) */
+    handlePostData?.();
+    /* console.log('radi', liked) */
   };
   const showPostComments = (e: React.MouseEvent) => {
     e.stopPropagation();
     openComments(postId);
   };
   const handleOpenPost = () => {
-    openPost(user, postId, likes, commentsNumber)
-  }
-  console.log(data)
+    openPost(user, postId, likes, commentsNumber);
+  };
   if (!created_at) return null;
   const date = format(new Date(created_at), "dd.MM.y.");
 
   return (
-    <div className={activePost ? 'single-post active' : 'single-post'} onClick={handleOpenPost}>
+    <div
+      className={activePost ? "single-post active" : "single-post"}
+      onClick={handleOpenPost}
+    >
       <div>
         <div className="post-user-data">
           <img src={picture} />

@@ -10,7 +10,7 @@ export const usePostLike = (postId: string) => {
 
     onMutate: async (liked: boolean) => {
       await queryClient.cancelQueries(['homepage']);
-
+      
       const previousPosts = queryClient.getQueryData(['homepage']);
 
       queryClient.setQueryData(['homepage'], (old: any[]) => {

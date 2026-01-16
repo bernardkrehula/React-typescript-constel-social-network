@@ -17,7 +17,6 @@ const ProfileContainer = ({logoutUser}: {logoutUser: () => void}) => {
     const closeProfleMenu = () => {
         setProfileMenu(false);
         setIsProfileMenuClicked(false);
-        console.log(isProfileMenuClicked)
     }
 
     useOutsideClick(profileRef, closeProfleMenu)

@@ -5,6 +5,7 @@ import type { UserProfileDataType } from "#/types/UserProfileDataType";
 import SinglePost from "../SinglePost";
 import { type SinglePostDataType } from "#/types/SinglePostDataType";
 import { requestSinglePost } from "#/api/requestSinglePosts";
+import { useQueryClient } from "@tanstack/react-query";
 
 export type postUserDataType = {
     username: string;
@@ -24,6 +25,7 @@ type PostModalType = {
 }
 
 const PostModal = ({closePost, postId, userProfileData, closeComments, postModalUserData}: PostModalType) => {
+    const queryClient = useQueryClient();
     const [isLoading, setLoading] = useState<boolean>(false);
     const [postData, setPostData] = useState<SinglePostDataType>({
         post_id: '',
@@ -31,8 +33,8 @@ const PostModal = ({closePost, postId, userProfileData, closeComments, postModal
         text: '',
         image: '',
         audio: null,
-        comments: postModalUserData.commentsNumber,
-        likes: postModalUserData.likes,
+        comments: 0,
+        likes: 0,
         created_at: '',
         user: postModalUserData.user,
         liked: false
@@ -42,14 +44,27 @@ const PostModal = ({closePost, postId, userProfileData, closeComments, postModal
 
     const handlePostData = async() => {
         const singlePostData = await requestSinglePost(postId);
-        setPostData(prev => ({ ...prev, ...singlePostData }));
+        const newPosts = queryClient.getQueryData(["homepage"]);
+        const post = newPosts.posts.find(p => p.post_id === postId); 
+        setPostData(prev => ({ 
+            ...prev,
+            ...singlePostData,
+            comments: post.comments,
+            likes: post.likes,
+            user: post.user,
+            liked: post.liked
+            }));
+        console.log('query ', post)
     }
-   
+    const handleQuery = () => {
+        const newPosts = queryClient.getQueryData(["homepage"]);
+        const post = newPosts.posts.find(p => p.post_id === postId); 
+        
+    }
     useEffect(() => {
         handlePostData();
         setTimeout(() => {
             setLoading(true);
-            console.log('radi', postData)
         }, 700)
     },[]);
 
@@ -63,7 +78,7 @@ const PostModal = ({closePost, postId, userProfileData, closeComments, postModal
         <>
             <div className='modal-overlay'></div>
             <div className="post-modal" ref={postRef}>
-                <SinglePost data={postData} activePost={true}/> 
+                <SinglePost data={postData} activePost={true} handlePostData={handlePostData}/> 
                 <Comments postId={postId} userProfileData={userProfileData} closeComments={closeComments} atciveModalComments={true}/>
            </div>
         </>
