@@ -7,13 +7,15 @@ import { requestDeletePost } from '#/api/requestDeletePost';
 
 type PostOptionsMessageType = {
     postId: string;
+    refetchPosts: () => void;
 }
 
-const PostOptionsMessage = ({postId}: PostOptionsMessageType) => {
+const PostOptionsMessage = ({postId, refetchPosts}: PostOptionsMessageType) => {
     const messageRef = useRef<HTMLDivElement>(null);
     const handleOptionsMessage = async(e: React.MouseEvent) => {
         e.stopPropagation(); 
         await requestDeletePost(postId);
+        refetchPosts();
     }
     /* useOutsideClick(messageRef, handleOptionsMessage); */ 
     return(

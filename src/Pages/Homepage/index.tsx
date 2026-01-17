@@ -24,7 +24,7 @@ const Homepage = () => {
     message: ''
   });
   const token = localStorage.getItem("token");
-  const { data: homepageData, isLoading, refetch, isFetched } = useQuery({
+  const { data: homepageData, isLoading, refetch: refetchPosts, isFetched } = useQuery({
       queryKey: ['homepage'],
       queryFn: () => requestHomepageData(token),
       enabled: !!token
@@ -45,7 +45,6 @@ const Homepage = () => {
   };
   const closeComments = () => {
     setisCommetnsBtnClicked(false); 
-    refetch();
   };
   const openPost = (id: string) => {
     setSinglePostClick(true);
@@ -140,6 +139,7 @@ const Homepage = () => {
                 isSinglePostClicked={isSinglePostClicked}
                 activePost={false}
                 userProfileData={userProfileData}
+                refetchPosts={refetchPosts}
                 />
             );
           })}

@@ -19,6 +19,7 @@ type SinglePostPropsType = {
   handlePostData?: () => void;
   isSinglePostClicked: boolean;
   userProfileData: UserProfileDataType;
+  refetchPosts: () => void;
 };
 
 const SinglePost = ({
@@ -28,7 +29,8 @@ const SinglePost = ({
   activePost,
   handlePostData,
   isSinglePostClicked,
-  userProfileData
+  userProfileData,
+  refetchPosts
 }: SinglePostPropsType) => {
   if (!data) return null;
   const [isPostByUser, setPostByUser] = useState<boolean>(false);
@@ -96,7 +98,7 @@ const SinglePost = ({
             <h2>{date}</h2>
           </div>
           <OptionsBtn onClick={handleOptionsMessage}/>
-          {isPostByUser && <PostOptionsMessage postId={postId} />}
+          {isPostByUser && <PostOptionsMessage postId={postId} refetchPosts={refetchPosts}/>}
         </div>
         {image && (
           <div className="post-image-containter">
