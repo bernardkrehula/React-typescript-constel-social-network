@@ -139,6 +139,7 @@ const Homepage = () => {
                 openPost={openPost}
                 isSinglePostClicked={isSinglePostClicked}
                 activePost={false}
+                userProfileData={userProfileData}
                 />
             );
           })}

@@ -8,8 +8,8 @@ import type { SinglePostDataType } from "#/types/SinglePostDataType";
 import LikeBtn from "./LikeBtn";
 import OptionsBtn from "./OptionsBtn";
 import { useState } from "react";
-import CommentPopUpModal from "../CommentPopUpModal";
 import PostOptionsMessage from "./PostOptionsMessage";
+import type { UserProfileDataType } from "#/types/UserProfileDataType";
 
 type SinglePostPropsType = {
   data: SinglePostDataType;
@@ -18,6 +18,7 @@ type SinglePostPropsType = {
   activePost: boolean;
   handlePostData?: () => void;
   isSinglePostClicked: boolean;
+  userProfileData: UserProfileDataType;
 };
 
 const SinglePost = ({
@@ -26,10 +27,11 @@ const SinglePost = ({
   openPost,
   activePost,
   handlePostData,
-  isSinglePostClicked
+  isSinglePostClicked,
+  userProfileData
 }: SinglePostPropsType) => {
   if (!data) return null;
-  const [activeOptions, setActiveOptions] = useState<boolean>(false);
+  const [isPostByUser, setPostByUser] = useState<boolean>(false);
 
   const {
     user,
@@ -67,7 +69,11 @@ const SinglePost = ({
 
   const handleOptionsMessage = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setActiveOptions(prev => !prev);
+    checkIfPostIsByUser();
+  }
+
+  const checkIfPostIsByUser = () => {
+    userProfileData.username === username ? setPostByUser(true) : setPostByUser(false);
   }
 
   if (!created_at) return null;
@@ -90,7 +96,7 @@ const SinglePost = ({
             <h2>{date}</h2>
           </div>
           <OptionsBtn onClick={handleOptionsMessage}/>
-          {activeOptions && <PostOptionsMessage />}
+          {isPostByUser && <PostOptionsMessage postId={postId} />}
         </div>
         {image && (
           <div className="post-image-containter">

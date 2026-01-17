@@ -1,0 +1,32 @@
+.post-options-message{
+    position: absolute;
+    margin-left: 570px;
+    margin-top: 1px;
+    height: fit-content;
+    width: 70px;
+    transform-origin: left center;
+    animation: slideInFromLeft 220ms ease-out forwards;
+    box-shadow: 0 0 10px 3px rgb(0, 0, 0, 0.4);
+}
+.post-options-message button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color:rgb(35, 35, 35);
+}
+.post-options-message h2{
+    font-size: 1.4rem;
+    color: rgb(214, 214, 214);
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(16px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
