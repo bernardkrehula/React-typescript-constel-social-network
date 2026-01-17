@@ -6,6 +6,9 @@ import { usePostLike } from "#/hooks/useLikePost";
 import { FaRegCalendar } from "react-icons/fa6";
 import type { SinglePostDataType } from "#/types/SinglePostDataType";
 import LikeBtn from "./LikeBtn";
+import OptionsBtn from "./OptionsBtn";
+import { useState } from "react";
+import PostCreatorMessageModal from "../PostCreatorMessageModal";
 
 type SinglePostPropsType = {
   data: SinglePostDataType;
@@ -25,6 +28,7 @@ const SinglePost = ({
   isSinglePostClicked
 }: SinglePostPropsType) => {
   if (!data) return null;
+  const [activeOptions, setActiveOptions] = useState<boolean>(false);
 
   const {
     user,
@@ -48,15 +52,22 @@ const SinglePost = ({
       handlePostData();
     };
   };
+
   const showPostComments = (e: React.MouseEvent) => {
     e.stopPropagation();
     if(openComments) openComments(postId);
   };
+
   const handleOpenPost = () => {
     if(openPost){
       openPost(postId);
     }
   };
+
+  const handleOptions = () => {
+    setActiveOptions(prev => !prev);
+  }
+
   if (!created_at) return null;
   const date = format(new Date(created_at), "dd.MM.y.");
 
@@ -76,6 +87,8 @@ const SinglePost = ({
             <FaRegCalendar />
             <h2>{date}</h2>
           </div>
+          <OptionsBtn onClick={handleOptions}/>
+          {activeOptions && <PostCreatorMessageModal />}
         </div>
         {image && (
           <div className="post-image-containter">
@@ -85,7 +98,6 @@ const SinglePost = ({
         <p className="post-content">{text}</p>
       </div>
       <div className="post-btns">
-        {/* pomaknut u posebnu komoponentu */}
         <LikeBtn handlePostlike={handlePostlike} liked={liked} likes={likes}></LikeBtn>
         <Btn
           variation="primary--small"

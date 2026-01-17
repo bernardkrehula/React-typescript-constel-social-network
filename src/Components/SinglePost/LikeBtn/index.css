@@ -1,0 +1,9 @@
+.like-icon{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.like-icon span{
+    color: white;
+    font-size: 2.16rem;
+}

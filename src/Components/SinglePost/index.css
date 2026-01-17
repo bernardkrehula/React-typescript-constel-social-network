@@ -78,15 +78,6 @@
     gap: 10px;
     margin-top: 10px;
 }
-.like-icon{
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-.like-icon span{
-    color: white;
-    font-size: 2.16rem;
-}
 .comment-icon{
     display: flex;
     align-items: center;
@@ -99,4 +90,10 @@
 .post-btns svg{
     height: 22px;
     width: 22px;
+}
+.options-btn{
+    height: 15px;
+    width: 15px;
+    cursor: pointer;
+    color: white;
 }
