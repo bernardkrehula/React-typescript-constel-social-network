@@ -22,7 +22,7 @@ Posloziti strukuru foldera(
 
 Merge request napraviti na nemanjinom projektu - (pronasao gresku, na upitu kod nemanje sto dalje)
 Error handling dodati na ekranu kada se posalje prazni input - odradeno
-Post modal vratiti s komentarima - odratiti 13.1
+Post modal vratiti s komentarima - odradeno
 Custom hook useOutsideClick - odradeno 
 Modal with outside click in react - odradeno
 How to detect where I click outside element in react - odradeno

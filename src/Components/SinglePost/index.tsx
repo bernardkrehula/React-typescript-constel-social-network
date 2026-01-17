@@ -1,11 +1,11 @@
 import "./index.css";
 import Btn from "../Btn";
 import { format } from "date-fns";
-import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { usePostLike } from "#/hooks/useLikePost";
 import { FaRegCalendar } from "react-icons/fa6";
 import type { SinglePostDataType } from "#/types/SinglePostDataType";
+import LikeBtn from "./LikeBtn";
 
 type SinglePostPropsType = {
   data: SinglePostDataType;
@@ -44,14 +44,18 @@ const SinglePost = ({
     e.stopPropagation();
     if(isPending) return
     likePost(liked);
-    handlePostData?.();
+    if(handlePostData){
+      handlePostData();
+    };
   };
   const showPostComments = (e: React.MouseEvent) => {
     e.stopPropagation();
-    openComments?.(postId);
+    if(openComments) openComments(postId);
   };
   const handleOpenPost = () => {
-    openPost?.(postId);
+    if(openPost){
+      openPost(postId);
+    }
   };
   if (!created_at) return null;
   const date = format(new Date(created_at), "dd.MM.y.");
@@ -81,19 +85,8 @@ const SinglePost = ({
         <p className="post-content">{text}</p>
       </div>
       <div className="post-btns">
-        <Btn variation="primary--small" onClick={handlePostlike} type="button">
-          {liked ? (
-            <div className="like-icon">
-              <AiFillLike />
-              <span>{likes}</span>
-            </div>
-          ) : (
-            <div className="like-icon">
-              <AiOutlineLike />
-              <span>{likes}</span>
-            </div>
-          )}
-        </Btn>
+        {/* pomaknut u posebnu komoponentu */}
+        <LikeBtn handlePostlike={handlePostlike} liked={liked} likes={likes}></LikeBtn>
         <Btn
           variation="primary--small"
           type="button"
