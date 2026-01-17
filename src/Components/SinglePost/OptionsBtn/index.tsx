@@ -2,7 +2,7 @@ import './index.css';
 import { HiDotsVertical } from "react-icons/hi";
 
 type OptionsBtnType = {
-    onClick: () => void;
+    onClick: (e: React.MouseEvent) => void;
 }
 
 const OptionsBtn = ({onClick}: OptionsBtnType) => {

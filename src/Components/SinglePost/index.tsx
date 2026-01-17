@@ -8,7 +8,8 @@ import type { SinglePostDataType } from "#/types/SinglePostDataType";
 import LikeBtn from "./LikeBtn";
 import OptionsBtn from "./OptionsBtn";
 import { useState } from "react";
-import PostCreatorMessageModal from "../PostCreatorMessageModal";
+import CommentPopUpModal from "../CommentPopUpModal";
+import PostOptionsMessage from "./PostOptionsMessage";
 
 type SinglePostPropsType = {
   data: SinglePostDataType;
@@ -64,7 +65,8 @@ const SinglePost = ({
     }
   };
 
-  const handleOptions = () => {
+  const handleOptionsMessage = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setActiveOptions(prev => !prev);
   }
 
@@ -87,8 +89,8 @@ const SinglePost = ({
             <FaRegCalendar />
             <h2>{date}</h2>
           </div>
-          <OptionsBtn onClick={handleOptions}/>
-          {activeOptions && <PostCreatorMessageModal />}
+          <OptionsBtn onClick={handleOptionsMessage}/>
+          {activeOptions && <PostOptionsMessage />}
         </div>
         {image && (
           <div className="post-image-containter">
