@@ -6,9 +6,6 @@ import { usePostLike } from "#/hooks/useLikePost";
 import { FaRegCalendar } from "react-icons/fa6";
 import type { SinglePostDataType } from "#/types/SinglePostDataType";
 import LikeBtn from "./LikeBtn";
-import OptionsBtn from "./OptionsBtn";
-import { useState } from "react";
-import PostOptionsMessage from "./PostOptionsMessage";
 import type { UserProfileDataType } from "#/types/UserProfileDataType";
 
 type SinglePostPropsType = {
@@ -19,7 +16,6 @@ type SinglePostPropsType = {
   handlePostData?: () => void;
   isSinglePostClicked: boolean;
   userProfileData: UserProfileDataType;
-  refetchPosts: () => void;
 };
 
 const SinglePost = ({
@@ -28,12 +24,9 @@ const SinglePost = ({
   openPost,
   activePost,
   handlePostData,
-  isSinglePostClicked,
-  userProfileData,
-  refetchPosts
+  isSinglePostClicked
 }: SinglePostPropsType) => {
   if (!data) return null;
-  const [isPostByUser, setPostByUser] = useState<boolean>(false);
 
   const {
     user,
@@ -69,15 +62,6 @@ const SinglePost = ({
     }
   };
 
-  const handleOptionsMessage = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    checkIfPostIsByUser();
-  }
-
-  const checkIfPostIsByUser = () => {
-    userProfileData.username === username ? setPostByUser(true) : setPostByUser(false);
-  }
-
   if (!created_at) return null;
   const date = format(new Date(created_at), "dd.MM.y.");
 
@@ -97,8 +81,6 @@ const SinglePost = ({
             <FaRegCalendar />
             <h2>{date}</h2>
           </div>
-          <OptionsBtn onClick={handleOptionsMessage}/>
-          {isPostByUser && <PostOptionsMessage postId={postId} refetchPosts={refetchPosts}/>}
         </div>
         {image && (
           <div className="post-image-containter">

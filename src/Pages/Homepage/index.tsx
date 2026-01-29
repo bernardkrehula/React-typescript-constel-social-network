@@ -44,7 +44,8 @@ const Homepage = () => {
     setSelectedPostId(postId);
   };
   const closeComments = () => {
-    setisCommetnsBtnClicked(false); 
+    setisCommetnsBtnClicked(false);
+    refetchPosts();
   };
   const openPost = (id: string) => {
     setSinglePostClick(true);
@@ -53,6 +54,7 @@ const Homepage = () => {
   }
   const closePost = () => {
     setSinglePostClick(false);
+    refetchPosts();
   }
   const manageIsPostAdded = async(isSuccess: boolean, errorMessage: string) => {
     setPostModalMessage(prev => ({...prev, message: errorMessage}))
@@ -139,7 +141,6 @@ const Homepage = () => {
                 isSinglePostClicked={isSinglePostClicked}
                 activePost={false}
                 userProfileData={userProfileData}
-                refetchPosts={refetchPosts}
                 />
             );
           })}
