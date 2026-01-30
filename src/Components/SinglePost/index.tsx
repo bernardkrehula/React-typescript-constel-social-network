@@ -26,6 +26,7 @@ const SinglePost = ({
   handlePostData,
   isSinglePostClicked
 }: SinglePostPropsType) => {
+  const { mutate: likePost, isPending } = usePostLike(data.post_id);
   if (!data) return null;
 
   const {
@@ -39,8 +40,6 @@ const SinglePost = ({
     liked,
   } = data;
   const { full_name, username, picture } = user;
-
-  const { mutate: likePost, isPending } = usePostLike(postId);
 
   const handlePostlike = (e: React.MouseEvent) => {
     e.stopPropagation();

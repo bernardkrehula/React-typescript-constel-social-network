@@ -29,7 +29,7 @@ const SingleComment = ({comment, postId, deleteComment, userProfileData}: Single
         checkIfCommetIsByUser();
     }
     const checkIfCommetIsByUser = () => {
-        userProfileData.username === username ? setUserComment(true) : setUserComment(false);
+        setUserComment(userProfileData.username === username);
     }
 
     return(

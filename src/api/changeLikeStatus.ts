@@ -15,8 +15,8 @@ export const changeLikeStatus = async (id: string, liked: boolean) => {
       },
     });
     return response.data.status;
-  } catch (error: any) {
-    if (error.status === 400) {
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error) && error.response?.status === 400) {
       throw new ValidationError(error.response.data.error.message);
     } else {
       throw Error;

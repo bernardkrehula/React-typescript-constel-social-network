@@ -18,10 +18,10 @@ export const requestCommentDelete = async (
       },
     });
     return response.data.status;
-  } catch (error: any) {
-    if (error.status === 400) {
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error) && error.response?.status === 400) {
       throw new ValidationError(error.response.data.error.message);
-    } else {
+    }else {
       throw Error;
     }
   }

@@ -12,12 +12,12 @@ export const usePostLike = (postId: string) => {
 
       const previousPosts = queryClient.getQueryData(["homepage"]);
 
-      queryClient.setQueryData(["homepage"], (old: any) => {
-        if (!old?.posts) return old;
+      queryClient.setQueryData(["homepage"], (old: unknown) => {
+        if (!old || typeof old !== "object" || !("posts" in old)) return old;
 
         return {
           ...old,
-          posts: old.posts.map((post: any) =>
+          posts: (old as any).posts.map((post: any) =>
             post.post_id === postId
               ? {
                   ...post,
