@@ -3,6 +3,7 @@ import SingleInput from "../SingleInput";
 import Btn from "../Btn";
 import { useState } from "react";
 import { useCreatePost } from "#/hooks/useCreatePost";
+import { AxiosError } from "axios";
 
 type PostCreatorType = {
   manageIsPostAdded: (isSuccess: boolean, errorMessage: string) => void;
@@ -10,10 +11,14 @@ type PostCreatorType = {
 
 const PostCreator = ({ manageIsPostAdded }: PostCreatorType) => {
   const [inputValue, setInputValue] = useState("");
-  const { mutate: createPost } = useCreatePost({
-    onSuccess: (onSuccess) => manageIsPostAdded(true, onSuccess),
+  const { mutate: createPost, data } = useCreatePost({
+    onSuccess: () => manageIsPostAdded(true, data),
     onError: (error) =>
-      manageIsPostAdded(false, error.response.data.error.message),
+      manageIsPostAdded(
+        false,
+        (error as AxiosError<{ error: { message: string } }>).response?.data
+          .error.message || "An error occurred",
+      ),
   });
 
   const getInputValue = (e: React.ChangeEvent<HTMLInputElement>) =>

@@ -15,7 +15,7 @@ type SinglePostPropsType = {
   activePost: boolean;
   handlePostData?: () => void;
   isSinglePostClicked: boolean;
-  userProfileData: UserProfileDataType;
+  userProfileData?: UserProfileDataType;
 };
 
 const SinglePost = ({
